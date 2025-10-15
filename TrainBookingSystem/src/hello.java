@@ -1,8 +1,0 @@
-
-public class hello {
-    public static void main(String[] args){
-   System.out.println("Can you see me?");
-   System.out.println("yes noura");
-   System.out.println("الملكه هنوف");
-    }
-}
