@@ -7,6 +7,6 @@
  *
  * @author imusn
  */
-public class Train {
+public class seat {
     
 }
