@@ -9,4 +9,5 @@
  */
 public class newClass {
     
+ public int noura;
 }
