@@ -9,53 +9,57 @@ package ServerSide;
  * @author imusn
  */
 import java.util.*;
-import java.io.Serializable;
-public class Train implements Serializable {
-private final String trainID;
-private final String source;
-private final String destination;
-private final Seat[] seatbyclass;
-private static final int Seats_per_class=10;
-private static final String [] classes={"First","Economy"};
+
+public class Train{
+private  String trainID;
+private String source;
+private String destination;
+private Seat[][] firstclassSeatbyday;
+private Seat[][] economyclassSeatbyday;
 public Train (String trainID, String source,String destination){
     this.trainID=trainID;
     this.source=source;
     this.destination=destination;
-    this.seatbyclass=initializeSeats();
-}
-private Seat[] initializeSeats(){
-    int totalSeats=classes.length*Seats_per_class;
-    Seat [] seats=new Seat[totalSeats];
-    int seatindex=0;
-    for(String classType:classes){
-        for(int i=1; i<=Seats_per_class;i++)
+    this.firstclassSeatbyday=new Seat[7][5];
+    this.economyclassSeatbyday=new Seat[7][5];// it will put each all seats for each day
+    for(int day=0; day<7; day++){
+        for(int seat=0; seat<5; seat++)
         {
-            String seatID=this.trainID +classType+i;
-            seats[seatindex++]=new Seat(seatID,classType);
+            this.firstclassSeatbyday[day][seat]=new Seat("First");
+            this.economyclassSeatbyday[day][seat]=new Seat("Economy");
             
-        }
-    }
-    return seats;
-}    
-public boolean isSeatAvailable(String classType){
-    for(Seat seat : seatbyclass){
-        if(seat.getClassType().equalsIgnoreCase(classType)&& seat.isAvailable()){
-            return true;
-        }
-    }
-    return false;
+        }}
 }
-public String reserveSeat(String username, String classType){
-    synchronized(this){
-    for(Seat seat: seatbyclass){
-        if(seat.getClassType().equalsIgnoreCase(classType)&& seat.isAvailable()){
-            if(seat.reserve(username)){
-                return seat.getSeatID();
-            }
-        }
-    }
-  }
-    return null;
+private Seat[] getAvailableSeats(String classType, int dayindex){
+    Seat [][] list=classType.equalsIgnoreCase("First")? this.firstclassSeatbyday: this.economyclassSeatbyday;
+  int count=0;
+for(Seat s: list[dayindex]){
+if(s.IsAvailable())
+count++;
+}
+Seat[] available=new Seat[count];
+int j=0;
+for(Seat s:list[dayindex]){
+if(s.IsAvailable()) 
+available[j++]=s;
+}
+return available;
+}  
+
+public boolean reserveSeat( String classType, int seatindex,int dayindex,String username){
+    Seat[][] list=classType.equalsIgnoreCase("FIrst")? this.firstclassSeatbyday: this.economyclassSeatbyday;
+if(dayindex >= 0&& dayindex<7&& seatindex>=0&&seatindex<5){
+    return list[dayindex][seatindex].reserve(username);
+}
+return false;
+}
+public void cancelSeat(String classType, int seatindex, int dayindex)
+{
+    Seat[][] list=classType.equalsIgnoreCase("First")? this.firstclassSeatbyday: this.economyclassSeatbyday;
+  if(dayindex >= 0&& dayindex<7&& seatindex>=0&&seatindex<5)
+    {
+    list[dayindex][seatindex].cancel();
+}
 }
 public String getSchedule()
 {
@@ -74,7 +78,5 @@ public String getSchedule()
         return destination;
     }
 
-public Seat[] getAllSeatsa(){  
-    return seatbyclass;
-}
+
 } 
