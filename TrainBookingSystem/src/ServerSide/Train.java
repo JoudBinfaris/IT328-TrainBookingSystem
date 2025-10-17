@@ -16,6 +16,7 @@ private String source;
 private String destination;
 private Seat[][] firstclassSeatbyday;
 private Seat[][] economyclassSeatbyday;
+
 public Train (String trainID, String source,String destination){
     this.trainID=trainID;
     this.source=source;

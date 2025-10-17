@@ -37,16 +37,19 @@ import java.util.logging.Logger;
 public class Server {
     private static ArrayList<ClientHandler> clients=new ArrayList<>();
     private static ArrayList<Reservation> reservations = new ArrayList<>();
+    private static ArrayList<User> users = new ArrayList<>();
     
+    public static Train t1 = new Train("1111","Riyadh","Jeddah");
+    public static Train t2 = new Train("2222","Jeddah","Riyadh");
+    public static Train t3 = new Train("3333","Riyadh","Dammam");
+    public static Train t4 = new Train("4444","Dammam","Riyadh");
+
     public static void main (String []args)throws IOException{
        
     
         ServerSocket serverSocket = new ServerSocket(9090);
          System.out.println("Server started on port 9090...");
-         Train t1=new Train("1111","Riyadh","Jeddah");
-         Train t2=new Train("2222","Jeddah","Riyadh");
-         Train t3=new Train("3333","Riyadh","Dammam");
-         Train t4=new Train("4444","Dammam","Riyadh");
+         
 
         while (true){
          System.out.println("Waiting for client connection");
@@ -54,7 +57,7 @@ public class Server {
          Socket client=serverSocket.accept();
          System.out.println("Connected");
          
-         ClientHandler handler=new ClientHandler(client,clients,reservations); // new thread 
+         ClientHandler handler=new ClientHandler(client,clients,reservations, users, t1, t2, t3, t4); // new thread 
          clients.add(handler);
          new Thread (handler).start();
          
@@ -69,12 +72,20 @@ private BufferedReader in;
 private PrintWriter out;
 private ArrayList<ClientHandler> clients;
 private ArrayList<Reservation> reservations;
+private ArrayList<User> users;
+private Train t1, t2, t3, t4;
 
-  public ClientHandler (Socket c,ArrayList<ClientHandler> clients, ArrayList<Reservation> reservations) throws IOException
+
+  public ClientHandler (Socket c,ArrayList<ClientHandler> clients, ArrayList<Reservation> reservations, ArrayList<User> users, Train t1, Train t2, Train t3, Train t4) throws IOException
   {
     this.client = c;
     this.clients=clients;
     this.reservations=reservations;
+    this.users=users;
+    this.t1 = t1;
+    this.t2 = t2;
+    this.t3 = t3;
+    this.t4 = t4;
     in= new BufferedReader (new InputStreamReader(client.getInputStream())); 
     out=new PrintWriter(client.getOutputStream(),true); 
   }
@@ -84,12 +95,43 @@ private ArrayList<Reservation> reservations;
    try{
          
     while (true){
-        System.out.println("Username:");
+        out.println("1-login\n2-sign up:");
+        int ch=Integer.parseInt(in.readLine());
+        out.println("Username:");
         String un=in.readLine(); 
+        out.println("Password:");
+        String p=in.readLine();
+        do
+        {
+          switch(ch){
+            case 2:
+                User u1=new User(un,p);
+                users.add(u1);
+                break;
+            case 1:
+                while(true){
+                for (User u : users) {
+                 if(u.getUsername().equals(un)&&u.getPassword().equals(p))
+                 {break;}
+                 
+                 }
+                out.println("username or password is wrong");
+                         out.println("Username:");
+                          un=in.readLine(); 
+                         out.println("Password:");
+                          p=in.readLine();
+                }
+               
+            default:
+                out.println("invalid choice");
+                out.println("1-login\n2-sign up:");
+                 ch=Integer.parseInt(in.readLine());
+        }}
+        while(ch!=1 && ch!=2);
         
-        System.out.println("Source city:");
+        out.println("Source city:");
         String sc=in.readLine();
-        System.out.println("Destination city:");
+        out.println("Destination city:");
          String dc=in.readLine(); 
          
          String tn="Nan";
@@ -102,28 +144,78 @@ private ArrayList<Reservation> reservations;
           else if(sc.equals("Dammam") && dc.equals("Riyadh"))
              tn="4444";
          
-        System.out.println("class:");
+        out.println("class:");
          String c=in.readLine(); 
          
-        System.out.println("Seat Number (1-5):");
+        out.println("Seat Number (1-5):");
         int sn=Integer.parseInt(in.readLine())-1; 
         
-        System.out.println("day:");
+        out.println("day:");
         int d=Integer.parseInt(in.readLine())-1; 
         
+        boolean success;
+        switch(tn)
+        {
+           case "1111":
+               success= t1.reserveSeat(c, sn, d, un );
+               if(success)
+               {
+                    Reservation r =new Reservation( un, tn,  c, sn, d);
+                    reservations.add(r);
+                    out.println("Reservation confirmed!");}
+               else
+                  out.println("Seat Already Taken :("); 
+                   
+                break;
+            case "2222":
+                success=t2.reserveSeat(c, sn, d, un );
+                if(success)
+               {
+                    Reservation r =new Reservation( un, tn,  c, sn, d);
+                    reservations.add(r);
+                    out.println("Reservation confirmed!");}
+               else
+                  out.println("Seat Already Taken :("); 
+                 break;
+            case "3333":
+                success=t3.reserveSeat(c, sn, d, un );
+                if(success)
+               {
+                    Reservation r =new Reservation( un, tn,  c, sn, d);
+                    reservations.add(r);
+                    out.println("Reservation confirmed!");}
+               else
+                  out.println("Seat Already Taken :("); 
+                 break;
+           case "4444":
+               success=t4.reserveSeat(c, sn, d, un );
+               if(success)
+               {
+                    Reservation r =new Reservation( un, tn,  c, sn, d);
+                    reservations.add(r);
+                    out.println("Reservation confirmed!");}
+               else
+                  out.println("Seat Already Taken :("); 
+                 break;
+         
+        }
+            
         
-         Reservation r=new Reservation( un, tn,  c, sn, d);
-          reservations.add(r);
-//                outToAll(request);
+         
+         
+      
+
    
     }
-}
+  }
+
    catch (IOException e){
        System.err.println("IO exception in new client class");
        System.err.println(e.getStackTrace());
    }
 finally{
     out.close();
+    clients.remove(this);
        try {
            in.close();
        } catch (IOException ex) {
@@ -131,11 +223,7 @@ finally{
        }
 }
   }
-//    private void outToAll(String substring) {
-//for (ClientHandler aclient:clients){
-//   aclient.out.println(substring); 
-//}
-//    }
+
 }
 
 
