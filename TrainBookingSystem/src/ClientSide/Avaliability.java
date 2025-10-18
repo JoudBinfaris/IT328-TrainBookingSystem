@@ -8,12 +8,12 @@ package ClientSide;
  *
  * @author sarah
  */
-public class makeReservation extends javax.swing.JPanel {
+public class Avaliability extends javax.swing.JPanel {
 
     /**
      * Creates new form makeReservation
      */
-    public makeReservation() {
+    public Avaliability() {
         initComponents();
     }
 
