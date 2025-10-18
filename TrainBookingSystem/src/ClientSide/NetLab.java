@@ -17,31 +17,10 @@ public class NetLab extends javax.swing.JFrame {
      * Creates new form NetLab
      */
     public NetLab() {
-        
-        initComponents();
-        
-
-    }
-    
+            initComponents();
+           }    
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        
-        /* Create and display the form */
+        //To show the frame when the file run
         java.awt.EventQueue.invokeLater(() -> new NetLab().setVisible(true));
     }
 
@@ -139,7 +118,7 @@ public class NetLab extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //Button for sign up:
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       Client client = new Client();
         try {
@@ -152,7 +131,7 @@ public class NetLab extends javax.swing.JFrame {
         }
           
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    //Button for login:
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
       Client client = new Client();
         try {
@@ -165,7 +144,7 @@ public class NetLab extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    //Exit buttom:
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton3ActionPerformed

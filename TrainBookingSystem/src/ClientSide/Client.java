@@ -24,6 +24,7 @@ public class Client {
 
     // send and recive message
     public String sendRequest(String request) throws IOException {
+        System.out.println("Done");
         out.println(request);      // send message
         return in.readLine();      // recive 
     }
