@@ -98,7 +98,7 @@ private Train t1, t2, t3, t4, t5;
    try{
          
     while (true){
-        java.awt.EventQueue.invokeLater(() -> new NetLab().setVisible(true));
+        //java.awt.EventQueue.invokeLater(() -> new NetLab().setVisible(true));
         out.println("1-login\n2-sign up:");
         int ch=Integer.parseInt(in.readLine());
         out.println("Username:");
