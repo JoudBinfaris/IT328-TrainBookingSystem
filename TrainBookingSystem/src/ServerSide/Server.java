@@ -44,6 +44,7 @@ public class Server {
     public static Train t2 = new Train("2222","Jeddah","Riyadh");
     public static Train t3 = new Train("3333","Riyadh","Dammam");
     public static Train t4 = new Train("4444","Dammam","Riyadh");
+    public static Train t5 = new Train("5555","Riyadh","Alula");
 
     public static void main (String []args)throws IOException{
        
@@ -58,7 +59,7 @@ public class Server {
          Socket client=serverSocket.accept();
          System.out.println("Connected");
          
-         ClientHandler handler=new ClientHandler(client,clients,reservations, users, t1, t2, t3, t4); // new thread 
+         ClientHandler handler=new ClientHandler(client,clients,reservations, users, t1, t2, t3, t4,t5); // new thread 
          clients.add(handler);
          new Thread (handler).start();
          
@@ -74,10 +75,10 @@ private PrintWriter out;
 private ArrayList<ClientHandler> clients;
 private ArrayList<Reservation> reservations;
 private ArrayList<User> users;
-private Train t1, t2, t3, t4;
+private Train t1, t2, t3, t4, t5;
 
 
-  public ClientHandler (Socket c,ArrayList<ClientHandler> clients, ArrayList<Reservation> reservations, ArrayList<User> users, Train t1, Train t2, Train t3, Train t4) throws IOException
+  public ClientHandler (Socket c,ArrayList<ClientHandler> clients, ArrayList<Reservation> reservations, ArrayList<User> users, Train t1, Train t2, Train t3, Train t4, Train t5) throws IOException
   {
     this.client = c;
     this.clients=clients;
@@ -87,6 +88,7 @@ private Train t1, t2, t3, t4;
     this.t2 = t2;
     this.t3 = t3;
     this.t4 = t4;
+    this.t5 = t5;
     in= new BufferedReader (new InputStreamReader(client.getInputStream())); 
     out=new PrintWriter(client.getOutputStream(),true); 
   }
@@ -145,6 +147,8 @@ private Train t1, t2, t3, t4;
              tn="3333";
           else if(sc.equals("Dammam") && dc.equals("Riyadh"))
              tn="4444";
+         else if(sc.equals("Riyadh") && dc.equals("Alula"))
+             tn="5555";
          
         out.println("class:");
          String c=in.readLine(); 
@@ -191,6 +195,16 @@ private Train t1, t2, t3, t4;
                  break;
            case "4444":
                success=t4.reserveSeat(c, sn, d, un );
+               if(success)
+               {
+                    Reservation r =new Reservation( un, tn,  c, sn, d);
+                    reservations.add(r);
+                    out.println("Reservation confirmed!");}
+               else
+                  out.println("Seat Already Taken :("); 
+                 break;
+            case "5555":
+               success=t5.reserveSeat(c, sn, d, un );
                if(success)
                {
                     Reservation r =new Reservation( un, tn,  c, sn, d);
