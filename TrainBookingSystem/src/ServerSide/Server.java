@@ -8,6 +8,7 @@ package ServerSide;
  *
  * @author joud
  */
+import ClientSide.NetLab;
    import java.io.*; 
 import java.net.Socket;
 import java.net.ServerSocket;
@@ -95,6 +96,7 @@ private Train t1, t2, t3, t4;
    try{
          
     while (true){
+        java.awt.EventQueue.invokeLater(() -> new NetLab().setVisible(true));
         out.println("1-login\n2-sign up:");
         int ch=Integer.parseInt(in.readLine());
         out.println("Username:");

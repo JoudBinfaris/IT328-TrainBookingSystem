@@ -8,7 +8,11 @@
  * @author sarah
  */
 package ClientSide;
-public class LogIn extends NetLab {
+
+import java.io.IOException;
+import javax.swing.JOptionPane;
+
+public class LogIn extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LogIn.class.getName());
 
@@ -20,7 +24,9 @@ public class LogIn extends NetLab {
         private Client client;
 
     public LogIn() {
-       
+       initComponents();
+        setLocationRelativeTo(null);
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
     public LogIn(Client client){
         this.client = client;
@@ -74,7 +80,7 @@ public class LogIn extends NetLab {
         jLabel4.setText("Email:");
         jLabel4.setToolTipText("");
 
-        connect.setText("Connect & register");
+        connect.setText("Log in");
         connect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 connectActionPerformed(evt);
@@ -100,7 +106,7 @@ public class LogIn extends NetLab {
                         .addGap(125, 125, 125)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
+                        .addGap(157, 157, 157)
                         .addComponent(connect)))
                 .addContainerGap(90, Short.MAX_VALUE))
         );
@@ -129,42 +135,49 @@ public class LogIn extends NetLab {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
-        username=Email.getText();
+        //username=Email.getText();
     }//GEN-LAST:event_EmailActionPerformed
 
     private void passwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwardActionPerformed
-         passward_=passward.getText();
+         //passward_=passward.getText();
 
     }//GEN-LAST:event_passwardActionPerformed
 
     private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
-        
+    username = Email.getText();
+    passward_ = passward.getText();
+        try {
+            client.login(username, passward_);
+            JOptionPane.showMessageDialog(this, "Logged in successfully.");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Login failed: " + ex.getMessage());
+    }
     }//GEN-LAST:event_connectActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new LogIn().setVisible(true));
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+//            logger.log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(() -> new LogIn().setVisible(true));
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Email;

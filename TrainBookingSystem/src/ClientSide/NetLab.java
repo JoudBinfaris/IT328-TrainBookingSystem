@@ -143,7 +143,7 @@ public class NetLab extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       Client client = new Client();
         try {
-            client.connect("localhost", 5000);
+            client.connect("localhost", 9090);
             SignUp signobj = new SignUp(client);  
       signobj.setVisible(true);
       dispose();    
@@ -156,7 +156,7 @@ public class NetLab extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
       Client client = new Client();
         try {
-            client.connect("localhost", 5000);
+            client.connect("localhost", 9090);
             LogIn logobj = new LogIn(client);  
             logobj.setVisible(true);
       dispose();

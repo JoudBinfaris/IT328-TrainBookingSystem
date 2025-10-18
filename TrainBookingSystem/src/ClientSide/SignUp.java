@@ -12,7 +12,7 @@ import ClientSide.Client;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
-public class SignUp extends NetLab {
+public class SignUp extends javax.swing.JFrame {
     //private Client client; 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SignUp.class.getName());
     private Client client;
@@ -20,13 +20,18 @@ public class SignUp extends NetLab {
      * Creates new form SignUp
      */
     public SignUp() {
-      //initComponents();
+       initComponents();
+        setLocationRelativeTo(null);
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+     
       //client.connect("localhost", 5000);
 
     }
     public SignUp(Client client){
         this.client = client;
         initComponents();
+        
     }
     String passward_;
     String username;
@@ -67,7 +72,8 @@ public class SignUp extends NetLab {
         jLabel3.setText("Email:");
         jLabel3.setToolTipText("");
 
-        jButton1.setText("Connect & register");
+        jButton1.setText("Sign up");
+        jButton1.setActionCommand("Sign Up");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -97,7 +103,7 @@ public class SignUp extends NetLab {
                             .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(passward, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(129, 129, 129)
+                        .addGap(162, 162, 162)
                         .addComponent(jButton1)))
                 .addContainerGap(77, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,46 +137,50 @@ public class SignUp extends NetLab {
     }// </editor-fold>//GEN-END:initComponents
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
-         passward_=passward.getText();
+         //passward_=passward.getText();
     }//GEN-LAST:event_emailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         username = email.getText();
+         passward_ = passward.getText();
         try {
-            client.register(username, passward_);
+            client.signup(username, passward_);
+            JOptionPane.showMessageDialog(this, "Sign up in successfully.");
         } catch (IOException ex) {
-            System.getLogger(SignUp.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+            JOptionPane.showMessageDialog(this, "Sign up failed: " + ex.getMessage());
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void passwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwardActionPerformed
-username=email.getText();     }//GEN-LAST:event_passwardActionPerformed
+//username=email.getText();     }//GEN-LAST:event_passwardActionPerformed
 
+    }
             
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new SignUp().setVisible(true));
-    }
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+//            logger.log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(() -> new SignUp().setVisible(true));
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField email;

@@ -29,9 +29,16 @@ public class Client {
     }
 
   
-    public String register(String user, String pass) throws IOException {
-        return sendRequest("REGISTER " + user + " " + pass);
+    public String login(String user, String pass) throws IOException {
+        //Just for us to be sure:
+        System.out.println("LOGIN " + user + " " + pass);
+        return sendRequest("LOGIN " + user + " " + pass);
     }
+    public String signup(String user, String pass) throws IOException {
+        System.out.println("SIGNUP " + user + " " + pass);
+        return sendRequest("SIGNUP " + user + " " + pass);
+    }
+    
 
     public String search(String src, String dest, String day, String cls) throws IOException {
         return sendRequest("SEARCH " + src + " " + dest + " " + day + " " + cls);
