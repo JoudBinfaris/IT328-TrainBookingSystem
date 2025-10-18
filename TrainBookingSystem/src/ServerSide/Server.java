@@ -97,7 +97,7 @@ class ClientHandler implements Runnable {
 
             while (true) {
                 //java.awt.EventQueue.invokeLater(() -> new NetLab().setVisible(true));
-                out.println("1-login\n2-sign up:");
+                
                 String allInfo = in.readLine();
 
                 int firstSpace = allInfo.indexOf(" ");
