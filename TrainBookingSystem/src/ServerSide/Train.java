@@ -48,7 +48,7 @@ return available;
 }  
 
 public boolean reserveSeat( String classType, int seatindex,int dayindex,String username){
-    Seat[][] list=classType.equalsIgnoreCase("FIrst")? this.firstclassSeatbyday: this.economyclassSeatbyday;
+    Seat[][] list=classType.equalsIgnoreCase("First")? this.firstclassSeatbyday: this.economyclassSeatbyday;
 if(dayindex >= 0&& dayindex<7&& seatindex>=0&&seatindex<5){
     return list[dayindex][seatindex].reserve(username);
 }

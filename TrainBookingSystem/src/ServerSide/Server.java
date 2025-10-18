@@ -108,6 +108,8 @@ class ClientHandler implements Runnable {
                 if (option.equals("SIGNUP")) {
                     User u1 = new User(info);
                     users.add(u1);
+
+    System.out.println("Total users: " + users.size());
                 } else {
                     while (true) {
                         for (User u : users) {
@@ -153,6 +155,8 @@ class ClientHandler implements Runnable {
                         if (success) {
                             Reservation r = new Reservation(info, tn, c, sn, d);
                             reservations.add(r);
+                            
+System.out.println("Total reservations: " + reservations.size());
                             out.println("Reservation confirmed!");
                         } else {
                             out.println("Seat Already Taken :(");
