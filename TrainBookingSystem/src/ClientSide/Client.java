@@ -19,6 +19,7 @@ public class Client {
         socket = new Socket(host, port);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
+        
     }
 
     // send and recive message
