@@ -20,12 +20,12 @@ public class Client {
 
     private void sendLine(String s) {
         out.println(s);
-        System.out.println(">> " + s); // print what we send
+        System.out.println(">> " + s); // sent to server 
     }
 
     private String readLine() throws IOException {
         String line = in.readLine();
-        System.out.println("<< " + line); // print what we receive
+        System.out.println("<< " + line); // received from server 
         return line;
     }
 
@@ -42,15 +42,24 @@ public class Client {
         return null;
     }
 
-    //  Perform SIGNUP and Reservation
-    //  Send SIGNUP <user> <pass>
-    //  Answer server prompts (Source, Destination, Class, Seat, Day)
-    //  Return final reservation message
-    public String signupAndReserve(String user, String pass,
-                                   String source, String dest,
-                                   String cls, int seat1to5, int day1to7) throws IOException {
-
+    // Send SIGNUP (first screen in GUI)
+    //    Server will immediately start prompting for reservation fields.
+    public void signup(String user, String pass) throws IOException {
         sendLine("SIGNUP " + user + " " + pass);
+        // No return here; proceed to reserve(...) to answer prompts.
+    }
+
+    // 6- Send LOGIN (first screen in GUI)
+    //    NOTE: With our current server code, LOGIN path contains a busy loop.
+    //    It will be fixed next phase.
+    public void login(String user, String pass) throws IOException {
+        sendLine("LOGIN " + user + " " + pass);
+        // No return here; proceed to reserve(...) to answer prompts.
+    }
+
+    //  Perform reservation by answering server prompts in order
+    //    Returns the final message from the server
+    public String reserve(String source, String dest, String cls, int seat1to5, int day1to7) throws IOException {
 
         waitForPrompt("Source city:");
         sendLine(source);
@@ -59,7 +68,7 @@ public class Client {
         sendLine(dest);
 
         waitForPrompt("class:");
-        sendLine(cls);
+        sendLine(cls); // "First" or "Economy"
 
         waitForPrompt("Seat Number");
         sendLine(String.valueOf(seat1to5));
@@ -67,16 +76,16 @@ public class Client {
         waitForPrompt("day:");
         sendLine(String.valueOf(day1to7));
 
-        String result = readLine();
+        String result = readLine(); // "Reservation confirmed!" or "Seat Already Taken :("
         return (result == null) ? "Server closed connection." : result;
     }
 
-    // 9- Disconnect from the server
+    // 8- Disconnect
     public void disconnect() throws IOException {
         if (socket != null) socket.close();
     }
 }
-   
+ 
     
    
 
