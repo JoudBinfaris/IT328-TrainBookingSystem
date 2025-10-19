@@ -111,14 +111,14 @@ class ClientHandler implements Runnable {
 
     System.out.println("Total users: " + users.size());
                 } else {
-                    while (true) {
+                    //while (true) {
                         for (User u : users) {
                             if (u.getInfo().equals(info)) {
                                 break;
                             }
 
                         }
-                    }
+                    //}
                 }
 
                 out.println("Source city:");

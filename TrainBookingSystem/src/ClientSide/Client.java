@@ -19,7 +19,7 @@ public class Client {
     }
 
     private void sendLine(String s) {
-        out.println(s);
+        out.print(s);
         System.out.println(">> " + s); // sent to server 
     }
 
@@ -45,6 +45,7 @@ public class Client {
     // Send SIGNUP (first screen in GUI)
     //    Server will immediately start prompting for reservation fields.
     public void signup(String user, String pass) throws IOException {
+        System.out.println("Sighn up"+ user + pass);
         sendLine("SIGNUP " + user + " " + pass);
         // No return here; proceed to reserve(...) to answer prompts.
     }
