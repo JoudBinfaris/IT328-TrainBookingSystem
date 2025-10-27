@@ -14,12 +14,12 @@ public class Client {
     // Connect to the server
     public void connect(String host, int port) throws IOException {
         socket = new Socket(host, port);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out = new PrintWriter(socket.getOutputStream(), true);
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+        out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
     }
 
     private void sendLine(String s) {
-        out.print(s);
+        out.println(s);
         System.out.println(">> " + s); // sent to server 
     }
 
@@ -60,7 +60,7 @@ public class Client {
 
     //  Perform reservation by answering server prompts in order
     //    Returns the final message from the server
-    public String reserve(String source, String dest, String cls, int seat1to5, int day1to7) throws IOException {
+    public String reserve(String source, String dest, String cls, String seat1to5, String day1to7) throws IOException {
 
         waitForPrompt("Source city:");
         sendLine(source);
