@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Arrays;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -142,69 +144,41 @@ class ClientHandler implements Runnable {
                 out.println("class:");
                 String c = in.readLine();
 
-                out.println("Seat Number (1-5):");
-                int sn = Integer.parseInt(in.readLine()) - 1;
+                
+               
+               
 
-                out.println("day:");
-                int d = Integer.parseInt(in.readLine()) - 1;
+// ... بعد تحديد tn وقراءة c (الـclass) ...
 
-                boolean success;
-                switch (tn) {
-                    case "1111":
-                        success = t1.reserveSeat(c, sn, d, info);
-                        if (success) {
-                            Reservation r = new Reservation(info, tn, c, sn, d);
-                            reservations.add(r);
-                            
-System.out.println("Total reservations: " + reservations.size());
-                            out.println("Reservation confirmed!");
-                        } else {
-                            out.println("Seat Already Taken :(");
-                        }
+Train t = switch (tn) {
+    case "1111" -> t1;
+    case "2222" -> t2;
+    case "3333" -> t3;
+    case "4444" -> t4;
+    case "5555" -> t5;
+    default -> null;
+};
 
-                        break;
-                    case "2222":
-                        success = t2.reserveSeat(c, sn, d, info);
-                        if (success) {
-                            Reservation r = new Reservation(info, tn, c, sn, d);
-                            reservations.add(r);
-                            out.println("Reservation confirmed!");
-                        } else {
-                            out.println("Seat Already Taken :(");
-                        }
-                        break;
-                    case "3333":
-                        success = t3.reserveSeat(c, sn, d, info);
-                        if (success) {
-                            Reservation r = new Reservation(info, tn, c, sn, d);
-                            reservations.add(r);
-                            out.println("Reservation confirmed!");
-                        } else {
-                            out.println("Seat Already Taken :(");
-                        }
-                        break;
-                    case "4444":
-                        success = t4.reserveSeat(c, sn, d, info);
-                        if (success) {
-                            Reservation r = new Reservation(info, tn, c, sn, d);
-                            reservations.add(r);
-                            out.println("Reservation confirmed!");
-                        } else {
-                            out.println("Seat Already Taken :(");
-                        }
-                        break;
-                    case "5555":
-                        success = t5.reserveSeat(c, sn, d, info);
-                        if (success) {
-                            Reservation r = new Reservation(info, tn, c, sn, d);
-                            reservations.add(r);
-                            out.println("Reservation confirmed!");
-                        } else {
-                            out.println("Seat Already Taken :(");
-                        }
-                        break;
+if (t == null) { out.println("No train on this route"); continue; }
 
-                }
+// 1) أرسل التوفّر لكل يوم: صيغة بسيطة 7 أرقام
+int[] counts = t.countAvailablePerDay(c);
+out.println("AVAIL:" + Arrays.toString(counts)); // مثال: AVAIL:[3, 1, 0, 5, 2, 0, 4]
+
+// 2) الآن اطلب اليوم
+out.println("day:");
+int d1 = Integer.parseInt(in.readLine()) - 1;
+
+// 3) احجز أول مقعد متاح تلقائيًا في هذا اليوم
+int seatIdx = t.reserveNextAvailable(c, d1, info);
+if (seatIdx >= 0) {
+    Reservation r = new Reservation(info, tn, c, seatIdx, d1);
+    reservations.add(r);
+    out.println("Reservation confirmed! seat=" + (seatIdx + 1));
+} else {
+    out.println("No seats available on this day");
+}
+
 
             }
         } catch (IOException e) {

@@ -18,12 +18,12 @@ public class Client {
         out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
     }
 
-    private void sendLine(String s) {
+    public void sendLine(String s) {
         out.println(s);
         System.out.println(">> " + s); // sent to server 
     }
 
-    private String readLine() throws IOException {
+    public String readLine() throws IOException {
         String line = in.readLine();
         System.out.println("<< " + line); // received from server 
         return line;
@@ -32,7 +32,7 @@ public class Client {
     //  Wait until the server sends a specific prompt
     //  Read line by line until prefix is found
     //  Return the line if matched, or null if server closes
-    private String waitForPrompt(String prefix) throws IOException {
+    public String waitForPrompt(String prefix) throws IOException {
         String line;
         while ((line = readLine()) != null) {
             if (line.startsWith(prefix)) {
@@ -57,6 +57,8 @@ public class Client {
         sendLine("LOGIN " + user + " " + pass);
         // No return here; proceed to reserve(...) to answer prompts.
     }
+ //********************************888
+    
 
     //  Perform reservation by answering server prompts in order
     //    Returns the final message from the server
@@ -71,8 +73,11 @@ public class Client {
         waitForPrompt("class:");
         sendLine(cls); // "First" or "Economy"
 
-        waitForPrompt("Seat Number");
-        sendLine(String.valueOf(seat1to5));
+        String availLine = waitForPrompt("AVAIL:");
+        System.out.println("Avalibility from server: " + availLine);
+
+        //waitForPrompt("Seat Number");
+        //sendLine(String.valueOf(seat1to5));
 
         waitForPrompt("day:");
         sendLine(String.valueOf(day1to7));
@@ -80,12 +85,57 @@ public class Client {
         String result = readLine(); // "Reservation confirmed!" or "Seat Already Taken :("
         return (result == null) ? "Server closed connection." : result;
     }
+    //*************************************
+    public String queryAvailability(String source, String dest, String cls) throws IOException{
+        waitForPrompt("Sourse city:");
+        sendLine(source);
+        waitForPrompt("Destination city:");
+        sendLine(dest);
+        waitForPrompt("Class:");
+        sendLine(cls);
+        
+        return waitForPrompt("AVAIL:");
+    }
+    // يرجّع مصفوفة 7 عناصر تمثل التوفّر لكل يوم
+public int[] requestAvailability(String source, String dest, String cls) throws IOException {
+    waitForPrompt("Source city:");
+    sendLine(source);
+
+    waitForPrompt("Destination city:");
+    sendLine(dest);
+
+    waitForPrompt("class:");
+    sendLine(cls);
+
+    String line = waitForPrompt("AVAIL:"); // مثال: AVAIL:[3, 1, 0, 5, 2, 0, 4]
+    return parseAvail(line);
+}
+
+// يرسل اليوم المختار ويستقبل رسالة النتيجة من السيرفر
+public String bookOnDay(int day1to7) throws IOException {
+    waitForPrompt("day:");
+    sendLine(String.valueOf(day1to7));
+    String result = readLine();
+    return (result == null) ? "Server closed connection." : result;
+}
+
+// مساعد داخلي لتحويل "AVAIL:[...]" إلى int[]
+private int[] parseAvail(String availLine) {
+    int l = availLine.indexOf('['), r = availLine.indexOf(']');
+    if (l == -1 || r == -1 || r <= l) return new int[0];
+    String[] parts = availLine.substring(l+1, r).split(",");
+    int[] out = new int[Math.min(7, parts.length)];
+    for (int i = 0; i < out.length; i++) out[i] = Integer.parseInt(parts[i].trim());
+    return out;
+}
+}
+/*********************************************
 
     // 8- Disconnect
     public void disconnect() throws IOException {
         if (socket != null) socket.close();
     }
-}
+}A*/
  
     
    

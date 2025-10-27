@@ -62,6 +62,71 @@ public void cancelSeat(String classType, int seatindex, int dayindex)
     list[dayindex][seatindex].cancel();
 }
 }
+
+//Sarahs edits: *****************************
+// How many avaliable seat we have?
+public synchronized int countAvailable(String classType, int dayIndex) {
+    Seat[][] list = classType.equalsIgnoreCase("First") ? firstclassSeatbyday : economyclassSeatbyday;
+    int c = 0;
+    for (int i = 0; i < 5; i++) if (list[dayIndex][i].IsAvailable()) c++;
+    return c;
+}
+
+// مصفوفة 7 عناصر: المتاح لكل يوم
+public synchronized int[] countAvailablePerDay(String classType) {
+    int[] res = new int[7];
+    for (int d = 0; d < 7; d++) res[d] = countAvailable(classType, d);
+    return res;
+}
+
+// حجز N مقاعد لأي يوم (يرجّع true لو تم، false لو ما يكفي)
+public synchronized boolean reserveSeats(String classType, int count, int dayIndex, String username) {
+    if (count <= 0) return false;
+    Seat[][] list = classType.equalsIgnoreCase("First") ? firstclassSeatbyday : economyclassSeatbyday;
+
+    // احسب المتاح
+    int free = 0;
+    for (int i = 0; i < 5; i++) if (list[dayIndex][i].IsAvailable()) free++;
+    if (free < count) return false;
+
+    // احجز أول count مقاعد متاحة
+    int taken = 0;
+    for (int i = 0; i < 5 && taken < count; i++) {
+        if (list[dayIndex][i].IsAvailable()) {
+            list[dayIndex][i].reserve(username);
+            taken++;
+        }
+    }
+    return true;
+}
+// Train.java
+public int firstAvailableIndex(String classType, int dayIndex) {
+    Seat[][] list = classType.equalsIgnoreCase("First") ? firstclassSeatbyday : economyclassSeatbyday;
+    if (dayIndex < 0 || dayIndex >= 7) return -1;
+    for (int i = 0; i < 5; i++) if (list[dayIndex][i].IsAvailable()) return i;
+    return -1;
+}
+
+public int reserveNextAvailable(String classType, int dayIndex, String username) {
+    Seat[][] list = classType.equalsIgnoreCase("First") ? firstclassSeatbyday : economyclassSeatbyday;
+    int idx = firstAvailableIndex(classType, dayIndex);
+    if (idx == -1) return -1;
+    list[dayIndex][idx].reserve(username);
+    return idx; // ارجعي seat index الفعلي المحجوز
+}
+
+public int[] availabilityPerDay(String classType) {
+    Seat[][] list = classType.equalsIgnoreCase("First") ? firstclassSeatbyday : economyclassSeatbyday;
+    int[] counts = new int[7];
+    for (int d = 0; d < 7; d++) {
+        int c = 0;
+        for (int s = 0; s < 5; s++) if (list[d][s].IsAvailable()) c++;
+        counts[d] = c; // عدد المقاعد الفاضية في هذا اليوم
+    }
+    return counts;
+}
+
+//*************************************************88
 public String getSchedule()
 {
     return String.format("Train ID: %s, From: %s, To: %s",trainID, source,destination);
@@ -78,6 +143,5 @@ public String getSchedule()
     public String getDestination() {
         return destination;
     }
-
 
 } 

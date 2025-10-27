@@ -3,13 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package ClientSide;
-
+import java.io.IOException;
+import javax.swing.*;
+import java.awt.event.*;
 /**
  *
  * @author sarah
  */
-public class Avaliability extends javax.swing.JPanel {
-
+public class Avaliability extends javax.swing.JFrame {
+   private Client client;
+   private String source, dest, cls;
+   
+     public Avaliability( Client client, String source, String dest, String cls ){
+         initComponents();
+         this.client=client;
+         this.source=source;
+         this.dest=dest;
+         this.cls=cls;
+         setLocationRelativeTo(null);
+         
+     }
+     
+ 
     /**
      * Creates new form makeReservation
      */
@@ -27,34 +42,39 @@ public class Avaliability extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnShow = new javax.swing.JButton();
+        cmbDay = new javax.swing.JComboBox<>();
+        btnBook = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("Select date show avalible time:");
+        jLabel1.setText("Select day show avalible time:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jButton1.setText("Show available time");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnShow.setText("Show available ");
+        btnShow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnShowActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Select time:");
+        cmbDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jButton2.setLabel("Book");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnBook.setLabel("Book");
+        btnBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnBookActionPerformed(evt);
             }
         });
+
+        btnBack.setText("back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Select trip:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -62,56 +82,118 @@ public class Avaliability extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(88, 88, 88)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addComponent(jButton2)))))
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addGap(50, 50, 50)
+                            .addComponent(cmbDay, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(btnBack)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnBook)
+                                    .addGap(63, 63, 63))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(btnShow)
+                                    .addGap(99, 99, 99)))))
+                    .addComponent(jLabel1))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(58, 58, 58)
                 .addComponent(jLabel1)
-                .addGap(39, 39, 39)
+                .addGap(18, 18, 18)
+                .addComponent(btnShow)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(31, 31, 31)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(cmbDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addContainerGap(72, Short.MAX_VALUE))
+                    .addComponent(btnBook)
+                    .addComponent(btnBack))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
+        loadAvailability();
+    }//GEN-LAST:event_btnShowActionPerformed
+    private void loadAvailability() {
+    try {
+        // اطلب التوفّر من السيرفر (لازم يكون عندك في Client دالة ترجع "AVAIL:[...]")
+        // إذا ما سويتيها، استخدمي reserve(...) مؤقتًا لقراءة AVAIL (موفّرة لك تحت)
+        String availLine = client.requestAvailability(source, dest, cls); 
+        // مثال: "AVAIL:[3, 1, 0, 5, 2, 0, 4]"
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        int[] avail = parseAvail(availLine); // شوفي البارس تحت
+
+        javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+        for (int i = 0; i < avail.length; i++) {
+            if (avail[i] > 0) {
+                model.addElement("Day " + (i + 1) + " — " + avail[i] + " seats");
+            }
+        }
+        cmbDay.setModel(model);
+
+        if (model.getSize() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
+        }
+    } catch (IOException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error loading availability: " + ex.getMessage());
+    }
+}
+
+private int[] parseAvail(String line) {
+    // يتوقع صيغة AVAIL:[a, b, c, ...]
+    int l = line.indexOf('['), r = line.indexOf(']');
+    String inside = (l >= 0 && r > l) ? line.substring(l + 1, r) : "";
+    String[] parts = inside.split(",");
+    int[] out = new int[7];
+    for (int i = 0; i < Math.min(7, parts.length); i++) {
+        out[i] = Integer.parseInt(parts[i].trim());
+    }
+    return out;
+}
+
+    private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
+        int sel = cmbDay.getSelectedIndex();
+    if (sel < 0) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please select a day/trip first.");
+        return;
+    }
+    int dayIndex1to7 = sel + 1;
+
+    try {
+        // نستخدم دالتك الحالية reserve(...) لأنها ترسل: Source, Dest, Class, ثم تقرأ AVAIL, ثم ترسل day
+        // قيمة "seat" ما تُستخدم بالسيرفر الآن، فأرسلي أي قيمة مثل "1"
+        String result = client.reserve(source, dest, cls, "1", String.valueOf(dayIndex1to7));
+        javax.swing.JOptionPane.showMessageDialog(this, result);
+        if (result.toLowerCase().contains("confirmed")) {
+            dispose(); // سكري الفريم بعد نجاح الحجز
+        }
+    } catch (IOException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Booking error: " + ex.getMessage());
+    }
+    
+    }//GEN-LAST:event_btnBookActionPerformed
+     
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        new SourceDestination(client).setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnBook;
+    private javax.swing.JButton btnShow;
+    private javax.swing.JComboBox<String> cmbDay;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
