@@ -28,7 +28,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Arrays;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -99,7 +98,7 @@ class ClientHandler implements Runnable {
 
             while (true) {
                 //java.awt.EventQueue.invokeLater(() -> new NetLab().setVisible(true));
-                
+
                 String allInfo = in.readLine();
 
                 int firstSpace = allInfo.indexOf(" ");
@@ -111,17 +110,18 @@ class ClientHandler implements Runnable {
                     User u1 = new User(info);
                     users.add(u1);
 
-    System.out.println("Total users: " + users.size());
-                } else {
-                    //while (true) {
-                        for (User u : users) {
-                            if (u.getInfo().equals(info)) {
-                                break;
-                            }
-
-                        }
-                    //}
+                    System.out.println("Total users: " + users.size());
                 }
+//else {
+//                    //while (true) {
+//                        for (User u : users) {
+//                            if (u.getInfo().equals(info)) {
+//                                break;
+//                            }
+//
+//                        }
+//                    //}
+//                }
 
                 out.println("Source city:");
                 String sc = in.readLine();
@@ -143,56 +143,76 @@ class ClientHandler implements Runnable {
 
                 out.println("class:");
                 String c = in.readLine();
-
-                
-               
-               
+                int d = Integer.parseInt(in.readLine());
 
 // ... بعد تحديد tn وقراءة c (الـclass) ...
+                Train t = switch (tn) {
+                    case "1111" ->
+                        t1;
+                    case "2222" ->
+                        t2;
+                    case "3333" ->
+                        t3;
+                    case "4444" ->
+                        t4;
+                    case "5555" ->
+                        t5;
+                    default ->
+                        null;
+                };
 
-Train t = switch (tn) {
-    case "1111" -> t1;
-    case "2222" -> t2;
-    case "3333" -> t3;
-    case "4444" -> t4;
-    case "5555" -> t5;
-    default -> null;
-};
+                if (t == null) {
+                    out.println("No train on this route");
+                    continue;
+                }
 
-if (t == null) { out.println("No train on this route"); continue; }
+                //get availability    
+                Seat[] open=t.getAvailableSeats(c, d);
+                
+                if(open.length==0)
+                out.println("No seats available on this day");
 
-// 1) أرسل التوفّر لكل يوم: صيغة بسيطة 7 أرقام
-int[] counts = t.countAvailablePerDay(c);
-out.println("AVAIL:" + Arrays.toString(counts)); // مثال: AVAIL:[3, 1, 0, 5, 2, 0, 4]
-
-// 2) الآن اطلب اليوم
-out.println("day:");
-int d1 = Integer.parseInt(in.readLine()) - 1;
-
-// 3) احجز أول مقعد متاح تلقائيًا في هذا اليوم
-int seatIdx = t.reserveNextAvailable(c, d1, info);
-if (seatIdx >= 0) {
-    Reservation r = new Reservation(info, tn, c, seatIdx, d1);
-    reservations.add(r);
-    out.println("Reservation confirmed! seat=" + (seatIdx + 1));
-} else {
-    out.println("No seats available on this day");
+            
+        
+    
+    //// 1) أرسل التوفّر لكل يوم: صيغة بسيطة 7 أرقام
+//int[] counts = t.countAvailablePerDay(c);
+//out.println("AVAIL:" + Arrays.toString(counts)); // مثال: AVAIL:[3, 1, 0, 5, 2, 0, 4]
+//
+//// 2) الآن اطلب اليوم
+//out.println("day:");
+//int d1 = Integer.parseInt(in.readLine()) - 1;
+//
+//// 3) احجز أول مقعد متاح تلقائيًا في هذا اليوم
+//int seatIdx = t.reserveNextAvailable(c, d1, info);
+//if (seatIdx >= 0) {
+//    Reservation r = new Reservation(info, tn, c, seatIdx, d1);
+//    reservations.add(r);
+//    out.println("Reservation confirmed! seat=" + (seatIdx + 1));
+//} else {
+//    out.println("No seats available on this day");
 }
 
 
             }
-        } catch (IOException e) {
+        } catch (IOException e
+
+    
+        ) {
             System.err.println("IO exception in new client class");
-            System.err.println(e.getStackTrace());
-        } finally {
+        System.err.println(e.getStackTrace());
+    }
+
+    
+        finally {
             out.close();
-            clients.remove(this);
-            try {
-                in.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+        clients.remove(this);
+        try {
+            in.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
+}
 
 }

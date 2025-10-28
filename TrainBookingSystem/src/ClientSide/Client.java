@@ -45,7 +45,7 @@ public class Client {
     // Send SIGNUP (first screen in GUI)
     //    Server will immediately start prompting for reservation fields.
     public void signup(String user, String pass) throws IOException {
-        System.out.println("Sighn up"+ user + pass);
+        System.out.println("Sign up"+ user + pass);
         sendLine("SIGNUP " + user + " " + pass);
         // No return here; proceed to reserve(...) to answer prompts.
     }

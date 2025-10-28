@@ -127,7 +127,8 @@ private String source, dest, cls;
     private void loadAvailability() {
     try {
         // اطلب البيانات من السيرفر (المصفوفة فيها عدد المقاعد المتاحة لكل يوم)
-        int[] avail = client.requestAvailability(source, dest, cls);
+//        int[] avail = client.requestAvailability(source, dest, cls);
+         int[] avail = client.requestAvailability(source, dest, cls);
 
         // أنشئ موديل جديد للكومبوبوكس
         javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();

@@ -33,7 +33,7 @@ public class SourceDestination extends javax.swing.JFrame {
     
     private void fillCombos() {
     source.setModel(new javax.swing.DefaultComboBoxModel<>(
-        new String[]{"Riyadh","Jeddah","Dammam","Alula"}));
+        new String[]{"Riyadh","Jeddah","Dammam"/*,"Alula"*/}));
     Destination.setModel(new javax.swing.DefaultComboBoxModel<>(
         new String[]{"Riyadh","Jeddah","Dammam","Alula"}));
     Class.setModel(new javax.swing.DefaultComboBoxModel<>(
@@ -158,6 +158,8 @@ public class SourceDestination extends javax.swing.JFrame {
         //String day = String.valueOf(Day.getSelectedItem());
 
         if(src.equals(des)){
+         //  JOptionPane.showMessageDialog(this, "source: "+source.getSelectedItem() +" Des : "+ Destination.getSelectedItem());
+
             JOptionPane.showMessageDialog(this, "Src =Des canot complete");
             return;
         }
