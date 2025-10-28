@@ -10,25 +10,25 @@ import java.awt.event.*;
  *
  * @author sarah
  */
-public class Avaliability extends javax.swing.JFrame {
+public class Availability extends javax.swing.JFrame {
    private Client client;
-   private String source, dest, cls;
-   
-     public Avaliability( Client client, String source, String dest, String cls ){
-         initComponents();
-         this.client=client;
-         this.source=source;
-         this.dest=dest;
-         this.cls=cls;
-         setLocationRelativeTo(null);
-         
-     }
+private String source, dest, cls;
+
+ public Availability(Client client, String source, String dest, String cls) {
+    this.client= client;
+    this.source= source;
+    this.dest= dest;
+    this.cls= cls;
+    initComponents(); 
+    setLocationRelativeTo(null);
+}
+
      
  
     /**
      * Creates new form makeReservation
      */
-    public Avaliability() {
+    public Availability() {
         initComponents();
     }
 
@@ -126,28 +126,33 @@ public class Avaliability extends javax.swing.JFrame {
     }//GEN-LAST:event_btnShowActionPerformed
     private void loadAvailability() {
     try {
-        // اطلب التوفّر من السيرفر (لازم يكون عندك في Client دالة ترجع "AVAIL:[...]")
-        // إذا ما سويتيها، استخدمي reserve(...) مؤقتًا لقراءة AVAIL (موفّرة لك تحت)
-        String availLine = client.requestAvailability(source, dest, cls); 
-        // مثال: "AVAIL:[3, 1, 0, 5, 2, 0, 4]"
+        // اطلب البيانات من السيرفر (المصفوفة فيها عدد المقاعد المتاحة لكل يوم)
+        int[] avail = client.requestAvailability(source, dest, cls);
 
-        int[] avail = parseAvail(availLine); // شوفي البارس تحت
-
+        // أنشئ موديل جديد للكومبوبوكس
         javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+
+        // أضف الأيام اللي فيها مقاعد متاحة
         for (int i = 0; i < avail.length; i++) {
             if (avail[i] > 0) {
                 model.addElement("Day " + (i + 1) + " — " + avail[i] + " seats");
             }
         }
+
+        // اربطي الموديل بالكومبوبوكس (بدّلي cmbDay باسم الكمبوبوكس عندك)
         cmbDay.setModel(model);
 
+        // لو ما فيه أي يوم متاح، طلّعي رسالة
         if (model.getSize() == 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
+            btnBook.setEnabled(false); // زر الحجز يتقفل (اختياري)
         }
+
     } catch (IOException ex) {
         javax.swing.JOptionPane.showMessageDialog(this, "Error loading availability: " + ex.getMessage());
     }
 }
+
 
 private int[] parseAvail(String line) {
     // يتوقع صيغة AVAIL:[a, b, c, ...]
