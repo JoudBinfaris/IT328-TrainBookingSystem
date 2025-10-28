@@ -168,9 +168,18 @@ class ClientHandler implements Runnable {
 
                 //get availability    
                 Seat[] open=t.getAvailableSeats(c, d);
-                
-                if(open.length==0)
+                int numOfSeats=open.length;
+                if(numOfSeats==0)
                 out.println("No seats available on this day");
+                else
+                {
+                    String seats="";
+                    for(Seat s:open)
+                   seats+=s.getSeatnumber()+" ";
+                    
+                    out.print(seats);
+                }
+                    
 
             
         

@@ -5,7 +5,7 @@
 package ClientSide;
 import java.io.*;
 import java.net.Socket;
-import ServerSide.Seat;
+
 
 public class Client {
     private Socket socket;
@@ -98,7 +98,7 @@ public class Client {
         return waitForPrompt("AVAIL:");
     }
     // يرجّع مصفوفة 7 عناصر تمثل التوفّر لكل يوم
-public Seat[] requestAvailability(String source, String dest, String cls) throws IOException {
+public String requestAvailability(String source, String dest, String cls) throws IOException {
     waitForPrompt("Source city:");
     sendLine(source);
 
@@ -110,7 +110,12 @@ public Seat[] requestAvailability(String source, String dest, String cls) throws
 
 //    String line = waitForPrompt("AVAIL:"); // مثال: AVAIL:[3, 1, 0, 5, 2, 0, 4]
 //    return parseAvail(line);
-      Seat [] seats=readline();
+
+      String avail=readLine();
+      
+      return avail;
+
+     
 
 
 
