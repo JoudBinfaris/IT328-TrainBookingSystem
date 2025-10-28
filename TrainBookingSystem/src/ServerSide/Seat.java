@@ -13,7 +13,9 @@ public class Seat{
     private boolean isAvailable;
     private String reservedBy;
     private String classType;
-    public Seat(String classType){
+    private int seatnumber;
+    public Seat(String classType, int seatnumber){
+        this.seatnumber=seatnumber;
         this.classType=classType;
         this.isAvailable=true;
         this.reservedBy=null;
@@ -51,6 +53,10 @@ public class Seat{
 
     public String getClassType() {
         return classType;
+    }
+
+    public int getSeatnumber() {
+        return seatnumber;
     }
   
 }

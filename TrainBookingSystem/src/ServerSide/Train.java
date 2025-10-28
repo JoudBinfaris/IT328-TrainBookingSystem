@@ -26,8 +26,8 @@ public Train (String trainID, String source,String destination){
     for(int day=0; day<7; day++){
         for(int seat=0; seat<4; seat++)
         {
-            this.firstclassSeatbyday[day][seat]=new Seat("First");
-            this.economyclassSeatbyday[day][seat]=new Seat("Economy");
+            this.firstclassSeatbyday[day][seat]=new Seat("First",seat+1);
+            this.economyclassSeatbyday[day][seat]=new Seat("Economy",seat+1);
             
         }}
 }
