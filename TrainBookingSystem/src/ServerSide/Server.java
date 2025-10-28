@@ -191,7 +191,7 @@ class ClientHandler implements Runnable {
 //    out.println("Reservation confirmed! seat=" + (seatIdx + 1));
 //} else {
 //    out.println("No seats available on this day");
-}
+//}
 
 
             }
