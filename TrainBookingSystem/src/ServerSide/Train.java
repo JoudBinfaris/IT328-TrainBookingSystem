@@ -21,10 +21,10 @@ public Train (String trainID, String source,String destination){
     this.trainID=trainID;
     this.source=source;
     this.destination=destination;
-    this.firstclassSeatbyday=new Seat[7][5];
-    this.economyclassSeatbyday=new Seat[7][5];// it will put each all seats for each day
+    this.firstclassSeatbyday=new Seat[7][4];
+    this.economyclassSeatbyday=new Seat[7][4];// it will put each all seats for each day
     for(int day=0; day<7; day++){
-        for(int seat=0; seat<5; seat++)
+        for(int seat=0; seat<4; seat++)
         {
             this.firstclassSeatbyday[day][seat]=new Seat("First");
             this.economyclassSeatbyday[day][seat]=new Seat("Economy");
@@ -49,7 +49,7 @@ return available;
 
 public boolean reserveSeat( String classType, int seatindex,int dayindex,String username){
     Seat[][] list=classType.equalsIgnoreCase("First")? this.firstclassSeatbyday: this.economyclassSeatbyday;
-if(dayindex >= 0&& dayindex<7&& seatindex>=0&&seatindex<5){
+if(dayindex >= 0&& dayindex<7&& seatindex>=0&&seatindex<4){
     return list[dayindex][seatindex].reserve(username);
 }
 return false;
@@ -57,7 +57,7 @@ return false;
 public void cancelSeat(String classType, int seatindex, int dayindex)
 {
     Seat[][] list=classType.equalsIgnoreCase("First")? this.firstclassSeatbyday: this.economyclassSeatbyday;
-  if(dayindex >= 0&& dayindex<7&& seatindex>=0&&seatindex<5)
+  if(dayindex >= 0&& dayindex<7&& seatindex>=0&&seatindex<4)
     {
     list[dayindex][seatindex].cancel();
 }
