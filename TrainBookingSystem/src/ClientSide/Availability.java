@@ -6,6 +6,7 @@ package ClientSide;
 import java.io.IOException;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 /**
  *
  * @author sarah
@@ -128,17 +129,26 @@ private String source, dest, cls;
     try {
         // اطلب البيانات من السيرفر (المصفوفة فيها عدد المقاعد المتاحة لكل يوم)
 //        int[] avail = client.requestAvailability(source, dest, cls);
-         int[] avail = client.requestAvailability(source, dest, cls);
+         ArrayList<Integer> seats= client.requestAvailability();
 
         // أنشئ موديل جديد للكومبوبوكس
         javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
 
         // أضف الأيام اللي فيها مقاعد متاحة
-        for (int i = 0; i < avail.length; i++) {
-            if (avail[i] > 0) {
-                model.addElement("Day " + (i + 1) + " — " + avail[i] + " seats");
+//        for (int i = 0; i < avail.length; i++) {
+//            if (avail[i] > 0) {
+//                model.addElement("Day " + (i + 1) + " — " + avail[i] + " seats");
+//            }
+//        }
+
+   for (int s:seats) {
+            if (s > 0) {
+                model.addElement("Seat Number "+s);
             }
         }
+
+           
+
 
         // اربطي الموديل بالكومبوبوكس (بدّلي cmbDay باسم الكمبوبوكس عندك)
         cmbDay.setModel(model);

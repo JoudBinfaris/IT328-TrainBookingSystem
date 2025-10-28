@@ -173,11 +173,11 @@ class ClientHandler implements Runnable {
                 out.println("No seats available on this day");
                 else
                 {
-                    String seats="";
-                    for(Seat s:open)
-                   seats+=s.getSeatnumber()+" ";
                     
-                    out.print(seats);
+                    
+                    for(Seat s:open)
+                        out.print(s.getSeatnumber());
+                   
                 }
                     
 
