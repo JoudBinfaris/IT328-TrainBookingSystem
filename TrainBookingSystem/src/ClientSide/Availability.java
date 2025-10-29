@@ -21,6 +21,7 @@ private String source, dest, cls;
     this.dest= dest;
     this.cls= cls;
     initComponents(); 
+    this.setSize(500, 500); 
     setLocationRelativeTo(null);
 }
 
@@ -59,7 +60,12 @@ private String source, dest, cls;
             }
         });
 
-        cmbDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbDay.setModel(new javax.swing.DefaultComboBoxModel<>());
+        cmbDay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbDayActionPerformed(evt);
+            }
+        });
 
         btnBook.setLabel("Book");
         btnBook.addActionListener(new java.awt.event.ActionListener() {
@@ -77,8 +83,8 @@ private String source, dest, cls;
 
         jLabel2.setText("Select trip:");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -125,38 +131,28 @@ private String source, dest, cls;
     private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
         loadAvailability();
     }//GEN-LAST:event_btnShowActionPerformed
+    
     private void loadAvailability() {
     try {
-        // اطلب البيانات من السيرفر (المصفوفة فيها عدد المقاعد المتاحة لكل يوم)
-//        int[] avail = client.requestAvailability(source, dest, cls);
-         ArrayList<Integer> seats= client.requestAvailability();
+        ArrayList<Integer> seats = client.requestAvailability();
 
-        // أنشئ موديل جديد للكومبوبوكس
+        // هذا هو السطر اللي كنتِ تسألين عنه
         javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
 
-        // أضف الأيام اللي فيها مقاعد متاحة
-//        for (int i = 0; i < avail.length; i++) {
-//            if (avail[i] > 0) {
-//                model.addElement("Day " + (i + 1) + " — " + avail[i] + " seats");
-//            }
-//        }
-
-   for (int s:seats) {
+        // أضفنا النصوص اللي تمثل المقاعد
+        for (int s : seats) {
             if (s > 0) {
-                model.addElement("Seat Number "+s);
+                model.addElement("Seat Number " + s);
             }
         }
 
-           
-
-
-        // اربطي الموديل بالكومبوبوكس (بدّلي cmbDay باسم الكمبوبوكس عندك)
         cmbDay.setModel(model);
 
-        // لو ما فيه أي يوم متاح، طلّعي رسالة
-        if (model.getSize() == 0) {
+        boolean hasAny = model.getSize() > 0;
+        btnBook.setEnabled(hasAny);
+
+        if (!hasAny) {
             javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
-            btnBook.setEnabled(false); // زر الحجز يتقفل (اختياري)
         }
 
     } catch (IOException ex) {
@@ -165,17 +161,6 @@ private String source, dest, cls;
 }
 
 
-private int[] parseAvail(String line) {
-    // يتوقع صيغة AVAIL:[a, b, c, ...]
-    int l = line.indexOf('['), r = line.indexOf(']');
-    String inside = (l >= 0 && r > l) ? line.substring(l + 1, r) : "";
-    String[] parts = inside.split(",");
-    int[] out = new int[7];
-    for (int i = 0; i < Math.min(7, parts.length); i++) {
-        out[i] = Integer.parseInt(parts[i].trim());
-    }
-    return out;
-}
 
     private void btnBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookActionPerformed
         int sel = cmbDay.getSelectedIndex();
@@ -201,8 +186,12 @@ private int[] parseAvail(String line) {
      
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         new SourceDestination(client).setVisible(true);
-    this.dispose();
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void cmbDayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbDayActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
