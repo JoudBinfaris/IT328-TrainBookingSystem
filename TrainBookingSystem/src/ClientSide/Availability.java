@@ -129,15 +129,21 @@ private String source, dest, cls;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowActionPerformed
+               System.out.println("in  btnShowActionPerformed");
+
         loadAvailability();
+        
     }//GEN-LAST:event_btnShowActionPerformed
     
     private void loadAvailability() {
     try {
         ArrayList<Integer> seats = client.requestAvailability();
+                       System.out.println("in  loadAvailability");
+
 
         // هذا هو السطر اللي كنتِ تسألين عنه
         javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+        System.out.println("passed ");
 
         // أضفنا النصوص اللي تمثل المقاعد
         for (int s : seats) {

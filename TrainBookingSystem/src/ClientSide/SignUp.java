@@ -147,13 +147,15 @@ public class SignUp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Please fill the blanks");
                 return;
         }
-        try{
-            client.signup(username, passward_);
+//        try{
+//            client.signup(username, passward_);
+            client.sendLine("SIGNUP");
+            client.sendLine(username+" "+passward_);
             new SourceDestination(client).setVisible(true);
             dispose();
-        }catch( IOException ex){
-            JOptionPane.showMessageDialog(this, "Sign up failed: " + ex.getMessage());
-        }
+//        }catch( IOException ex){
+//            JOptionPane.showMessageDialog(this, "Sign up failed: " + ex.getMessage());
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void passwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwardActionPerformed

@@ -3,17 +3,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ClientSide;
+
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
-//import java.swing.JOptionPane;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
+import java.net.Socket;
+import java.net.ServerSocket;
+
+//import java.swing.JOptionPane;
 /**
  *
  * @author sarah
  */
 public class SourceDestination extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SourceDestination.class.getName());
     private Client client;
 
@@ -26,23 +34,24 @@ public class SourceDestination extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         fillCombos();//To fill the combo box
     }
-    public SourceDestination(Client client){
+
+    public SourceDestination(Client client) {
         this();
         this.client = client;
     }
-    
+
     private void fillCombos() {
-    source.setModel(new javax.swing.DefaultComboBoxModel<>(
-        new String[]{"Riyadh","Jeddah","Dammam"/*,"Alula"*/}));
-    Destination.setModel(new javax.swing.DefaultComboBoxModel<>(
-        new String[]{"Riyadh","Jeddah","Dammam","Alula"}));
-    Class.setModel(new javax.swing.DefaultComboBoxModel<>(
-        new String[]{"First","Economy"}));
-    //String[] seats = {"1", "2", "3", "4", "5"};
-      //Seat.setModel(new javax.swing.DefaultComboBoxModel<>(seats));
-    //String[] days = {"1", "2", "3", "4", "5", "6", "7"};
-      //Day.setModel(new javax.swing.DefaultComboBoxModel<>(days));
-}
+        source.setModel(new javax.swing.DefaultComboBoxModel<>(
+                new String[]{"Riyadh", "Jeddah", "Dammam"/*,"Alula"*/}));
+        Destination.setModel(new javax.swing.DefaultComboBoxModel<>(
+                new String[]{"Riyadh", "Jeddah", "Dammam", "Alula"}));
+        Class.setModel(new javax.swing.DefaultComboBoxModel<>(
+                new String[]{"First", "Economy"}));
+        //String[] seats = {"1", "2", "3", "4", "5"};
+        //Seat.setModel(new javax.swing.DefaultComboBoxModel<>(seats));
+        //String[] days = {"1", "2", "3", "4", "5", "6", "7"};
+        //Day.setModel(new javax.swing.DefaultComboBoxModel<>(days));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -151,14 +160,20 @@ public class SourceDestination extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+
         String src = String.valueOf(source.getSelectedItem());
+         client.sendLine(src);
         String des = String.valueOf(Destination.getSelectedItem());
+         client.sendLine(des);
+
         String cls = String.valueOf(Class.getSelectedItem());
+        client.sendLine(cls);
         //String sat = String.valueOf(Seat.getSelectedItem());
         //String day = String.valueOf(Day.getSelectedItem());
 
-        if(src.equals(des)){
-         //  JOptionPane.showMessageDialog(this, "source: "+source.getSelectedItem() +" Des : "+ Destination.getSelectedItem());
+        if (src.equals(des)) {
+            //  JOptionPane.showMessageDialog(this, "source: "+source.getSelectedItem() +" Des : "+ Destination.getSelectedItem());
 
             JOptionPane.showMessageDialog(this, "Src =Des canot complete");
             return;
@@ -177,7 +192,7 @@ public class SourceDestination extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void DestinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DestinationActionPerformed
-        
+
     }//GEN-LAST:event_DestinationActionPerformed
 
     /**

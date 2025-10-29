@@ -99,15 +99,20 @@ class ClientHandler implements Runnable {
             while (true) {
                 //java.awt.EventQueue.invokeLater(() -> new NetLab().setVisible(true));
 
-                String allInfo = in.readLine();
+                String option = in.readLine();
+                String userinfo = in.readLine();
+                System.out.println(option+" " + userinfo);
 
-                int firstSpace = allInfo.indexOf(" ");
-
-                String option = allInfo.substring(0, firstSpace);   // SIGNUP or LOGIN
-                String info = allInfo.substring(firstSpace + 1);  //username password
+                                
+//                System.out.println(allInfo);
+//
+//                int firstSpace = allInfo.indexOf(" ");
+//
+//                String option = allInfo.substring(0, firstSpace);   // SIGNUP or LOGIN
+//                String info = allInfo.substring(firstSpace + 1);  //username password
 
                 if (option.equals("SIGNUP")) {
-                    User u1 = new User(info);
+                    User u1 = new User(userinfo);
                     users.add(u1);
 
                     System.out.println("Total users: " + users.size());
@@ -123,10 +128,12 @@ class ClientHandler implements Runnable {
 //                    //}
 //                }
 
-                out.println("Source city:");
+                //Source city:
                 String sc = in.readLine();
-                out.println("Destination city:");
+                //Destination city:
                 String dc = in.readLine();
+                System.out.println(sc +" "+dc);
+
 
                 String tn = "Nan";
                 if (sc.equals("Riyadh") && dc.equals("Jeddah")) {
@@ -141,9 +148,10 @@ class ClientHandler implements Runnable {
                     tn = "5555";
                 }
 
-                out.println("class:");
+                System.out.println("class:");
                 String c = in.readLine();
-                int d = Integer.parseInt(in.readLine());
+                System.out.println(c);
+                int d =1 /*Integer.parseInt(in.readLine())*/;
 
 // ... بعد تحديد tn وقراءة c (الـclass) ...
                 Train t = switch (tn) {
@@ -162,7 +170,7 @@ class ClientHandler implements Runnable {
                 };
 
                 if (t == null) {
-                    out.println("No train on this route");
+                    System.out.println("No train on this route");
                     continue;
                 }
 
@@ -170,15 +178,16 @@ class ClientHandler implements Runnable {
                 Seat[] open=t.getAvailableSeats(c, d);
                 int numOfSeats=open.length;
                 if(numOfSeats==0)
-                out.println("No seats available on this day");
+                System.out.println("No seats available on this day");
                 else
                 {
                     
                     
                     for(Seat s:open)
-                        out.print(s.getSeatnumber());
+                        out.println(s.getSeatnumber());
                    
                 }
+                out.println("END");
                     
 
             

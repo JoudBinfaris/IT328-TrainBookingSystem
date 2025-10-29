@@ -19,7 +19,7 @@ public class Client {
         out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
     }
 
-    public void sendLine(String s) {
+    public void sendLine(String s)  {
         out.println(s);
         System.out.println(">> " + s); // sent to server 
     }
@@ -111,16 +111,23 @@ public ArrayList<Integer> requestAvailability() throws IOException {
 //    String line = waitForPrompt("AVAIL:"); // مثال: AVAIL:[3, 1, 0, 5, 2, 0, 4]
 //    return parseAvail(line);
 
+       System.out.println("in requestAvailability");
+
       ArrayList<Integer> seats= new ArrayList();
       
-      while(readLine()!=null)
-          seats.add(Integer.parseInt(readLine()));
+          String tmp="";
+          while(true)
+          {
+              tmp=readLine();
+              
+               if (tmp.equalsIgnoreCase("END")) break;
+               seats.add(Integer.parseInt(tmp));
+         
+          }
+          
+          System.out.println("in requestAvailability before return seats");
       
       return seats;
-
-     
-
-
 
 
 }
