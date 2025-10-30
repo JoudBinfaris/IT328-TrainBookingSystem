@@ -102,6 +102,12 @@ class ClientHandler implements Runnable {
                 String option = in.readLine();
                 String userinfo = in.readLine();
                 System.out.println(option+" " + userinfo);
+                
+                //To take username:
+                //String str = "Seat Number 5";
+                String username = option.substring(0, option.indexOf(" "));
+                System.out.println(username);
+                //String username= sub
 
                                 
 //                System.out.println(allInfo);
@@ -188,6 +194,16 @@ class ClientHandler implements Runnable {
                    
                 }
                 out.println("END");
+                //Day:
+                System.out.println("Day:");
+                int day = Integer.parseInt(in.readLine());
+                System.out.println(day);
+                //Book:
+                System.out.println("Seat:");
+                String seat = in.readLine();
+                System.out.println(seat);
+                int seatnum = Integer.parseInt(seat);
+                    t.reserveSeat(c, seatnum, day, username);
                     
 
             
