@@ -83,6 +83,11 @@ public class SourceDestination extends javax.swing.JFrame {
         jLabel4.setText("Source:");
 
         source.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        source.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sourceActionPerformed(evt);
+            }
+        });
 
         Destination.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Destination.addActionListener(new java.awt.event.ActionListener() {
@@ -194,6 +199,10 @@ public class SourceDestination extends javax.swing.JFrame {
     private void DestinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DestinationActionPerformed
 
     }//GEN-LAST:event_DestinationActionPerformed
+
+    private void sourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sourceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sourceActionPerformed
 
     /**
      * @param args the command line arguments

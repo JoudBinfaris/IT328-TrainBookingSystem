@@ -105,8 +105,8 @@ class ClientHandler implements Runnable {
                 
                 //To take username:
                 //String str = "Seat Number 5";
-                String username = option.substring(0, option.indexOf(" "));
-                System.out.println(username);
+                //String username = option.substring(0, option.indexOf(" "));
+                //System.out.println(username);
                 //String username= sub
 
                                 
@@ -196,14 +196,46 @@ class ClientHandler implements Runnable {
                 out.println("END");
                 //Day:
                 System.out.println("Day:");
-                int day = Integer.parseInt(in.readLine());
-                System.out.println(day);
+                String dayy=in.readLine();
+                int day=0;
+                switch(dayy){
+            case"Sunday":
+                day=1;
+                break;
+            case "Monday":
+                day=2;
+                break;
+            case "Tuesday":
+                day=3;
+                break;
+            case "Wednesday":
+                day=4;
+                break;
+            case "Thursday":
+                day=5;
+                break;
+            case "Friday":
+                day=6;
+                break;
+            case "Saturday":
+                day=7;
+                break;
+            default:
+                day = 0;
+        }
+                out.print("Day:" + day);
+               System.out.println(day);
+                
                 //Book:
-                System.out.println("Seat:");
-                String seat = in.readLine();
-                System.out.println(seat);
-                int seatnum = Integer.parseInt(seat);
-                    t.reserveSeat(c, seatnum, day, username);
+                //System.out.println("Seat:");
+                //String seat = in.readLine();
+                //System.out.println(seat);
+                //int seatnum = Integer.parseInt(seat);
+                String book = in.readLine();
+                if(book.equals("Book")){
+                     //t.reserveSeat(c, seatnum, day, userinfo);
+                     System.out.println("Its works");
+                }
                     
 
             

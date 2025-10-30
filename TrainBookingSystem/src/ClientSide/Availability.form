@@ -146,16 +146,8 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="Daycb">
       <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="7">
-            <StringItem index="0" value="Sunday"/>
-            <StringItem index="1" value="Monday"/>
-            <StringItem index="2" value="Tuesday"/>
-            <StringItem index="3" value="Wednesday"/>
-            <StringItem index="4" value="Thursday"/>
-            <StringItem index="5" value="Friday"/>
-            <StringItem index="6" value="Sautrday"/>
-          </StringArray>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Sunday&quot;, &quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot; })" type="code"/>
         </Property>
       </Properties>
       <Events>

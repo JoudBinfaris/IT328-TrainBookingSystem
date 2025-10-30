@@ -93,7 +93,7 @@ public class Availability extends javax.swing.JFrame {
             }
         });
 
-        Daycb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Sautrday" }));
+        Daycb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" }));
         Daycb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DaycbActionPerformed(evt);
@@ -182,6 +182,7 @@ public class Availability extends javax.swing.JFrame {
             if (s > 0) {
                 model.addElement("Seat Number " + s);
             }
+            
         }
 
         seatcb.setModel(model);
@@ -202,7 +203,54 @@ public class Availability extends javax.swing.JFrame {
     }//GEN-LAST:event_DaycbActionPerformed
 
     private void bookbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookbtnActionPerformed
-    client.sendLine("BOOK");
+        System.out.println("In bookbtnActionPerformed");
+        
+        //int d;
+        int dayy = Daycb.getSelectedIndex();
+        client.sendLine("Day:");
+        //client.sendLine(dayy);
+        System.out.println(dayy);
+        //System.out.println("Yes am selected " + d);
+        //client.sendLine(dayy); 
+        client.sendLine("Seat Number:");
+        String n =String.valueOf(seatcb.getSelectedItem());
+        int snum = 0;
+//        switch(n){
+//            case "Seat Number 1":
+//                snum=0;
+//                break;
+//            case "Seat Number 2":
+//                snum=1;
+//                break;
+//            case "Seat Number 3":
+//                snum=2;
+//                break;
+//            case "Seat Number 4":
+//                snum=3;
+//                break;
+//            default:
+//                snum=0;
+//                        }
+//        if(snum ==0)
+//            javax.swing.JOptionPane.showMessageDialog(this, "Please select a day/trip first.");
+//        return;
+          try {
+        // نستخدم دالتك الحالية reserve(...) لأنها ترسل: Source, Dest, Class, ثم تقرأ AVAIL, ثم ترسل day
+        // قيمة "seat" ما تُستخدم بالسيرفر الآن، فأرسلي أي قيمة مثل "1"
+        String result = client.reserve(src, dest, cls, n, String.valueOf(dayy));
+        javax.swing.JOptionPane.showMessageDialog(this, result);
+        if (result.toLowerCase().contains("confirmed")) {
+            dispose(); // سكري الفريم بعد نجاح الحجز
+        }
+    } catch (IOException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Booking error: " + ex.getMessage());
+    }
+        
+        
+//    }
+//        client.sendLine(n);
+        
+        //client.sendLine("BOOK");
     
     }//GEN-LAST:event_bookbtnActionPerformed
 
@@ -211,28 +259,7 @@ public class Availability extends javax.swing.JFrame {
     }//GEN-LAST:event_backbtnActionPerformed
 
     private void seatcbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seatcbActionPerformed
-        String n =(String)seatcb.getSelectedItem();
-        int snum = 0;
-        switch(n){
-            case "Seat Number 1":
-                snum=1;
-                break;
-            case "Seat Number 2":
-                snum=2;
-                break;
-            case "Seat Number 3":
-                snum=3;
-                break;
-            case "Seat Number 4":
-                snum=4;
-                break;
-            default:
-                snum=0;
-                        }
-        if(snum ==0)
-            //Massage
-            
-        client.sendLine(Integer.toString(snum));
+       
     }//GEN-LAST:event_seatcbActionPerformed
 
     /**
@@ -260,33 +287,7 @@ public class Availability extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new Availability().setVisible(true));
     }
     private void showaAvailability(){
-        int d;
-        switch((String) Daycb.getSelectedItem()){
-            case"Sunday":
-                d=1;
-                break;
-            case "Monday":
-                d=2;
-                break;
-            case "Tuesday":
-                d=3;
-                break;
-            case "Wednesday":
-                d=4;
-                break;
-            case "Thursday":
-                d=5;
-                break;
-            case "Friday":
-                d=6;
-                break;
-            case "Saturday":
-                d=7;
-                break;
-            default:
-                d = 0;
-        }
-        client.sendLine(Integer.toString(d));
+        
         try{
             ArrayList<Integer> seats = client.requestAvailability();
                        System.out.println("in  loadAvailability");

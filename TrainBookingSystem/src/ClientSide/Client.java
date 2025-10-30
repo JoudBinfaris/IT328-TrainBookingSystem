@@ -63,7 +63,7 @@ public class Client {
 
     //  Perform reservation by answering server prompts in order
     //    Returns the final message from the server
-    public String reserve(String source, String dest, String cls, String seat1to5, String day1to7) throws IOException {
+    public String reserve(String source, String dest, String cls, String day1to7, String seat1to5) throws IOException {
 
         waitForPrompt("Source city:");
         sendLine(source);
@@ -74,14 +74,14 @@ public class Client {
         waitForPrompt("class:");
         sendLine(cls); // "First" or "Economy"
 
-        String availLine = waitForPrompt("AVAIL:");
-        System.out.println("Avalibility from server: " + availLine);
+        //String availLine = waitForPrompt("AVAIL:");
+        //System.out.println("Avalibility from server: " + availLine);
 
-        //waitForPrompt("Seat Number");
-        //sendLine(String.valueOf(seat1to5));
-
-        waitForPrompt("day:");
+        waitForPrompt("Day:");
         sendLine(String.valueOf(day1to7));
+        
+        waitForPrompt("Seat Number:");
+        sendLine(String.valueOf(seat1to5));
 
         String result = readLine(); // "Reservation confirmed!" or "Seat Already Taken :("
         return (result == null) ? "Server closed connection." : result;
