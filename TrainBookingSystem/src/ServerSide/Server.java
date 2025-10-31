@@ -197,6 +197,7 @@ class ClientHandler implements Runnable {
                 //Day:
                 System.out.println("Day:");
                 String dayy=in.readLine();
+                System.out.println(dayy);
                 int day=0;
                 switch(dayy){
             case"Sunday":
@@ -223,17 +224,34 @@ class ClientHandler implements Runnable {
             default:
                 day = 0;
         }
-                out.print("Day:" + day);
-               System.out.println(day);
+                //out.print("Day:" + day);
+               //System.out.println(day);
                 
-                //Book:
-                //System.out.println("Seat:");
-                //String seat = in.readLine();
-                //System.out.println(seat);
+                
+                System.out.println("Seat:");
+                String seat = in.readLine();
+                System.out.println(seat);
+                int snum = 0;
+                switch(seat){
+            case "Seat Number 1":
+                snum=0;
+                break;
+            case "Seat Number 2":
+                snum=1;
+                break;
+            case "Seat Number 3":
+                snum=2;
+                break;
+            case "Seat Number 4":
+                snum=3;
+                break;
+            default:
+                snum=0;
+                        }
                 //int seatnum = Integer.parseInt(seat);
                 String book = in.readLine();
                 if(book.equals("Book")){
-                     //t.reserveSeat(c, seatnum, day, userinfo);
+                     t.reserveSeat(c, snum, day, userinfo);
                      System.out.println("Its works");
                 }
                     
