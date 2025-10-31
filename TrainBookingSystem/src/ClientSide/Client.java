@@ -74,9 +74,6 @@ public class Client {
         waitForPrompt("class:");
         sendLine(cls); // "First" or "Economy"
 
-        //String availLine = waitForPrompt("AVAIL:");
-        //System.out.println("Avalibility from server: " + availLine);
-
         waitForPrompt("Day:");
         sendLine(String.valueOf(day1to7));
         
@@ -86,30 +83,8 @@ public class Client {
         String result = readLine(); // "Reservation confirmed!" or "Seat Already Taken :("
         return (result == null) ? "Server closed connection." : result;
     }
-    //*************************************
-    public String queryAvailability(String source, String dest, String cls) throws IOException{
-        waitForPrompt("Sourse city:");
-        sendLine(source);
-        waitForPrompt("Destination city:");
-        sendLine(dest);
-        waitForPrompt("Class:");
-        sendLine(cls);
-        
-        return waitForPrompt("AVAIL:");
-    }
-    // يرجّع مصفوفة 7 عناصر تمثل التوفّر لكل يوم
+    
 public ArrayList<Integer> requestAvailability() throws IOException {
-//    waitForPrompt("Source city:");
-//    sendLine(source);
-//
-//    waitForPrompt("Destination city:");
-//    sendLine(dest);
-//
-//    waitForPrompt("class:");
-//    sendLine(cls);
-
-//    String line = waitForPrompt("AVAIL:"); // مثال: AVAIL:[3, 1, 0, 5, 2, 0, 4]
-//    return parseAvail(line);
 
        System.out.println("in requestAvailability");
 
@@ -132,28 +107,6 @@ public ArrayList<Integer> requestAvailability() throws IOException {
 
 
 }
-
-// يرسل اليوم المختار ويستقبل رسالة النتيجة من السيرفر
-public String bookOnDay(int day1to7) throws IOException {
-    waitForPrompt("day:");
-    sendLine(String.valueOf(day1to7));
-    String result = readLine();
-    return (result == null) ? "Server closed connection." : result;
-}
-
-// مساعد داخلي لتحويل "AVAIL:[...]" إلى int[]
-private int[] parseAvail(String availLine) {
-    int l = availLine.indexOf('['), r = availLine.indexOf(']');
-    if (l == -1 || r == -1 || r <= l) return new int[0];
-    String[] parts = availLine.substring(l+1, r).split(",");
-    int[] out = new int[Math.min(7, parts.length)];
-    for (int i = 0; i < out.length; i++) out[i] = Integer.parseInt(parts[i].trim());
-    return out;
-}
-
-
-
-   
     public void disconnec() throws IOException {
         if (socket != null) socket.close();
     }
