@@ -231,13 +231,13 @@ public class Availability extends javax.swing.JFrame {
             String booked = client.readLine();
             System.out.println(booked);
             if (booked.equals("true")) {
-                client.sendLine("not yet");
+                client.sendLine("CHANGE");
                 new Availability(client).setVisible(true);
                 dispose();
                 return;
             } else {
-
-                client.sendLine("Book");
+       
+                client.sendLine("CONFIRM");
 
                 String check = client.readLine();
                 if (check.equals("done")) {

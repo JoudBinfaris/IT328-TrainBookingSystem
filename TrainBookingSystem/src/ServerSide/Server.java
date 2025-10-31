@@ -37,6 +37,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import ClientSide.*;
+import java.io.IOException;
 
 public class Server {
 
@@ -225,46 +226,35 @@ class ClientHandler implements Runnable {
 //                out.println("END");
 
                  sendAvail( t,  c,  day);
+               
+                int snum=receiveSnum();
 
-                //out.print("Day:" + day);
-                //System.out.println(day);
-                System.out.println("Seat:");
-                String seat = in.readLine();
-                System.out.println(seat);
-                int snum = 0;
-                switch (seat) {
-                    case "Seat Number 1":
-                        snum = 0;
-                        break;
-                    case "Seat Number 2":
-                        snum = 1;
-                        break;
-                    case "Seat Number 3":
-                        snum = 2;
-                        break;
-                    case "Seat Number 4":
-                        snum = 3;
-                        break;
-                    default:
-                        snum = 0;
-                }
-                //int seatnum = Integer.parseInt(seat);\
 
                 //double check
                 String booked = searchRes(tn, c, snum, day) ? "true" : "false";
                 System.out.println(booked);
                 out.println(booked);
                 
-                String book = in.readLine();
-                while(!book.equals("Book")){
+                String cmd = in.readLine();
+                
+                while(!cmd.equals("CONFIRM")){
                 sendAvail( t,  c,  day);
+                snum=receiveSnum();
+                
+                booked = searchRes(tn, c, snum, day) ? "true" : "false";
+                out.println(booked);
+                
+                cmd = in.readLine();
+                
                 
                 }
+                
+                
 
                 
                
-
-                if (book.equals("Book")) {
+                 
+                if (cmd.equals("CONFIRM")) {
                     t.reserveSeat(c, snum, day, userinfo);
                     Reservation res = new Reservation(userinfo, tn, c, snum, day);
                     reservations.add(res);
@@ -342,7 +332,45 @@ class ClientHandler implements Runnable {
                 out.println("END");
     
 }
+    private int receiveSnum() {
+           System.out.println("Seat:");
+           int snum = -1;
+               try{ 
+                   String seat = in.readLine();
+               
+              
+                System.out.println(seat);
+                
+                switch (seat) {
+                    case "Seat Number 1":
+                        snum = 0;
+                        break;
+                    case "Seat Number 2":
+                        snum = 1;
+                        break;
+                    case "Seat Number 3":
+                        snum = 2;
+                        break;
+                    case "Seat Number 4":
+                        snum = 3;
+                        break;
+                    default:
+                        snum = -1;
+                }
+                
+               } catch (IOException ex) {
+            System.out.print(" error: " + ex.getMessage());
+        }
+    return snum;
+    }
 }
+
+                
+                
+    
+
+    
+
 
 
  
