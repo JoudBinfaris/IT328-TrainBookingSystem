@@ -169,6 +169,11 @@ public class Availability extends javax.swing.JFrame {
     }//GEN-LAST:event_showAvalbtnActionPerformed
     private void loadAvailability() {
     try {
+        int dayy = Daycb.getSelectedIndex();
+        System.out.print("day:");
+        System.out.println(dayy);
+        client.sendLine(Integer.toString(dayy));
+        
         ArrayList<Integer> seats = client.requestAvailability();
                        System.out.println("in  loadAvailability");
 
@@ -206,10 +211,7 @@ public class Availability extends javax.swing.JFrame {
         System.out.println("In bookbtnActionPerformed");
         
         //int d;
-        int dayy = Daycb.getSelectedIndex();
-        System.out.print("day:");
-        System.out.println(dayy);
-        client.sendLine(Integer.toString(dayy));
+        
         
         //client.sendLine(dayy);
        
