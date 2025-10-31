@@ -221,6 +221,8 @@ public class Availability extends javax.swing.JFrame {
         client.sendLine(n);
         
         client.sendLine("Book");
+        System.out.print("pls");
+
 
         
         
