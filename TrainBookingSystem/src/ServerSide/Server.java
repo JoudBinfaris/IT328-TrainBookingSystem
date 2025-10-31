@@ -36,6 +36,8 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import ClientSide.Client;
+
 public class Server {
 
     private static ArrayList<ClientHandler> clients = new ArrayList<>();
@@ -116,31 +118,30 @@ class ClientHandler implements Runnable {
 //
 //                String option = allInfo.substring(0, firstSpace);   // SIGNUP or LOGIN
 //                String info = allInfo.substring(firstSpace + 1);  //username password
-
+        
+                 if(option==null)
+                    option="nope";
                 if (option.equals("SIGNUP")) {
                     User u1 = new User(userinfo);
                     users.add(u1);
 
                     System.out.println("Total users: " + users.size());
                 }
-//else {
-//                    //while (true) {
-//                        for (User u : users) {
-//                            if (u.getInfo().equals(info)) {
-//                                break;
-//                            }
-//
-//                        }
-//                    //}
-//                }
+
 
                 //Source city:
                 String sc = in.readLine();
                 //Destination city:
                 String dc = in.readLine();
                 System.out.println(sc +" "+dc);
-
-
+                
+                 if(sc==null)
+                    sc="nope";
+                 
+                  if(dc==null)
+                    dc="nope";
+                  
+                  
                 String tn = "Nan";
                 if (sc.equals("Riyadh") && dc.equals("Jeddah")) {
                     tn = "1111";
@@ -153,14 +154,8 @@ class ClientHandler implements Runnable {
                 } else if (sc.equals("Riyadh") && dc.equals("Alula")) {
                     tn = "5555";
                 }
-
-                System.out.println("class:");
-                String c = in.readLine();
-                System.out.println(c);
-                int d =1 /*Integer.parseInt(in.readLine())*/;
-
-// ... بعد تحديد tn وقراءة c (الـclass) ...
-                Train t = switch (tn) {
+                
+                     Train t = switch (tn) {
                     case "1111" ->
                         t1;
                     case "2222" ->
@@ -179,21 +174,11 @@ class ClientHandler implements Runnable {
                     System.out.println("No train on this route");
                     continue;
                 }
+                
 
-                //get availability    
-                Seat[] open=t.getAvailableSeats(c, d);
-                int numOfSeats=open.length;
-                if(numOfSeats==0)
-                System.out.println("No seats available on this day");
-                else
-                {
-                    
-                    
-                    for(Seat s:open)
-                        out.println(s.getSeatnumber());
-                   
-                }
-                out.println("END");
+                System.out.println("class:");
+                String c = in.readLine();
+                System.out.println(c);
                 //Day:
                 System.out.println("Day:");
                 String dayy=in.readLine();
@@ -224,6 +209,26 @@ class ClientHandler implements Runnable {
             default:
                 day = 0;
         }
+
+// ... بعد تحديد tn وقراءة c (الـclass) ...
+           
+
+                //get availability    
+                Seat[] open=t.getAvailableSeats(c, day);
+                int numOfSeats=open.length;
+                if(numOfSeats==0)
+                System.out.println("No seats available on this day");
+                else
+                {
+                    
+                    
+                    for(Seat s:open)
+                        out.println(s.getSeatnumber());
+                   
+                }
+                out.println("END");
+                
+                
                 //out.print("Day:" + day);
                //System.out.println(day);
                 
@@ -250,13 +255,18 @@ class ClientHandler implements Runnable {
                         }
                 //int seatnum = Integer.parseInt(seat);
                 String book = in.readLine();
-                if(book.equals(null))
+                if(book == null)
                     book="nope";
                 if(book.equals("Book")){
                      t.reserveSeat(c, snum, day, userinfo);
                      System.out.println("Its works");
                       out.println("done");
                 }
+                
+               
+                 break;
+                 
+                
                     
 
             

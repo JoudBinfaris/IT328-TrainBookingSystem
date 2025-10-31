@@ -228,7 +228,10 @@ public class Availability extends javax.swing.JFrame {
         String check=client.readLine();
          if(check.equals("done"))
             dispose();
+         client.disconnec();
         }
+        
+       
         
        
  

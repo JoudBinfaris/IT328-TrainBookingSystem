@@ -122,6 +122,7 @@ public ArrayList<Integer> requestAvailability() throws IOException {
               
                if (tmp.equalsIgnoreCase("END")) break;
                seats.add(Integer.parseInt(tmp));
+               
          
           }
           
@@ -149,15 +150,19 @@ private int[] parseAvail(String availLine) {
     for (int i = 0; i < out.length; i++) out[i] = Integer.parseInt(parts[i].trim());
     return out;
 }
-}
-/*********************************************
 
-    // 8- Disconnect
-    public void disconnect() throws IOException {
+
+
+   
+    public void disconnec() throws IOException {
         if (socket != null) socket.close();
     }
-}A*/
+    
+    public Socket getSocket(){
+    return socket;
+    }
+}
+
  
     
    
-
