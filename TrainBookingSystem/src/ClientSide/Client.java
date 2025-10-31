@@ -12,18 +12,19 @@ public class Client {
     private BufferedReader in;
     private PrintWriter out;
 
-    // Connect to the server
+    // Connect to the server:
     public void connect(String host, int port) throws IOException {
         socket = new Socket(host, port);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
         out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
     }
-
+    
+    //To send to the server:
     public void sendLine(String s)  {
         out.println(s);
         System.out.println(">> " + s); // sent to server 
     }
-
+    //The server can read frim the client:
     public String readLine() throws IOException {
         String line = in.readLine();
         System.out.println("<< " + line); // received from server 
@@ -51,14 +52,13 @@ public class Client {
         // No return here; proceed to reserve(...) to answer prompts.
     }
 
-    // 6- Send LOGIN (first screen in GUI)
+    //    Send LOGIN (first screen in GUI)
     //    NOTE: With our current server code, LOGIN path contains a busy loop.
     //    It will be fixed next phase.
     public void login(String user, String pass) throws IOException {
         sendLine("LOGIN " + user + " " + pass);
         // No return here; proceed to reserve(...) to answer prompts.
     }
- //********************************888
     
 
     //  Perform reservation by answering server prompts in order
@@ -84,11 +84,11 @@ public class Client {
         return (result == null) ? "Server closed connection." : result;
     }
     
-public ArrayList<Integer> requestAvailability() throws IOException {
+    public ArrayList<Integer> requestAvailability() throws IOException {
 
        System.out.println("in requestAvailability");
 
-      ArrayList<Integer> seats= new ArrayList();
+       ArrayList<Integer> seats= new ArrayList();
       
           String tmp="";
           while(true)
@@ -97,8 +97,6 @@ public ArrayList<Integer> requestAvailability() throws IOException {
               
                if (tmp.equalsIgnoreCase("END")) break;
                seats.add(Integer.parseInt(tmp));
-               
-         
           }
           
           System.out.println("in requestAvailability before return seats");

@@ -34,8 +34,8 @@ public class Availability extends javax.swing.JFrame {
     dest =destination;
     cls = class_;
     initComponents(); 
-    this.setSize(500, 500); 
     setLocationRelativeTo(null);
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -52,7 +52,6 @@ public class Availability extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         showAvalbtn = new javax.swing.JButton();
-        backbtn = new javax.swing.JButton();
         bookbtn = new javax.swing.JButton();
         seatcb = new javax.swing.JComboBox<>();
         Daycb = new javax.swing.JComboBox<>();
@@ -70,13 +69,6 @@ public class Availability extends javax.swing.JFrame {
         showAvalbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showAvalbtnActionPerformed(evt);
-            }
-        });
-
-        backbtn.setText("Back");
-        backbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backbtnActionPerformed(evt);
             }
         });
 
@@ -100,7 +92,7 @@ public class Availability extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("Trip seat booking");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -109,41 +101,36 @@ public class Availability extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(54, 54, 54)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(59, 59, 59)
+                                    .addComponent(seatcb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(48, 48, 48)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel2)
+                                .addComponent(Daycb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(24, 24, 24)
+                            .addComponent(showAvalbtn)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(backbtn)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(Daycb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(24, 24, 24)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(showAvalbtn)
-                                    .addComponent(bookbtn)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(59, 59, 59)
-                                        .addComponent(seatcb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(161, 161, 161)
+                        .addComponent(bookbtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(120, 120, 120)
+                        .addGap(102, 102, 102)
                         .addComponent(jLabel3)))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -153,10 +140,8 @@ public class Availability extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(seatcb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bookbtn)
-                    .addComponent(backbtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addComponent(bookbtn)
                 .addGap(16, 16, 16))
         );
 
@@ -175,21 +160,19 @@ public class Availability extends javax.swing.JFrame {
         client.sendLine(Integer.toString(dayy));
         
         ArrayList<Integer> seats = client.requestAvailability();
-                       System.out.println("in  loadAvailability");
+        System.out.println("in  loadAvailability");
 
 
-        // هذا هو السطر اللي كنتِ تسألين عنه
         javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
         System.out.println("passed ");
 
-        // أضفنا النصوص اللي تمثل المقاعد
+        // To fill seat combo:
         for (int s : seats) {
             if (s > 0) {
                 model.addElement("Seat Number " + s);
             }
             
         }
-
         seatcb.setModel(model);
 
         boolean hasAny = model.getSize() > 0;
@@ -199,9 +182,9 @@ public class Availability extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
         }
 
-    } catch (IOException ex) {
+        } catch (IOException ex) {
         javax.swing.JOptionPane.showMessageDialog(this, "Error loading availability: " + ex.getMessage());
-    }
+        }
 }
     private void DaycbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DaycbActionPerformed
        
@@ -209,15 +192,6 @@ public class Availability extends javax.swing.JFrame {
 
     private void bookbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookbtnActionPerformed
         System.out.println("In bookbtnActionPerformed");
-        
-        //int d;
-        
-        
-        //client.sendLine(dayy);
-       
-        //System.out.println("Yes am selected " + d);
-        //client.sendLine(dayy); 
-        
         
         String n =String.valueOf(seatcb.getSelectedItem());
         System.out.print("Seat number:");
@@ -228,67 +202,16 @@ public class Availability extends javax.swing.JFrame {
         
         try{
         String check=client.readLine();
+        JOptionPane.showMessageDialog(this, "Booking confirmed successfully!");
          if(check.equals("done"))
             dispose();
          client.disconnec();
         }
-        
-       
-        
-       
- 
-
-
-        
-        
-        
-        
-        
-            
-//        int snum = 0;
-//        switch(n){
-//            case "Seat Number 1":
-//                snum=0;
-//                break;
-//            case "Seat Number 2":
-//                snum=1;
-//                break;
-//            case "Seat Number 3":
-//                snum=2;
-//                break;
-//            case "Seat Number 4":
-//                snum=3;
-//                break;
-//            default:
-//                snum=0;
-//                        }
-//        if(snum ==0)
-//            javax.swing.JOptionPane.showMessageDialog(this, "Please select a day/trip first.");
-//        return;
-
-//          try {
-//        // نستخدم دالتك الحالية reserve(...) لأنها ترسل: Source, Dest, Class, ثم تقرأ AVAIL, ثم ترسل day
-//        // قيمة "seat" ما تُستخدم بالسيرفر الآن، فأرسلي أي قيمة مثل "1"
-//        String result = client.reserve(src, dest, cls, n, String.valueOf(dayy));
-//        javax.swing.JOptionPane.showMessageDialog(this, result);
-//        if (result.toLowerCase().contains("confirmed")) {
-//            dispose(); // سكري الفريم بعد نجاح الحجز
-//        }}
-     catch (IOException ex) {
+        catch (IOException ex) {
         javax.swing.JOptionPane.showMessageDialog(this, "Booking error: " + ex.getMessage());
-    }
+        }
         
-        
-//    }
-//        client.sendLine(n);
-        
-        //client.sendLine("BOOK");
-    
     }//GEN-LAST:event_bookbtnActionPerformed
-
-    private void backbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbtnActionPerformed
-        
-    }//GEN-LAST:event_backbtnActionPerformed
 
     private void seatcbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seatcbActionPerformed
        
@@ -318,41 +241,9 @@ public class Availability extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Availability().setVisible(true));
     }
-    private void showaAvailability(){
-        
-        try{
-            ArrayList<Integer> seats = client.requestAvailability();
-                       System.out.println("in  loadAvailability");
-
-
-        // هذا هو السطر اللي كنتِ تسألين عنه
-        javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
-        System.out.println("passed ");
-
-        // أضفنا النصوص اللي تمثل المقاعد
-        for (int s : seats) {
-            if (s > 0) {
-                model.addElement("Seat Number " + s);
-            }
-        }
-
-        seatcb.setModel(model);
-
-        boolean hasAny = model.getSize() > 0;
-        bookbtn.setEnabled(hasAny);
-
-        if (!hasAny) {
-            javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
-        }
-
-    } catch (IOException ex) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error loading availability: " + ex.getMessage());
-    }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Daycb;
-    private javax.swing.JButton backbtn;
     private javax.swing.JButton bookbtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

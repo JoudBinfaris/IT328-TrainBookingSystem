@@ -47,10 +47,6 @@ public class SourceDestination extends javax.swing.JFrame {
                 new String[]{"Riyadh", "Jeddah", "Dammam", "Alula"}));
         Class.setModel(new javax.swing.DefaultComboBoxModel<>(
                 new String[]{"First", "Economy"}));
-        //String[] seats = {"1", "2", "3", "4", "5"};
-        //Seat.setModel(new javax.swing.DefaultComboBoxModel<>(seats));
-        //String[] days = {"1", "2", "3", "4", "5", "6", "7"};
-        //Day.setModel(new javax.swing.DefaultComboBoxModel<>(days));
     }
 
     /**
@@ -166,7 +162,6 @@ public class SourceDestination extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-
         String src = String.valueOf(source.getSelectedItem());
          client.sendLine(src);
         String des = String.valueOf(Destination.getSelectedItem());
@@ -174,26 +169,21 @@ public class SourceDestination extends javax.swing.JFrame {
 
         String cls = String.valueOf(Class.getSelectedItem());
         client.sendLine(cls);
-        //String sat = String.valueOf(Seat.getSelectedItem());
-        //String day = String.valueOf(Day.getSelectedItem());
 
         if (src.equals(des)) {
-            //  JOptionPane.showMessageDialog(this, "source: "+source.getSelectedItem() +" Des : "+ Destination.getSelectedItem());
-
             JOptionPane.showMessageDialog(this, "Src =Des canot complete");
             return;
         }
+        if ((src.equals("Dammam") && des.equals("Jeddah")) 
+         || (src.equals("Dammam") && des.equals("Alula"))
+         || (src.equals("Jeddah") && des.equals("Alula")) 
+         || (src.equals("Jeddah") && des.equals("Dammam"))
+         || src.equals(des)) {
+         JOptionPane.showMessageDialog(this, "Sorry, no available route for this source and destination");
+         return;}
+
         new Availability(client, src, des, cls).setVisible(true);
         dispose();
-        /*try{
-            String result = client.reserve(src, des, cls, sat, day);
-            JOptionPane.showMessageDialog(this, result);
-            new Avaliability().setVisible(true);
-             dispose();
-
-        }catch(IOException ex){
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
-        }*/
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void DestinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DestinationActionPerformed

@@ -20,18 +20,16 @@ public class SignUp extends javax.swing.JFrame {
      * Creates new form SignUp
      */
     public SignUp() {
-       initComponents();
-        setLocationRelativeTo(null);
+    initComponents();
+    setLocationRelativeTo(null);
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-     
-      //client.connect("localhost", 5000);
 
     }
     public SignUp(Client client){
         this.client = client;
         initComponents();
-        
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
     String passward_;
     String username;
@@ -72,7 +70,7 @@ public class SignUp extends javax.swing.JFrame {
         jLabel3.setText("Email:");
         jLabel3.setToolTipText("");
 
-        jButton1.setText("Sign up");
+        jButton1.setText("Register");
         jButton1.setActionCommand("Sign Up");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,7 +101,7 @@ public class SignUp extends javax.swing.JFrame {
                             .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(passward, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(162, 162, 162)
+                        .addGap(164, 164, 164)
                         .addComponent(jButton1)))
                 .addContainerGap(77, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,7 +135,7 @@ public class SignUp extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
-         //passward_=passward.getText();
+ 
     }//GEN-LAST:event_emailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -147,15 +145,11 @@ public class SignUp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Please fill the blanks");
                 return;
         }
-//        try{
-//            client.signup(username, passward_);
             client.sendLine("SIGNUP");
             client.sendLine(username+" "+passward_);
+            JOptionPane.showMessageDialog(this, "sign-up done successfully!");
             new SourceDestination(client).setVisible(true);
             dispose();
-//        }catch( IOException ex){
-//            JOptionPane.showMessageDialog(this, "Sign up failed: " + ex.getMessage());
-//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void passwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwardActionPerformed
