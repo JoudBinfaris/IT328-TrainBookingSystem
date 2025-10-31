@@ -32,9 +32,11 @@ public class Availability extends javax.swing.JFrame {
     //Declaration of the var:
 
     Client client;
+    boolean changeMode;
 
-    public Availability(Client client) {
+    public Availability(Client client, boolean changeMode) {
         this.client = client;
+        this.changeMode= changeMode;
 
 //    this.client = client;
 //    src =source;
@@ -177,10 +179,13 @@ public class Availability extends javax.swing.JFrame {
     }//GEN-LAST:event_showAvalbtnActionPerformed
     private void loadAvailability() {
         try {
+            if( changeMode==false)
+            {
             int dayy = Daycb.getSelectedIndex();
             System.out.print("day:");
             System.out.println(dayy);
             client.sendLine(Integer.toString(dayy));
+            }
 
             ArrayList<Integer> seats = client.requestAvailability();
             System.out.println("in  loadAvailability");
@@ -232,7 +237,7 @@ public class Availability extends javax.swing.JFrame {
             System.out.println(booked);
             if (booked.equals("true")) {
                 client.sendLine("CHANGE");
-                new Availability(client).setVisible(true);
+                new Availability(client, true).setVisible(true);
                 dispose();
                 return;
             } else {
