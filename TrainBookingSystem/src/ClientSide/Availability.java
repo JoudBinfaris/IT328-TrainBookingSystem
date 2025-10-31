@@ -8,15 +8,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import ClientSide.Client;
-
+import ClientSide.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 /**
  *
  * @author sarah
  */
 public class Availability extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Availability.class.getName());
 
     /**
@@ -26,16 +30,19 @@ public class Availability extends javax.swing.JFrame {
         initComponents();
     }
     //Declaration of the var:
-    String src, dest, cls;
-    Client  client ;
-    public Availability(Client client, String source, String destination, String class_) {
-    this.client = client;
-    src =source;
-    dest =destination;
-    cls = class_;
-    initComponents(); 
-    this.setSize(500, 500); 
-    setLocationRelativeTo(null);
+
+    Client client;
+
+    public Availability(Client client) {
+        this.client = client;
+
+//    this.client = client;
+//    src =source;
+//    dest =destination;
+//    cls = class_;
+        initComponents();
+        this.setSize(500, 500);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -45,7 +52,7 @@ public class Availability extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     //Insilize combo box with integer:
-    
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -162,89 +169,86 @@ public class Availability extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void showAvalbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAvalbtnActionPerformed
         System.out.println("in  btnShowActionPerformed");
         loadAvailability();
+
     }//GEN-LAST:event_showAvalbtnActionPerformed
     private void loadAvailability() {
-    try {
-        int dayy = Daycb.getSelectedIndex();
-        System.out.print("day:");
-        System.out.println(dayy);
-        client.sendLine(Integer.toString(dayy));
-        
-        ArrayList<Integer> seats = client.requestAvailability();
-                       System.out.println("in  loadAvailability");
+        try {
+            int dayy = Daycb.getSelectedIndex();
+            System.out.print("day:");
+            System.out.println(dayy);
+            client.sendLine(Integer.toString(dayy));
 
+            ArrayList<Integer> seats = client.requestAvailability();
+            System.out.println("in  loadAvailability");
 
-        // هذا هو السطر اللي كنتِ تسألين عنه
-        javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
-        System.out.println("passed ");
+            // هذا هو السطر اللي كنتِ تسألين عنه
+            javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+            System.out.println("passed ");
 
-        // أضفنا النصوص اللي تمثل المقاعد
-        for (int s : seats) {
-            if (s > 0) {
-                model.addElement("Seat Number " + s);
+            // أضفنا النصوص اللي تمثل المقاعد
+            for (int s : seats) {
+                if (s > 0) {
+                    model.addElement("Seat Number " + s);
+                }
+
             }
-            
+
+            seatcb.setModel(model);
+
+            boolean hasAny = model.getSize() > 0;
+            bookbtn.setEnabled(hasAny);
+
+            if (!hasAny) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
+            }
+
+        } catch (IOException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error loading availability: " + ex.getMessage());
         }
-
-        seatcb.setModel(model);
-
-        boolean hasAny = model.getSize() > 0;
-        bookbtn.setEnabled(hasAny);
-
-        if (!hasAny) {
-            javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
-        }
-
-    } catch (IOException ex) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error loading availability: " + ex.getMessage());
     }
-}
     private void DaycbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DaycbActionPerformed
-       
+
     }//GEN-LAST:event_DaycbActionPerformed
 
     private void bookbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookbtnActionPerformed
+
         System.out.println("In bookbtnActionPerformed");
-        
+
         //int d;
-        
-        
         //client.sendLine(dayy);
-       
         //System.out.println("Yes am selected " + d);
         //client.sendLine(dayy); 
-        
-        
-        String n =String.valueOf(seatcb.getSelectedItem());
+        String n = String.valueOf(seatcb.getSelectedItem());
         System.out.print("Seat number:");
         System.out.println(n);
         client.sendLine(n);
-        
-        client.sendLine("Book");
-        
-        try{
-        String check=client.readLine();
-         if(check.equals("done"))
-            dispose();
-         client.disconnec();
+
+        try {
+            String booked = client.readLine();
+            System.out.println(booked);
+            if (booked.equals("true")) {
+                client.sendLine("not yet");
+                new Availability(client).setVisible(true);
+                dispose();
+                return;
+            } else {
+
+                client.sendLine("Book");
+
+                String check = client.readLine();
+                if (check.equals("done")) {
+                    dispose();
+                }
+            }
+            client.disconnec();
+        } catch (IOException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Booking error: " + ex.getMessage());
         }
-        
-       
-        
-       
- 
 
-
-        
-        
-        
-        
-        
-            
 //        int snum = 0;
 //        switch(n){
 //            case "Seat Number 1":
@@ -265,7 +269,6 @@ public class Availability extends javax.swing.JFrame {
 //        if(snum ==0)
 //            javax.swing.JOptionPane.showMessageDialog(this, "Please select a day/trip first.");
 //        return;
-
 //          try {
 //        // نستخدم دالتك الحالية reserve(...) لأنها ترسل: Source, Dest, Class, ثم تقرأ AVAIL, ثم ترسل day
 //        // قيمة "seat" ما تُستخدم بالسيرفر الآن، فأرسلي أي قيمة مثل "1"
@@ -274,24 +277,18 @@ public class Availability extends javax.swing.JFrame {
 //        if (result.toLowerCase().contains("confirmed")) {
 //            dispose(); // سكري الفريم بعد نجاح الحجز
 //        }}
-     catch (IOException ex) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Booking error: " + ex.getMessage());
-    }
-        
-        
 //    }
 //        client.sendLine(n);
-        
         //client.sendLine("BOOK");
-    
+
     }//GEN-LAST:event_bookbtnActionPerformed
 
     private void backbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbtnActionPerformed
-        
+
     }//GEN-LAST:event_backbtnActionPerformed
 
     private void seatcbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seatcbActionPerformed
-       
+
     }//GEN-LAST:event_seatcbActionPerformed
 
     /**
@@ -318,37 +315,40 @@ public class Availability extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Availability().setVisible(true));
     }
-    private void showaAvailability(){
-        
-        try{
+
+   
+
+    private void showaAvailability() {
+
+        try {
             ArrayList<Integer> seats = client.requestAvailability();
-                       System.out.println("in  loadAvailability");
+            System.out.println("in  loadAvailability");
 
+            // هذا هو السطر اللي كنتِ تسألين عنه
+            javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+            System.out.println("passed ");
 
-        // هذا هو السطر اللي كنتِ تسألين عنه
-        javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
-        System.out.println("passed ");
-
-        // أضفنا النصوص اللي تمثل المقاعد
-        for (int s : seats) {
-            if (s > 0) {
-                model.addElement("Seat Number " + s);
+            // أضفنا النصوص اللي تمثل المقاعد
+            for (int s : seats) {
+                if (s > 0) {
+                    model.addElement("Seat Number " + s);
+                }
             }
+
+            seatcb.setModel(model);
+
+            boolean hasAny = model.getSize() > 0;
+            bookbtn.setEnabled(hasAny);
+
+            if (!hasAny) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
+            }
+
+        } catch (IOException ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error loading availability: " + ex.getMessage());
         }
-
-        seatcb.setModel(model);
-
-        boolean hasAny = model.getSize() > 0;
-        bookbtn.setEnabled(hasAny);
-
-        if (!hasAny) {
-            javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
-        }
-
-    } catch (IOException ex) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error loading availability: " + ex.getMessage());
     }
-    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Daycb;

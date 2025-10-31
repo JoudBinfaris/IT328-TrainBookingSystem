@@ -183,7 +183,7 @@ public class SourceDestination extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Src =Des canot complete");
             return;
         }
-        new Availability(client, src, des, cls).setVisible(true);
+        new Availability(client).setVisible(true);
         dispose();
         /*try{
             String result = client.reserve(src, des, cls, sat, day);
