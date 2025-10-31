@@ -255,7 +255,7 @@ class ClientHandler implements Runnable {
                 if(book.equals("Book")){
                      t.reserveSeat(c, snum, day, userinfo);
                      System.out.println("Its works");
-                     System.out.println("pls");
+                      out.println("done");
                 }
                     
 

@@ -207,13 +207,15 @@ public class Availability extends javax.swing.JFrame {
         
         //int d;
         int dayy = Daycb.getSelectedIndex();
-        
-        //client.sendLine(dayy);
         System.out.print("day:");
         System.out.println(dayy);
+        client.sendLine(Integer.toString(dayy));
+        
+        //client.sendLine(dayy);
+       
         //System.out.println("Yes am selected " + d);
         //client.sendLine(dayy); 
-        client.sendLine(Integer.toString(dayy));
+        
         
         String n =String.valueOf(seatcb.getSelectedItem());
         System.out.print("Seat number:");
@@ -221,7 +223,15 @@ public class Availability extends javax.swing.JFrame {
         client.sendLine(n);
         
         client.sendLine("Book");
-        System.out.print("pls");
+        
+        try{
+        String check=client.readLine();
+         if(check.equals("done"))
+            dispose();
+        }
+        
+       
+ 
 
 
         
@@ -259,9 +269,9 @@ public class Availability extends javax.swing.JFrame {
 //        if (result.toLowerCase().contains("confirmed")) {
 //            dispose(); // سكري الفريم بعد نجاح الحجز
 //        }}
-//     catch (IOException ex) {
-//        javax.swing.JOptionPane.showMessageDialog(this, "Booking error: " + ex.getMessage());
-//    }
+     catch (IOException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Booking error: " + ex.getMessage());
+    }
         
         
 //    }
