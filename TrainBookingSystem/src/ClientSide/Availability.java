@@ -207,14 +207,28 @@ public class Availability extends javax.swing.JFrame {
         
         //int d;
         int dayy = Daycb.getSelectedIndex();
-        client.sendLine("Day:");
+        
         //client.sendLine(dayy);
+        System.out.print("day:");
         System.out.println(dayy);
         //System.out.println("Yes am selected " + d);
         //client.sendLine(dayy); 
-        client.sendLine("Seat Number:");
+        client.sendLine(Integer.toString(dayy));
+        
         String n =String.valueOf(seatcb.getSelectedItem());
-        int snum = 0;
+        System.out.print("Seat number:");
+        System.out.println(n);
+        client.sendLine(n);
+        
+        client.sendLine("Book");
+
+        
+        
+        
+        
+        
+            
+//        int snum = 0;
 //        switch(n){
 //            case "Seat Number 1":
 //                snum=0;
@@ -234,17 +248,18 @@ public class Availability extends javax.swing.JFrame {
 //        if(snum ==0)
 //            javax.swing.JOptionPane.showMessageDialog(this, "Please select a day/trip first.");
 //        return;
-          try {
-        // نستخدم دالتك الحالية reserve(...) لأنها ترسل: Source, Dest, Class, ثم تقرأ AVAIL, ثم ترسل day
-        // قيمة "seat" ما تُستخدم بالسيرفر الآن، فأرسلي أي قيمة مثل "1"
-        String result = client.reserve(src, dest, cls, n, String.valueOf(dayy));
-        javax.swing.JOptionPane.showMessageDialog(this, result);
-        if (result.toLowerCase().contains("confirmed")) {
-            dispose(); // سكري الفريم بعد نجاح الحجز
-        }
-    } catch (IOException ex) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Booking error: " + ex.getMessage());
-    }
+
+//          try {
+//        // نستخدم دالتك الحالية reserve(...) لأنها ترسل: Source, Dest, Class, ثم تقرأ AVAIL, ثم ترسل day
+//        // قيمة "seat" ما تُستخدم بالسيرفر الآن، فأرسلي أي قيمة مثل "1"
+//        String result = client.reserve(src, dest, cls, n, String.valueOf(dayy));
+//        javax.swing.JOptionPane.showMessageDialog(this, result);
+//        if (result.toLowerCase().contains("confirmed")) {
+//            dispose(); // سكري الفريم بعد نجاح الحجز
+//        }}
+//     catch (IOException ex) {
+//        javax.swing.JOptionPane.showMessageDialog(this, "Booking error: " + ex.getMessage());
+//    }
         
         
 //    }
