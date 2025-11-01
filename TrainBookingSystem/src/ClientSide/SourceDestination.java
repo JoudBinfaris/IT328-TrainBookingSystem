@@ -161,28 +161,28 @@ public class SourceDestination extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
 
         String src = String.valueOf(source.getSelectedItem());
-         client.sendLine(src);
+        client.sendLine(src);
         String des = String.valueOf(Destination.getSelectedItem());
-         client.sendLine(des);
+        client.sendLine(des);
 
         String cls = String.valueOf(Class.getSelectedItem());
         client.sendLine(cls);
 
         if (src.equals(des)) {
-           JOptionPane.showMessageDialog(this, "Src =Des canot complete");
+            JOptionPane.showMessageDialog(this, "Src =Des canot complete");
             return;
         }
-        if ((src.equals("Dammam") && des.equals("Jeddah")) 
-         || (src.equals("Dammam") && des.equals("Alula"))
-         || (src.equals("Jeddah") && des.equals("Alula")) 
-         || (src.equals("Jeddah") && des.equals("Dammam"))
-         || src.equals(des)) {
-         JOptionPane.showMessageDialog(this, "Sorry, no available route for this source and destination");
-         return;}
-        
+        if ((src.equals("Dammam") && des.equals("Jeddah"))
+                || (src.equals("Dammam") && des.equals("Alula"))
+                || (src.equals("Jeddah") && des.equals("Alula"))
+                || (src.equals("Jeddah") && des.equals("Dammam"))
+                || src.equals(des)) {
+            JOptionPane.showMessageDialog(this, "Sorry, no available route for this source and destination");
+            return;
+        }
+
         new Availability(client, false).setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

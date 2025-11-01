@@ -9,8 +9,8 @@ package ServerSide;
  * @author joud
  */
 public class User {
+
     private String info;
-   
 
     // constructor
     public User(String info) {
@@ -18,11 +18,8 @@ public class User {
     }
 
     // getters
-    public String getInfo() { return info; }
+    public String getInfo() {
+        return info;
+    }
 
-
-   
-    
-
-    
 }

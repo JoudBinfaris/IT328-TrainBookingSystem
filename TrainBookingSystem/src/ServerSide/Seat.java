@@ -9,39 +9,43 @@ package ServerSide;
  * @author imusn
  */
 import java.util.*;
-public class Seat{
+
+public class Seat {
+
     private boolean isAvailable;
     private String reservedBy;
     private String classType;
     private int seatnumber;
-    public Seat(String classType, int seatnumber){
-        this.seatnumber=seatnumber;
-        this.classType=classType;
-        this.isAvailable=true;
-        this.reservedBy=null;
+
+    public Seat(String classType, int seatnumber) {
+        this.seatnumber = seatnumber;
+        this.classType = classType;
+        this.isAvailable = true;
+        this.reservedBy = null;
     }
-    public boolean reserve(String username){
-         if(isAvailable)
-      {
-          this.isAvailable=false;
-          this.reservedBy= username;
-          return true;
-      }
-         return false;
+
+    public boolean reserve(String username) {
+        if (isAvailable) {
+            this.isAvailable = false;
+            this.reservedBy = username;
+            return true;
+        }
+        return false;
     }
-  public void cancel(){
-  
-    isAvailable=true;
-    this.reservedBy=null;
-  }
-  
-  public String getStatus()
-  {
-      if(isAvailable)
-          return"Available";
-      else
-          return"Reserved by:"+this.reservedBy;
-  }
+
+    public void cancel() {
+
+        isAvailable = true;
+        this.reservedBy = null;
+    }
+
+    public String getStatus() {
+        if (isAvailable) {
+            return "Available";
+        } else {
+            return "Reserved by:" + this.reservedBy;
+        }
+    }
 
     public boolean IsAvailable() {
         return isAvailable;
@@ -58,8 +62,5 @@ public class Seat{
     public int getSeatnumber() {
         return seatnumber;
     }
-  
+
 }
-
-    
-

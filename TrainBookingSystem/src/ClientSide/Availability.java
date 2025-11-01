@@ -29,21 +29,22 @@ public class Availability extends javax.swing.JFrame {
     public Availability() {
         initComponents();
         setLocationRelativeTo(null);
-    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
     //Declaration of the var:
-  //hello
+    //hello
     Client client;
     boolean changeMode;
 
     public Availability(Client client, boolean changeMode) {
         this.client = client;
-        this.changeMode= changeMode;
+        this.changeMode = changeMode;
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-         if( changeMode==true)
-        Daycb.setEnabled(false);
+        if (changeMode == true) {
+            Daycb.setEnabled(false);
+        }
     }
 
     /**
@@ -164,13 +165,12 @@ public class Availability extends javax.swing.JFrame {
     }//GEN-LAST:event_showAvalbtnActionPerformed
     private void loadAvailability() {
         try {
-            if( changeMode==false)
-            {
-            
-            int dayy = Daycb.getSelectedIndex();
-            System.out.print("day:");
-            System.out.println(dayy);
-            client.sendLine(Integer.toString(dayy));
+            if (changeMode == false) {
+
+                int dayy = Daycb.getSelectedIndex();
+                System.out.print("day:");
+                System.out.println(dayy);
+                client.sendLine(Integer.toString(dayy));
             }
 
             ArrayList<Integer> seats = client.requestAvailability();
@@ -193,7 +193,7 @@ public class Availability extends javax.swing.JFrame {
 
             if (!hasAny) {
                 javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
-                dispose();  
+                dispose();
                 //SourceDestination.this.
                 //new SourceDestination(client).setVisible(true);
             }
@@ -209,7 +209,7 @@ public class Availability extends javax.swing.JFrame {
     private void bookbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookbtnActionPerformed
 
         System.out.println("In bookbtnActionPerformed");
-        
+
         String n = String.valueOf(seatcb.getSelectedItem());
         System.out.print("Seat number:");
         System.out.println(n);
@@ -221,14 +221,14 @@ public class Availability extends javax.swing.JFrame {
             if (booked.equals("true")) {
                 client.sendLine("CHANGE");
                 JOptionPane.showMessageDialog(this, "Seat already taken:(");
-                Availability.this.dispose();  
+                Availability.this.dispose();
                 new Availability(client, true).setVisible(true);
-                
+
                 return;
             } else {
-       
+
                 client.sendLine("CONFIRM");
- 
+
                 String check = client.readLine();
                 JOptionPane.showMessageDialog(this, "Booking confirmed successfully!");
                 if (check.equals("done")) {

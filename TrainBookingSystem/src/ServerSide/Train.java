@@ -10,58 +10,61 @@ package ServerSide;
  */
 import java.util.*;
 
-public class Train{
-private  String trainID;
-private String source;
-private String destination;
-private Seat[][] firstclassSeatbyday;
-private Seat[][] economyclassSeatbyday;
+public class Train {
 
-public Train (String trainID, String source,String destination){
-    this.trainID=trainID;
-    this.source=source;
-    this.destination=destination;
-    this.firstclassSeatbyday=new Seat[7][4];
-    this.economyclassSeatbyday=new Seat[7][4];// it will put each all seats for each day
-    for(int day=0; day<7; day++){
-        for(int seat=0; seat<4; seat++)
-        {
-            this.firstclassSeatbyday[day][seat]=new Seat("First",seat+1);
-            this.economyclassSeatbyday[day][seat]=new Seat("Economy",seat+1);
-            
-        }}
-}
-public Seat[] getAvailableSeats(String classType, int dayindex){
-    Seat [][] list=classType.equalsIgnoreCase("First")? this.firstclassSeatbyday: this.economyclassSeatbyday;
-  int count=0;
-for(Seat s: list[dayindex]){
-if(s.IsAvailable())
-count++;
-}
-Seat[] available=new Seat[count];
-int j=0;
-for(Seat s:list[dayindex]){
-if(s.IsAvailable()) 
-available[j++]=s;
-}
-return available;
-}  
+    private String trainID;
+    private String source;
+    private String destination;
+    private Seat[][] firstclassSeatbyday;
+    private Seat[][] economyclassSeatbyday;
 
-public boolean reserveSeat( String classType, int seatindex,int dayindex,String username){
-    Seat[][] list=classType.equalsIgnoreCase("First")? this.firstclassSeatbyday: this.economyclassSeatbyday;
-if(dayindex >= 0&& dayindex<7&& seatindex>=0&&seatindex<4){
-    return list[dayindex][seatindex].reserve(username);
-}
-return false;
-}
-public void cancelSeat(String classType, int seatindex, int dayindex)
-{
-    Seat[][] list=classType.equalsIgnoreCase("First")? this.firstclassSeatbyday: this.economyclassSeatbyday;
-  if(dayindex >= 0&& dayindex<7&& seatindex>=0&&seatindex<4)
-    {
-    list[dayindex][seatindex].cancel();
-}
-}
+    public Train(String trainID, String source, String destination) {
+        this.trainID = trainID;
+        this.source = source;
+        this.destination = destination;
+        this.firstclassSeatbyday = new Seat[7][4];
+        this.economyclassSeatbyday = new Seat[7][4];// it will put each all seats for each day
+        for (int day = 0; day < 7; day++) {
+            for (int seat = 0; seat < 4; seat++) {
+                this.firstclassSeatbyday[day][seat] = new Seat("First", seat + 1);
+                this.economyclassSeatbyday[day][seat] = new Seat("Economy", seat + 1);
+
+            }
+        }
+    }
+
+    public Seat[] getAvailableSeats(String classType, int dayindex) {
+        Seat[][] list = classType.equalsIgnoreCase("First") ? this.firstclassSeatbyday : this.economyclassSeatbyday;
+        int count = 0;
+        for (Seat s : list[dayindex]) {
+            if (s.IsAvailable()) {
+                count++;
+            }
+        }
+        Seat[] available = new Seat[count];
+        int j = 0;
+        for (Seat s : list[dayindex]) {
+            if (s.IsAvailable()) {
+                available[j++] = s;
+            }
+        }
+        return available;
+    }
+
+    public boolean reserveSeat(String classType, int seatindex, int dayindex, String username) {
+        Seat[][] list = classType.equalsIgnoreCase("First") ? this.firstclassSeatbyday : this.economyclassSeatbyday;
+        if (dayindex >= 0 && dayindex < 7 && seatindex >= 0 && seatindex < 4) {
+            return list[dayindex][seatindex].reserve(username);
+        }
+        return false;
+    }
+
+    public void cancelSeat(String classType, int seatindex, int dayindex) {
+        Seat[][] list = classType.equalsIgnoreCase("First") ? this.firstclassSeatbyday : this.economyclassSeatbyday;
+        if (dayindex >= 0 && dayindex < 7 && seatindex >= 0 && seatindex < 4) {
+            list[dayindex][seatindex].cancel();
+        }
+    }
 
 //Sarahs edits: *****************************
 // How many avaliable seat we have?
@@ -72,7 +75,7 @@ public void cancelSeat(String classType, int seatindex, int dayindex)
 //    return c;
 //}
 //
-//// مصفوفة 7 عناصر: المتاح لكل يوم
+    //// مصفوفة 7 عناصر: المتاح لكل يوم
 //public synchronized int[] countAvailablePerDay(String classType) {
 //    int[] res = new int[7];
 //    for (int d = 0; d < 7; d++) res[d] = countAvailable(classType, d);
@@ -127,10 +130,9 @@ public void cancelSeat(String classType, int seatindex, int dayindex)
 //}
 
 //*************************************************88
-public String getSchedule()
-{
-    return String.format("Train ID: %s, From: %s, To: %s",trainID, source,destination);
-}
+public String getSchedule() {
+        return String.format("Train ID: %s, From: %s, To: %s", trainID, source, destination);
+    }
 
     public String getTrainID() {
         return trainID;
@@ -144,4 +146,4 @@ public String getSchedule()
         return destination;
     }
 
-} 
+}

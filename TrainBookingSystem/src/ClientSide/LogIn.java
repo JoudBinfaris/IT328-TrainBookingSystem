@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author sarah
@@ -13,7 +12,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class LogIn extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LogIn.class.getName());
 
     /**
@@ -21,14 +20,15 @@ public class LogIn extends javax.swing.JFrame {
      */
     String passward_;
     String username;
-        private Client client;
+    private Client client;
 
     public LogIn() {
-       initComponents();
+        initComponents();
         setLocationRelativeTo(null);
-    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
-    public LogIn(Client client){
+
+    public LogIn(Client client) {
         this.client = client;
         initComponents();
     }
@@ -139,19 +139,19 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_EmailActionPerformed
 
     private void passwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwardActionPerformed
-         //passward_=passward.getText();
+        //passward_=passward.getText();
 
     }//GEN-LAST:event_passwardActionPerformed
 
     private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
-    username = Email.getText();
-    passward_ = passward.getText();
+        username = Email.getText();
+        passward_ = passward.getText();
         try {
             client.login(username, passward_);
             JOptionPane.showMessageDialog(this, "Logged in successfully.");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Login failed: " + ex.getMessage());
-    }
+        }
     }//GEN-LAST:event_connectActionPerformed
 
     /**

@@ -8,23 +8,22 @@ package ServerSide;
  *
  * @author imusn
  */
-
 import java.util.*;
 
+public class Reservation {
 
-public class Reservation{
     private String username;
     private String trainID;
     private String classType;
     private int seatindex;
     private int dayindex;
-    public  Reservation(String username, String trainID, String classType, int seatindex, int dayindex)
-    {
-        this.username=username;
-        this.dayindex=dayindex;
-        this.seatindex=seatindex;
-        this.classType=classType;
-        this.trainID=trainID;
+
+    public Reservation(String username, String trainID, String classType, int seatindex, int dayindex) {
+        this.username = username;
+        this.dayindex = dayindex;
+        this.seatindex = seatindex;
+        this.classType = classType;
+        this.trainID = trainID;
     }
 
     public String getUsername() {
@@ -46,10 +45,9 @@ public class Reservation{
     public int getDayindex() {
         return dayindex;
     }
-    public String toString(){
-        return this.username+ "Train:"+this.trainID+"("+this.classType+"Seat No:"+(this.seatindex+1)+") Day"+(this.dayindex+1);
+
+    public String toString() {
+        return this.username + "Train:" + this.trainID + "(" + this.classType + "Seat No:" + (this.seatindex + 1) + ") Day" + (this.dayindex + 1);
     }
-            
-    
 
 }

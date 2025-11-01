@@ -3,26 +3,25 @@
  * @author sarah
  */
 package ClientSide;
+
 import java.net.Socket;
 import ClientSide.Client;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
-
 public class NetLab extends javax.swing.JFrame {
-    
-    
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(NetLab.class.getName());
 
     /**
      * Creates new form NetLab
      */
     public NetLab() {
-            initComponents();
-            setLocationRelativeTo(null);
-    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-           }    
+        initComponents();
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    }
+
     public static void main(String args[]) {
         //To show the frame when the file run
         java.awt.EventQueue.invokeLater(() -> new NetLab().setVisible(true));
@@ -123,30 +122,30 @@ public class NetLab extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     //Button for sign up:
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      Client client = new Client();
+        Client client = new Client();
         try {
             client.connect("localhost", 9090);
-            SignUp signobj = new SignUp(client);  
+            SignUp signobj = new SignUp(client);
             signobj.setVisible(true);
-            dispose(); 
-            JOptionPane.showMessageDialog(this,"Connicaton done successfully!");
+            dispose();
+            JOptionPane.showMessageDialog(this, "Connicaton done successfully!");
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Connicaton fealid"+ ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Connicaton fealid" + ex.getMessage());
         }
-          
+
     }//GEN-LAST:event_jButton1ActionPerformed
     //Button for login:
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      Client client = new Client();
+        Client client = new Client();
         try {
             client.connect("localhost", 9090);
-            LogIn logobj = new LogIn(client);  
+            LogIn logobj = new LogIn(client);
             logobj.setVisible(true);
-      dispose();
+            dispose();
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Connicaton fealid"+ ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Connicaton fealid" + ex.getMessage());
         }
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
     //Exit buttom:
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -156,7 +155,6 @@ public class NetLab extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

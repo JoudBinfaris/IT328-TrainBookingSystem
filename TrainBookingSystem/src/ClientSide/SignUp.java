@@ -2,30 +2,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author sarah
  */
 package ClientSide;
+
 import ClientSide.Client;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class SignUp extends javax.swing.JFrame {
+
     //private Client client; 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SignUp.class.getName());
     private Client client;
+
     /**
      * Creates new form SignUp
      */
     public SignUp() {
-       initComponents();
+        initComponents();
         setLocationRelativeTo(null);
-    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
     }
-    public SignUp(Client client){
+
+    public SignUp(Client client) {
         this.client = client;
         initComponents();
         setLocationRelativeTo(null);
@@ -33,7 +36,7 @@ public class SignUp extends javax.swing.JFrame {
     }
     String passward_;
     String username;
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -126,28 +129,27 @@ public class SignUp extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
-       
+
     }//GEN-LAST:event_emailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         username = email.getText();
-         passward_ = passward.getText();
-        if( username.isEmpty() || passward_.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Please fill the blanks");
-                return;
+        username = email.getText();
+        passward_ = passward.getText();
+        if (username.isEmpty() || passward_.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill the blanks");
+            return;
         }
-            client.sendLine("SIGNUP");
-            client.sendLine(username+" "+passward_);
-            new SourceDestination(client).setVisible(true);
-            JOptionPane.showMessageDialog(this, "sign-up done successfully!");
-            dispose();
+        client.sendLine("SIGNUP");
+        client.sendLine(username + " " + passward_);
+        new SourceDestination(client).setVisible(true);
+        JOptionPane.showMessageDialog(this, "sign-up done successfully!");
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void passwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwardActionPerformed
 //username=email.getText();     }//GEN-LAST:event_passwardActionPerformed
 
     }
-            
 
 //    /**
 //     * @param args the command line arguments
