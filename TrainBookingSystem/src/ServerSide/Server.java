@@ -182,8 +182,15 @@ class ClientHandler implements Runnable {
                 //reading Day:
                 System.out.println("Day:");
                 String dayy = in.readLine();
-                System.out.println(dayy);
-                int day = -1;
+                         System.out.println("Resceives day:" + dayy);
+
+                int day = 0;
+                try{
+                    day=Integer.parseInt(dayy.trim());
+                
+              
+                }
+                catch(NumberFormatException e){
                 switch (dayy) {
                     case "Sunday":
                         day = 0;
@@ -207,10 +214,11 @@ class ClientHandler implements Runnable {
                         day = 6;
                         break;
                     default:
-                        day = -1;
+                        day = 0;
+                }
                 }
 
-
+//hellojhiyguf
                 //getting availability and sending it for gui to display it  
                  sendAvail( t,  c,  day);
                
