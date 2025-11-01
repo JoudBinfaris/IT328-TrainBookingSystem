@@ -20,7 +20,6 @@ import java.net.Socket;
  * @author sarah
  */
 public class Availability extends javax.swing.JFrame {
-
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Availability.class.getName());
 
     /**
@@ -67,7 +66,6 @@ public class Availability extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     //Insilize combo box with integer:
-
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -169,7 +167,6 @@ public class Availability extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     private void showAvalbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAvalbtnActionPerformed
         System.out.println("in  btnShowActionPerformed");
         loadAvailability();
