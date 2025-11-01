@@ -190,11 +190,9 @@ public class Availability extends javax.swing.JFrame {
             ArrayList<Integer> seats = client.requestAvailability();
             System.out.println("in  loadAvailability");
 
-            // هذا هو السطر اللي كنتِ تسألين عنه
             javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
             System.out.println("passed ");
 
-            // أضفنا النصوص اللي تمثل المقاعد
             for (int s : seats) {
                 if (s > 0) {
                     model.addElement("Seat Number " + s);
@@ -222,11 +220,7 @@ public class Availability extends javax.swing.JFrame {
     private void bookbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookbtnActionPerformed
 
         System.out.println("In bookbtnActionPerformed");
-
-        //int d;
-        //client.sendLine(dayy);
-        //System.out.println("Yes am selected " + d);
-        //client.sendLine(dayy); 
+        
         String n = String.valueOf(seatcb.getSelectedItem());
         System.out.print("Seat number:");
         System.out.println(n);
@@ -245,6 +239,7 @@ public class Availability extends javax.swing.JFrame {
                 client.sendLine("CONFIRM");
 
                 String check = client.readLine();
+                JOptionPane.showMessageDialog(this, "Booking confirmed successfully!");
                 if (check.equals("done")) {
                     dispose();
                 }
