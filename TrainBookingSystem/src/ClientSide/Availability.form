@@ -55,7 +55,7 @@
                       <Component id="bookbtn" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="69" max="32767" attributes="0"/>
+              <EmptySpace pref="62" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -101,7 +101,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="showAvalbtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Show available seat"/>
+        <Property name="text" type="java.lang.String" value="Show available seats"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showAvalbtnActionPerformed"/>

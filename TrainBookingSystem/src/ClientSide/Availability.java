@@ -42,6 +42,8 @@ public class Availability extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+         if( changeMode==true)
+        Daycb.setEnabled(false);
     }
 
     /**
@@ -71,7 +73,7 @@ public class Availability extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("1)Choose a day:");
 
-        showAvalbtn.setText("Show available seat");
+        showAvalbtn.setText("Show available seats");
         showAvalbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showAvalbtnActionPerformed(evt);
@@ -129,7 +131,7 @@ public class Availability extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(159, 159, 159)
                         .addComponent(bookbtn)))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,12 +159,14 @@ public class Availability extends javax.swing.JFrame {
     private void showAvalbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAvalbtnActionPerformed
         System.out.println("in  btnShowActionPerformed");
         loadAvailability();
-
+        showAvalbtn.setEnabled(false);
+        Daycb.setEnabled(false);
     }//GEN-LAST:event_showAvalbtnActionPerformed
     private void loadAvailability() {
         try {
             if( changeMode==false)
             {
+            
             int dayy = Daycb.getSelectedIndex();
             System.out.print("day:");
             System.out.println(dayy);
@@ -189,7 +193,8 @@ public class Availability extends javax.swing.JFrame {
 
             if (!hasAny) {
                 javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
-                //dispose();  //SourceDestination.this.
+                dispose();  
+                //SourceDestination.this.
                 //new SourceDestination(client).setVisible(true);
             }
 
@@ -198,7 +203,7 @@ public class Availability extends javax.swing.JFrame {
         }
     }
     private void DaycbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DaycbActionPerformed
-
+        Daycb.setEnabled(false);
     }//GEN-LAST:event_DaycbActionPerformed
 
     private void bookbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookbtnActionPerformed
