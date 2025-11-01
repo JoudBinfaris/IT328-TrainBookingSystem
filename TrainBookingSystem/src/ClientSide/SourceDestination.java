@@ -162,7 +162,6 @@ public class SourceDestination extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-
         String src = String.valueOf(source.getSelectedItem());
          client.sendLine(src);
         String des = String.valueOf(Destination.getSelectedItem());
@@ -172,7 +171,7 @@ public class SourceDestination extends javax.swing.JFrame {
         client.sendLine(cls);
 
         if (src.equals(des)) {
-           JOptionPane.showMessageDialog(this, "Src =Des canot complete");
+            JOptionPane.showMessageDialog(this, "Src =Des canot complete");
             return;
         }
         if ((src.equals("Dammam") && des.equals("Jeddah")) 

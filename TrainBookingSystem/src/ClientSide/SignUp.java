@@ -20,8 +20,8 @@ public class SignUp extends javax.swing.JFrame {
      * Creates new form SignUp
      */
     public SignUp() {
-       initComponents();
-        setLocationRelativeTo(null);
+    initComponents();
+    setLocationRelativeTo(null);
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
     }
@@ -70,7 +70,7 @@ public class SignUp extends javax.swing.JFrame {
         jLabel3.setText("Email:");
         jLabel3.setToolTipText("");
 
-        jButton1.setText("Sign up");
+        jButton1.setText("Register");
         jButton1.setActionCommand("Sign Up");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,8 +93,24 @@ public class SignUp extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(109, 109, 109))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(116, 116, 116)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addComponent(jLabel2)
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passward, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(164, 164, 164)
+                        .addComponent(jButton1)))
+                .addContainerGap(77, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(82, 82, 82)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -126,7 +142,7 @@ public class SignUp extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
-       
+ 
     }//GEN-LAST:event_emailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -138,6 +154,7 @@ public class SignUp extends javax.swing.JFrame {
         }
             client.sendLine("SIGNUP");
             client.sendLine(username+" "+passward_);
+            JOptionPane.showMessageDialog(this, "sign-up done successfully!");
             new SourceDestination(client).setVisible(true);
             JOptionPane.showMessageDialog(this, "sign-up done successfully!");
             dispose();
