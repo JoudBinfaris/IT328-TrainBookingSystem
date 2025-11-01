@@ -126,8 +126,9 @@ public class NetLab extends javax.swing.JFrame {
         try {
             client.connect("localhost", 9090);
             SignUp signobj = new SignUp(client);  
-      signobj.setVisible(true);
-      dispose();    
+            signobj.setVisible(true);
+            dispose(); 
+            JOptionPane.showMessageDialog(this,"Connicaton done successfully!");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Connicaton fealid"+ ex.getMessage());
         }
