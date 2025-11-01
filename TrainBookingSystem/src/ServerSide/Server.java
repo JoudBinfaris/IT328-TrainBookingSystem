@@ -212,9 +212,18 @@ class ClientHandler implements Runnable {
                 }
             }
 
+<<<<<<< Updated upstream
 //hellojhiyguf
             //getting availability and sending it for gui to display it  
             sendAvail(t, c, day);
+=======
+
+                //getting availability and sending it for gui to display it  
+                 sendAvail( t,  c,  day);
+               
+                // reading seat number
+                int snum=receiveSnum();
+>>>>>>> Stashed changes
 
             // reading seat number
             int snum = receiveSnum();

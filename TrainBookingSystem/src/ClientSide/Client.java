@@ -32,9 +32,7 @@ public class Client {
         return line;
     }
 
-    //  Wait until the server sends a specific prompt
-    //  Read line by line until prefix is found
-    //  Return the line if matched, or null if server closes
+  
     public String waitForPrompt(String prefix) throws IOException {
         String line;
         while ((line = readLine()) != null) {
@@ -45,25 +43,18 @@ public class Client {
         return null;
     }
 
-    // Send SIGNUP (first screen in GUI)
-    //    Server will immediately start prompting for reservation fields.
+   
     public void signup(String user, String pass) throws IOException {
         System.out.println("Sign up" + user + pass);
         sendLine("SIGNUP " + user + " " + pass);
-        // No return here; proceed to reserve(...) to answer prompts.
+       
     }
 
-    // 6- Send LOGIN (first screen in GUI)
-    //    NOTE: With our current server code, LOGIN path contains a busy loop.
-    //    It will be fixed next phase.
+   
     public void login(String user, String pass) throws IOException {
         sendLine("LOGIN " + user + " " + pass);
-        // No return here; proceed to reserve(...) to answer prompts.
+       
     }
-    //********************************888
-
-    //  Perform reservation by answering server prompts in order
-    //    Returns the final message from the server
     public String reserve(String source, String dest, String cls, String day1to7, String seat1to5) throws IOException {
 
         waitForPrompt("Source city:");
@@ -75,8 +66,7 @@ public class Client {
         waitForPrompt("class:");
         sendLine(cls); // "First" or "Economy"
 
-        //String availLine = waitForPrompt("AVAIL:");
-        //System.out.println("Avalibility from server: " + availLine);
+        
         waitForPrompt("Day:");
         sendLine(String.valueOf(day1to7));
 
@@ -98,20 +88,10 @@ public class Client {
 
         return waitForPrompt("AVAIL:");
     }
-    // يرجّع مصفوفة 7 عناصر تمثل التوفّر لكل يوم
+
 
     public ArrayList<Integer> requestAvailability() throws IOException {
-//    waitForPrompt("Source city:");
-//    sendLine(source);
-//
-//    waitForPrompt("Destination city:");
-//    sendLine(dest);
-//
-//    waitForPrompt("class:");
-//    sendLine(cls);
 
-//    String line = waitForPrompt("AVAIL:"); // مثال: AVAIL:[3, 1, 0, 5, 2, 0, 4]
-//    return parseAvail(line);
         System.out.println("in requestAvailability");
 
         ArrayList<Integer> seats = new ArrayList();
@@ -141,7 +121,7 @@ public class Client {
         return (result == null) ? "Server closed connection." : result;
     }
 
-// مساعد داخلي لتحويل "AVAIL:[...]" إلى int[]
+
     private int[] parseAvail(String availLine) {
         int l = availLine.indexOf('['), r = availLine.indexOf(']');
         if (l == -1 || r == -1 || r <= l) {
