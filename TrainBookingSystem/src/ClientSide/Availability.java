@@ -184,20 +184,7 @@ public class Availability extends javax.swing.JFrame {
         boolean hasAny = model.getSize() > 0;
         bookbtn.setEnabled(hasAny);
 
-            javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
-            System.out.println("passed ");
-
-            for (int s : seats) {
-                if (s > 0) {
-                    model.addElement("Seat Number " + s);
-                }
-
-            }
-
-            seatcb.setModel(model);
-
-            boolean hasAny = model.getSize() > 0;
-            bookbtn.setEnabled(hasAny);
+            
 
             if (!hasAny) {
                 javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
@@ -238,8 +225,6 @@ public class Availability extends javax.swing.JFrame {
                 }
             }
             client.disconnec();
-        } catch (IOException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Booking error: " + ex.getMessage());
         }
         catch (IOException ex) {
         javax.swing.JOptionPane.showMessageDialog(this, "Booking error: " + ex.getMessage());
