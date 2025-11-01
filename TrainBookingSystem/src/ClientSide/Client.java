@@ -11,7 +11,6 @@ public class Client {
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
-   
 
     // Connect to the server:
     public void connect(String host, int port) throws IOException {

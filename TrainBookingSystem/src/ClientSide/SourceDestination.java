@@ -174,7 +174,6 @@ public class SourceDestination extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Src =Des canot complete");
             return;
         }
-<<<<<<< HEAD
         if ((src.equals("Dammam") && des.equals("Jeddah")) 
          || (src.equals("Dammam") && des.equals("Alula"))
          || (src.equals("Jeddah") && des.equals("Alula")) 
@@ -184,9 +183,6 @@ public class SourceDestination extends javax.swing.JFrame {
          return;}
 
         new Availability(client, src, des, cls).setVisible(true);
-=======
-        new Availability(client, false).setVisible(true);
->>>>>>> 351c590fe6c0c3a681a92e4d5978f7f6de704865
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
