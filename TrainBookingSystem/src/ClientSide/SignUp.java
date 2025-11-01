@@ -24,14 +24,12 @@ public class SignUp extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-     
-      //client.connect("localhost", 5000);
-
     }
     public SignUp(Client client){
         this.client = client;
         initComponents();
-        
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
     String passward_;
     String username;
@@ -137,7 +135,7 @@ public class SignUp extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
-         //passward_=passward.getText();
+       
     }//GEN-LAST:event_emailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -147,15 +145,11 @@ public class SignUp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Please fill the blanks");
                 return;
         }
-//        try{
-//            client.signup(username, passward_);
             client.sendLine("SIGNUP");
             client.sendLine(username+" "+passward_);
             new SourceDestination(client).setVisible(true);
+            JOptionPane.showMessageDialog(this, "sign-up done successfully!");
             dispose();
-//        }catch( IOException ex){
-//            JOptionPane.showMessageDialog(this, "Sign up failed: " + ex.getMessage());
-//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void passwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwardActionPerformed
