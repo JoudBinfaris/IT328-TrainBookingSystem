@@ -160,10 +160,12 @@ public class Availability extends javax.swing.JFrame {
     }//GEN-LAST:event_showAvalbtnActionPerformed
     private void loadAvailability() {
     try {
+        if(!changeMode){
         int dayy = Daycb.getSelectedIndex();
         System.out.print("day:");
         System.out.println(dayy);
         client.sendLine(Integer.toString(dayy));
+        }
         
         ArrayList<Integer> seats = client.requestAvailability();
         System.out.println("in  loadAvailability");
