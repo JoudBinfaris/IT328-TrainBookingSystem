@@ -171,11 +171,11 @@ public class SourceDestination extends javax.swing.JFrame {
         client.sendLine(cls);
 
         if (src.equals(des)) {
-<<<<<<< HEAD
+
            JOptionPane.showMessageDialog(this, "Src =Des canot complete");
-=======
+
             JOptionPane.showMessageDialog(this, "Src =Des canot complete");
->>>>>>> main
+
             return;
         }
         if ((src.equals("Dammam") && des.equals("Jeddah")) 
@@ -185,13 +185,10 @@ public class SourceDestination extends javax.swing.JFrame {
          || src.equals(des)) {
          JOptionPane.showMessageDialog(this, "Sorry, no available route for this source and destination");
          return;}
-<<<<<<< HEAD
+
         
         new Availability(client, false).setVisible(true);
-=======
 
-        new Availability(client, src, des, cls).setVisible(true);
->>>>>>> main
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
