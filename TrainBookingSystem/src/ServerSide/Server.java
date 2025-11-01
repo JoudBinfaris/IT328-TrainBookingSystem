@@ -100,27 +100,18 @@ class ClientHandler implements Runnable {
     public void run() {
         try {
 
-     
-                //java.awt.EventQueue.invokeLater(() -> new NetLab().setVisible(true));
 
+                //reading SIGNUP or LOGIN and user info (username password)
                 String option = in.readLine();
                 String userinfo = in.readLine();
                 System.out.println(option + " " + userinfo);
 
-                //To take username:
-                //String str = "Seat Number 5";
-                //String username = option.substring(0, option.indexOf(" "));
-                //System.out.println(username);
-                //String username= sub
-//                System.out.println(allInfo);
-//
-//                int firstSpace = allInfo.indexOf(" ");
-//
-//                String option = allInfo.substring(0, firstSpace);   // SIGNUP or LOGIN
-//                String info = allInfo.substring(firstSpace + 1);  //username password
+                //Null safety check
                 if (option == null) {
                     option = "nope";
                 }
+                
+                //Null safety check
                 if (option.equals("SIGNUP")) {
                     User u1 = new User(userinfo);
                     users.add(u1);
@@ -128,20 +119,26 @@ class ClientHandler implements Runnable {
                     System.out.println("Total users: " + users.size());
                 }
 
-                //Source city:
+                //Reading Source city:
                 String sc = in.readLine();
-                //Destination city:
+                
+                //Reading Destination city:
                 String dc = in.readLine();
                 System.out.println(sc + " " + dc);
+                
+                //Null safety check
 
                 if (sc == null) {
                     sc = "nope";
                 }
+                //Null safety check
 
                 if (dc == null) {
                     dc = "nope";
                 }
-
+                
+                
+                //deciding train id based on route
                 String tn = "Nan";
                 if (sc.equals("Riyadh") && dc.equals("Jeddah")) {
                     tn = "1111";
@@ -154,7 +151,9 @@ class ClientHandler implements Runnable {
                 } else if (sc.equals("Riyadh") && dc.equals("Alula")) {
                     tn = "5555";
                 }
-
+                
+                
+                //choosing train object based on train id
                 Train t = switch (tn) {
                     case "1111" ->
                         t1;
@@ -175,11 +174,12 @@ class ClientHandler implements Runnable {
                    
                 }
 
+                //reading class (First or Economy)
                 System.out.println("class:");
                 String c = in.readLine();
                 System.out.println(c);
 
-                //Day:
+                //reading Day:
                 System.out.println("Day:");
                 String dayy = in.readLine();
                 System.out.println(dayy);
@@ -210,23 +210,11 @@ class ClientHandler implements Runnable {
                         day = 0;
                 }
 
-// ... بعد تحديد tn وقراءة c (الـclass) ...
-//                //get availability    
-//                Seat[] open = t.getAvailableSeats(c, day);
-//                int numOfSeats = open.length;
-//                if (numOfSeats == 0) {
-//                    System.out.println("No seats available on this day");
-//                } else {
-//
-//                    for (Seat s : open) {
-//                        out.println(s.getSeatnumber());
-//                    }
-//
-//                }
-//                out.println("END");
 
+                //getting availability and sending it for gui to display it  
                  sendAvail( t,  c,  day);
                
+                // reading seat number
                 int snum=receiveSnum();
 
 
@@ -235,8 +223,11 @@ class ClientHandler implements Runnable {
                 System.out.println(booked);
                 out.println(booked);
                 
+                //reading if the user pressed button book and checking if the reservation is availablle (value: CONFIRM or CHANGE)
                 String cmd = in.readLine();
                 
+                
+                //loop until client chooses available reservation
                 while(!cmd.equals("CONFIRM")){
                 sendAvail( t,  c,  day);
                 snum=receiveSnum();
@@ -253,7 +244,7 @@ class ClientHandler implements Runnable {
 
                 
                
-                 
+                //book it and send confirmation to gui
                 if (cmd.equals("CONFIRM")) {
                     t.reserveSeat(c, snum, day, userinfo);
                     Reservation res = new Reservation(userinfo, tn, c, snum, day);
@@ -266,24 +257,6 @@ class ClientHandler implements Runnable {
 
                 
 
-            
-         //// 1) أرسل التوفّر لكل يوم: صيغة بسيطة 7 أرقام
-//int[] counts = t.countAvailablePerDay(c);
-//out.println("AVAIL:" + Arrays.toString(counts)); // مثال: AVAIL:[3, 1, 0, 5, 2, 0, 4]
-//
-//// 2) الآن اطلب اليوم
-//out.println("day:");
-//int d1 = Integer.parseInt(in.readLine()) - 1;
-//
-//// 3) احجز أول مقعد متاح تلقائيًا في هذا اليوم
-//int seatIdx = t.reserveNextAvailable(c, d1, info);
-//if (seatIdx >= 0) {
-//    Reservation r = new Reservation(info, tn, c, seatIdx, d1);
-//    reservations.add(r);
-//    out.println("Reservation confirmed! seat=" + (seatIdx + 1));
-//} else {
-//    out.println("No seats available on this day");
-//}
 
 
             
@@ -301,7 +274,7 @@ class ClientHandler implements Runnable {
         }
     }
 
-
+    //searches in arraylist of reservation for the same reservation
     private boolean searchRes(String tn, String c, int snum, int day) {
         System.out.println("in search");
         for (Reservation r : reservations) {
@@ -314,7 +287,8 @@ class ClientHandler implements Runnable {
         return false;
 
     }
-    
+     
+    //sends to gui the availability so it can display is
     private void sendAvail(Train t, String c, int day) {
         System.out.println("in search");
         //get availability    
