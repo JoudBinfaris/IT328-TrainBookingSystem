@@ -36,8 +36,6 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import ClientSide.*;
-import java.io.IOException;
 import ClientSide.Client;
 
 public class Server {
@@ -100,13 +98,11 @@ class ClientHandler implements Runnable {
     public void run() {
         try {
 
-     
+            while (true) {
                 //java.awt.EventQueue.invokeLater(() -> new NetLab().setVisible(true));
 
                 String option = in.readLine();
                 String userinfo = in.readLine();
-                System.out.println(option + " " + userinfo);
-
                 System.out.println(option+" " + userinfo);
                 
                 //To take username:
@@ -122,9 +118,6 @@ class ClientHandler implements Runnable {
 //
 //                String option = allInfo.substring(0, firstSpace);   // SIGNUP or LOGIN
 //                String info = allInfo.substring(firstSpace + 1);  //username password
-                if (option == null) {
-                    option = "nope";
-                }
         
                  if(option==null)
                     option="nope";
@@ -179,6 +172,7 @@ class ClientHandler implements Runnable {
 
                 if (t == null) {
                     System.out.println("No train on this route");
+                    continue;
                 }
                 
 
@@ -218,21 +212,6 @@ class ClientHandler implements Runnable {
         }
 
 // ... بعد تحديد tn وقراءة c (الـclass) ...
-                 sendAvail( t,  c,  day);
-               
-                int snum=receiveSnum();
-
-
-                //double check
-                String booked = searchRes(tn, c, snum, day) ? "true" : "false";
-                System.out.println(booked);
-                out.println(booked);
-                
-                String cmd = in.readLine();
-                
-                while(!cmd.equals("CONFIRM")){
-                sendAvail( t,  c,  day);
-                snum=receiveSnum();
            
 
                 //get availability    
@@ -250,10 +229,7 @@ class ClientHandler implements Runnable {
                 }
                 out.println("END");
                 
-                booked = searchRes(tn, c, snum, day) ? "true" : "false";
-                out.println(booked);
                 
-                cmd = in.readLine();
                 //out.print("Day:" + day);
                //System.out.println(day);
                 
@@ -291,17 +267,8 @@ class ClientHandler implements Runnable {
                 }
                 
                
+                 break;
                  
-                if (cmd.equals("CONFIRM")) {
-                    t.reserveSeat(c, snum, day, userinfo);
-                    Reservation res = new Reservation(userinfo, tn, c, snum, day);
-                    reservations.add(res);
-                    System.out.println("Its works");
-                    out.println("done");
-                    
-
-                }
-
                 
                     
 
@@ -327,84 +294,16 @@ class ClientHandler implements Runnable {
 //}
 
 
-            
-        } catch (IOException e) {
-            System.err.println("IO exception in new client class");
-            System.err.println(e.getStackTrace());
-        } finally {
-            out.close();
-            clients.remove(this);
-            try {
-                in.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
             }
-        }
-    }
+        } catch (IOException e
 
-
-    private boolean searchRes(String tn, String c, int snum, int day) {
-        System.out.println("in search");
-        for (Reservation r : reservations) {
-            if (tn.equals(r.getTrainID()) && c.equals(r.getClassType()) && r.getSeatindex() == snum && r.getDayindex() == day) {
-                return true;
-            }
-        }
-
-        System.out.println("finished search");
-        return false;
-
-    }
     
-    private void sendAvail(Train t, String c, int day) {
-        System.out.println("in search");
-        //get availability    
-                Seat[] open = t.getAvailableSeats(c, day);
-                int numOfSeats = open.length;
-                if (numOfSeats == 0) {
-                    System.out.println("No seats available on this day");
-                } else {
-
-                    for (Seat s : open) {
-                        out.println(s.getSeatnumber());
-                    }
         ) {
             System.err.println("IO exception in new client class");
         System.err.println(e.getStackTrace());
     }
 
-                }
-                out.println("END");
     
-}
-    private int receiveSnum() {
-           System.out.println("Seat:");
-           int snum = -1;
-               try{ 
-                   String seat = in.readLine();
-               
-              
-                System.out.println(seat);
-                
-                switch (seat) {
-                    case "Seat Number 1":
-                        snum = 0;
-                        break;
-                    case "Seat Number 2":
-                        snum = 1;
-                        break;
-                    case "Seat Number 3":
-                        snum = 2;
-                        break;
-                    case "Seat Number 4":
-                        snum = 3;
-                        break;
-                    default:
-                        snum = -1;
-                }
-                
-               } catch (IOException ex) {
-            System.out.print(" error: " + ex.getMessage());
         finally {
             out.close();
         clients.remove(this);
