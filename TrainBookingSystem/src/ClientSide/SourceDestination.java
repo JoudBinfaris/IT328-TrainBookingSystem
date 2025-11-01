@@ -190,6 +190,7 @@ public class SourceDestination extends javax.swing.JFrame {
         new Availability(client, false).setVisible(true);
 =======
 
+        new Availability(client, src, des, cls).setVisible(true);
 >>>>>>> main
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
