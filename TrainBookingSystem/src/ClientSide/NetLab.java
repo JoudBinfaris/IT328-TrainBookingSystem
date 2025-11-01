@@ -11,18 +11,23 @@ import javax.swing.JOptionPane;
 
 public class NetLab extends javax.swing.JFrame {
     
-    
-    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(NetLab.class.getName());
 
     /**
      * Creates new form NetLab
      */
     public NetLab() {
+<<<<<<< HEAD
             initComponents();
             setLocationRelativeTo(null);
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
            }    
+=======
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        initComponents();
+        setLocationRelativeTo(null);
+        }    
+>>>>>>> main
     public static void main(String args[]) {
         //To show the frame when the file run
         java.awt.EventQueue.invokeLater(() -> new NetLab().setVisible(true));
@@ -56,11 +61,18 @@ public class NetLab extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+<<<<<<< HEAD
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Welcome to Train Reservation System!");
         jLabel1.setToolTipText("");
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+=======
+        jLabel1.setFont(new java.awt.Font("PMingLiU-ExtB", 1, 24)); // NOI18N
+        jLabel1.setText("Welcome to Train Reservation System!");
+        jLabel1.setToolTipText("");
+
+>>>>>>> main
         jButton1.setText("Sign Up");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,7 +80,10 @@ public class NetLab extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< HEAD
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+=======
+>>>>>>> main
         jButton2.setText("Log In");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,7 +91,10 @@ public class NetLab extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< HEAD
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+=======
+>>>>>>> main
         jButton3.setText("Exit");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,6 +109,7 @@ public class NetLab extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+<<<<<<< HEAD
                         .addGap(86, 86, 86)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(61, 61, 61)
@@ -99,6 +118,21 @@ public class NetLab extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton3)))
+=======
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(115, 115, 115)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 25, Short.MAX_VALUE)))
+>>>>>>> main
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -108,13 +142,13 @@ public class NetLab extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(106, 106, 106)
+                .addGap(94, 94, 94)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addContainerGap())
         );
@@ -128,27 +162,31 @@ public class NetLab extends javax.swing.JFrame {
             client.connect("localhost", 9090);
             SignUp signobj = new SignUp(client);  
             signobj.setVisible(true);
+<<<<<<< HEAD
             dispose(); 
+=======
+            dispose();    
+>>>>>>> main
             JOptionPane.showMessageDialog(this,"Connicaton done successfully!");
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Connicaton fealid"+ ex.getMessage());
         }
           
     }//GEN-LAST:event_jButton1ActionPerformed
-    //Button for login:
+    //Button for login: (NOT IN PHASE 1) We add it preparing for phase 2
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
       Client client = new Client();
         try {
             client.connect("localhost", 9090);
             LogIn logobj = new LogIn(client);  
             logobj.setVisible(true);
-      dispose();
+            dispose();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Connicaton fealid"+ ex.getMessage());
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
-    //Exit buttom:
+    //Exit button:
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton3ActionPerformed

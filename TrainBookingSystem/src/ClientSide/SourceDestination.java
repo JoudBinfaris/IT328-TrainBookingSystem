@@ -162,7 +162,6 @@ public class SourceDestination extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-
         String src = String.valueOf(source.getSelectedItem());
          client.sendLine(src);
         String des = String.valueOf(Destination.getSelectedItem());
@@ -172,7 +171,11 @@ public class SourceDestination extends javax.swing.JFrame {
         client.sendLine(cls);
 
         if (src.equals(des)) {
+<<<<<<< HEAD
            JOptionPane.showMessageDialog(this, "Src =Des canot complete");
+=======
+            JOptionPane.showMessageDialog(this, "Src =Des canot complete");
+>>>>>>> main
             return;
         }
         if ((src.equals("Dammam") && des.equals("Jeddah")) 
@@ -182,8 +185,12 @@ public class SourceDestination extends javax.swing.JFrame {
          || src.equals(des)) {
          JOptionPane.showMessageDialog(this, "Sorry, no available route for this source and destination");
          return;}
+<<<<<<< HEAD
         
         new Availability(client, false).setVisible(true);
+=======
+
+>>>>>>> main
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

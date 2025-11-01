@@ -24,8 +24,8 @@ public class LogIn extends javax.swing.JFrame {
         private Client client;
 
     public LogIn() {
-       initComponents();
-        setLocationRelativeTo(null);
+    initComponents();
+    setLocationRelativeTo(null);
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
     public LogIn(Client client){
@@ -106,7 +106,7 @@ public class LogIn extends javax.swing.JFrame {
                         .addGap(125, 125, 125)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
+                        .addGap(159, 159, 159)
                         .addComponent(connect)))
                 .addContainerGap(90, Short.MAX_VALUE))
         );
@@ -135,12 +135,11 @@ public class LogIn extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
-        //username=Email.getText();
+
     }//GEN-LAST:event_EmailActionPerformed
 
     private void passwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwardActionPerformed
-         //passward_=passward.getText();
-
+      
     }//GEN-LAST:event_passwardActionPerformed
 
     private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed

@@ -38,6 +38,7 @@ import java.util.logging.Logger;
 
 import ClientSide.*;
 import java.io.IOException;
+import ClientSide.Client;
 
 public class Server {
 
@@ -93,7 +94,6 @@ class ClientHandler implements Runnable {
         this.t5 = t5;
         in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         out = new PrintWriter(client.getOutputStream(), true);
-
     }
 
     @Override
@@ -107,11 +107,15 @@ class ClientHandler implements Runnable {
                 String userinfo = in.readLine();
                 System.out.println(option + " " + userinfo);
 
+                System.out.println(option+" " + userinfo);
+                
                 //To take username:
                 //String str = "Seat Number 5";
                 //String username = option.substring(0, option.indexOf(" "));
                 //System.out.println(username);
                 //String username= sub
+
+                                
 //                System.out.println(allInfo);
 //
 //                int firstSpace = allInfo.indexOf(" ");
@@ -121,6 +125,9 @@ class ClientHandler implements Runnable {
                 if (option == null) {
                     option = "nope";
                 }
+        
+                 if(option==null)
+                    option="nope";
                 if (option.equals("SIGNUP")) {
                     User u1 = new User(userinfo);
                     users.add(u1);
@@ -128,20 +135,20 @@ class ClientHandler implements Runnable {
                     System.out.println("Total users: " + users.size());
                 }
 
+
                 //Source city:
                 String sc = in.readLine();
                 //Destination city:
                 String dc = in.readLine();
-                System.out.println(sc + " " + dc);
-
-                if (sc == null) {
-                    sc = "nope";
-                }
-
-                if (dc == null) {
-                    dc = "nope";
-                }
-
+                System.out.println(sc +" "+dc);
+                
+                 if(sc==null)
+                    sc="nope";
+                 
+                  if(dc==null)
+                    dc="nope";
+                  
+                  
                 String tn = "Nan";
                 if (sc.equals("Riyadh") && dc.equals("Jeddah")) {
                     tn = "1111";
@@ -154,8 +161,8 @@ class ClientHandler implements Runnable {
                 } else if (sc.equals("Riyadh") && dc.equals("Alula")) {
                     tn = "5555";
                 }
-
-                Train t = switch (tn) {
+                
+                     Train t = switch (tn) {
                     case "1111" ->
                         t1;
                     case "2222" ->
@@ -172,59 +179,45 @@ class ClientHandler implements Runnable {
 
                 if (t == null) {
                     System.out.println("No train on this route");
-                   
                 }
+                
 
                 System.out.println("class:");
                 String c = in.readLine();
                 System.out.println(c);
-
+                
                 //Day:
                 System.out.println("Day:");
-                String dayy = in.readLine();
+                String dayy=in.readLine();
                 System.out.println(dayy);
-                int day = -1;
-                switch (dayy) {
-                    case "Sunday":
-                        day = 0;
-                        break;
-                    case "Monday":
-                        day = 1;
-                        break;
-                    case "Tuesday":
-                        day = 2;
-                        break;
-                    case "Wednesday":
-                        day = 3;
-                        break;
-                    case "Thursday":
-                        day = 4;
-                        break;
-                    case "Friday":
-                        day = 5;
-                        break;
-                    case "Saturday":
-                        day = 6;
-                        break;
-                    default:
-                        day = 0;
-                }
+                int day=-1;
+                switch(dayy){
+            case"Sunday":
+                day=0;
+                break;
+            case "Monday":
+                day=1;
+                break;
+            case "Tuesday":
+                day=2;
+                break;
+            case "Wednesday":
+                day=3;
+                break;
+            case "Thursday":
+                day=4;
+                break;
+            case "Friday":
+                day=5;
+                break;
+            case "Saturday":
+                day=6;
+                break;
+            default:
+                day = 0;
+        }
 
 // ... بعد تحديد tn وقراءة c (الـclass) ...
-//                //get availability    
-//                Seat[] open = t.getAvailableSeats(c, day);
-//                int numOfSeats = open.length;
-//                if (numOfSeats == 0) {
-//                    System.out.println("No seats available on this day");
-//                } else {
-//
-//                    for (Seat s : open) {
-//                        out.println(s.getSeatnumber());
-//                    }
-//
-//                }
-//                out.println("END");
-
                  sendAvail( t,  c,  day);
                
                 int snum=receiveSnum();
@@ -240,17 +233,62 @@ class ClientHandler implements Runnable {
                 while(!cmd.equals("CONFIRM")){
                 sendAvail( t,  c,  day);
                 snum=receiveSnum();
+           
+
+                //get availability    
+                Seat[] open=t.getAvailableSeats(c, day);
+                int numOfSeats=open.length;
+                if(numOfSeats==0)
+                System.out.println("No seats available on this day");
+                else
+                {
+                    
+                    
+                    for(Seat s:open)
+                        out.println(s.getSeatnumber());
+                   
+                }
+                out.println("END");
                 
                 booked = searchRes(tn, c, snum, day) ? "true" : "false";
                 out.println(booked);
                 
                 cmd = in.readLine();
+                //out.print("Day:" + day);
+               //System.out.println(day);
                 
                 
+                System.out.println("Seat:");
+                String seat = in.readLine();
+                System.out.println(seat);
+                int snum = 0;
+                switch(seat){
+            case "Seat Number 1":
+                snum=0;
+                break;
+            case "Seat Number 2":
+                snum=1;
+                break;
+            case "Seat Number 3":
+                snum=2;
+                break;
+            case "Seat Number 4":
+                snum=3;
+                break;
+            default:
+                snum=0;
+                        }
+                //int seatnum = Integer.parseInt(seat);
+                String book = in.readLine();
+                if(book == null)
+                    book="nope";
+                if(book.equals("Book")){
+                     t.reserveSeat(c, snum, day, userinfo);
+                     Reservation res=new Reservation(userinfo, tn, c,  snum, day);
+                     reservations.add(res);
+                     System.out.println("Its works");
+                      out.println("done");
                 }
-                
-                
-
                 
                
                  
@@ -265,9 +303,12 @@ class ClientHandler implements Runnable {
                 }
 
                 
+                    
 
             
-         //// 1) أرسل التوفّر لكل يوم: صيغة بسيطة 7 أرقام
+        
+    
+    //// 1) أرسل التوفّر لكل يوم: صيغة بسيطة 7 أرقام
 //int[] counts = t.countAvailablePerDay(c);
 //out.println("AVAIL:" + Arrays.toString(counts)); // مثال: AVAIL:[3, 1, 0, 5, 2, 0, 4]
 //
@@ -327,6 +368,10 @@ class ClientHandler implements Runnable {
                     for (Seat s : open) {
                         out.println(s.getSeatnumber());
                     }
+        ) {
+            System.err.println("IO exception in new client class");
+        System.err.println(e.getStackTrace());
+    }
 
                 }
                 out.println("END");
@@ -360,20 +405,15 @@ class ClientHandler implements Runnable {
                 
                } catch (IOException ex) {
             System.out.print(" error: " + ex.getMessage());
+        finally {
+            out.close();
+        clients.remove(this);
+        try {
+            in.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
-    return snum;
     }
 }
 
-                
-                
-    
-
-    
-
-
-
- 
-
-
-
+}

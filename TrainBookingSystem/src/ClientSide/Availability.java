@@ -8,19 +8,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import ClientSide.*;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.Socket;
+import ClientSide.Client;
+
 
 /**
  *
  * @author sarah
  */
 public class Availability extends javax.swing.JFrame {
-
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Availability.class.getName());
 
     /**
@@ -32,6 +28,7 @@ public class Availability extends javax.swing.JFrame {
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
     //Declaration of the var:
+<<<<<<< HEAD
 
     Client client;
     boolean changeMode;
@@ -42,6 +39,18 @@ public class Availability extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+=======
+    String src, dest, cls;
+    Client  client ;
+    public Availability(Client client, String source, String destination, String class_) {
+    this.client = client;
+    src =source;
+    dest =destination;
+    cls = class_;
+    initComponents(); 
+    setLocationRelativeTo(null);
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+>>>>>>> main
     }
 
     /**
@@ -51,7 +60,7 @@ public class Availability extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     //Insilize combo box with integer:
-
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -113,6 +122,7 @@ public class Availability extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
+<<<<<<< HEAD
                             .addGap(112, 112, 112)
                             .addComponent(seatcb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -130,13 +140,40 @@ public class Availability extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))))
                 .addContainerGap(69, Short.MAX_VALUE))
+=======
+                            .addGap(54, 54, 54)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(59, 59, 59)
+                                    .addComponent(seatcb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(48, 48, 48)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel2)
+                                .addComponent(Daycb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(24, 24, 24)
+                            .addComponent(showAvalbtn)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(bookbtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(102, 102, 102)
+                        .addComponent(jLabel3)))
+                .addContainerGap(60, Short.MAX_VALUE))
+>>>>>>> main
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+<<<<<<< HEAD
                 .addContainerGap(54, Short.MAX_VALUE)
+=======
+                .addGap(31, 31, 31)
+>>>>>>> main
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -146,32 +183,51 @@ public class Availability extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(seatcb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+<<<<<<< HEAD
                 .addGap(18, 18, 18)
                 .addComponent(bookbtn)
                 .addGap(38, 38, 38))
+=======
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addComponent(bookbtn)
+                .addGap(16, 16, 16))
+>>>>>>> main
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void showAvalbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAvalbtnActionPerformed
         System.out.println("in  btnShowActionPerformed");
         loadAvailability();
-
     }//GEN-LAST:event_showAvalbtnActionPerformed
     private void loadAvailability() {
-        try {
-            if( changeMode==false)
-            {
-            int dayy = Daycb.getSelectedIndex();
-            System.out.print("day:");
-            System.out.println(dayy);
-            client.sendLine(Integer.toString(dayy));
+    try {
+        int dayy = Daycb.getSelectedIndex();
+        System.out.print("day:");
+        System.out.println(dayy);
+        client.sendLine(Integer.toString(dayy));
+        
+        ArrayList<Integer> seats = client.requestAvailability();
+        System.out.println("in  loadAvailability");
+
+
+        javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
+        System.out.println("passed ");
+
+        // To fill seat combo:
+        for (int s : seats) {
+            if (s > 0) {
+                model.addElement("Seat Number " + s);
             }
+            
+        }
+        seatcb.setModel(model);
 
-            ArrayList<Integer> seats = client.requestAvailability();
-            System.out.println("in  loadAvailability");
+        boolean hasAny = model.getSize() > 0;
+        bookbtn.setEnabled(hasAny);
 
+<<<<<<< HEAD
             javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
             System.out.println("passed ");
 
@@ -190,19 +246,24 @@ public class Availability extends javax.swing.JFrame {
             if (!hasAny) {
                 javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
             }
+=======
+        if (!hasAny) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
+        }
+>>>>>>> main
 
         } catch (IOException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error loading availability: " + ex.getMessage());
+        javax.swing.JOptionPane.showMessageDialog(this, "Error loading availability: " + ex.getMessage());
         }
-    }
+}
     private void DaycbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DaycbActionPerformed
-
+       
     }//GEN-LAST:event_DaycbActionPerformed
 
     private void bookbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookbtnActionPerformed
-
         System.out.println("In bookbtnActionPerformed");
         
+<<<<<<< HEAD
         String n = String.valueOf(seatcb.getSelectedItem());
         System.out.print("Seat number:");
         System.out.println(n);
@@ -229,44 +290,30 @@ public class Availability extends javax.swing.JFrame {
             client.disconnec();
         } catch (IOException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, "Booking error: " + ex.getMessage());
+=======
+        String n =String.valueOf(seatcb.getSelectedItem());
+        System.out.print("Seat number:");
+        System.out.println(n);
+        client.sendLine(n);
+        
+        client.sendLine("Book");
+        
+        try{
+        String check=client.readLine();
+        JOptionPane.showMessageDialog(this, "Booking confirmed successfully!");
+         if(check.equals("done"))
+            dispose();
+         client.disconnec();
+>>>>>>> main
         }
-
-//        int snum = 0;
-//        switch(n){
-//            case "Seat Number 1":
-//                snum=0;
-//                break;
-//            case "Seat Number 2":
-//                snum=1;
-//                break;
-//            case "Seat Number 3":
-//                snum=2;
-//                break;
-//            case "Seat Number 4":
-//                snum=3;
-//                break;
-//            default:
-//                snum=0;
-//                        }
-//        if(snum ==0)
-//            javax.swing.JOptionPane.showMessageDialog(this, "Please select a day/trip first.");
-//        return;
-//          try {
-//        // نستخدم دالتك الحالية reserve(...) لأنها ترسل: Source, Dest, Class, ثم تقرأ AVAIL, ثم ترسل day
-//        // قيمة "seat" ما تُستخدم بالسيرفر الآن، فأرسلي أي قيمة مثل "1"
-//        String result = client.reserve(src, dest, cls, n, String.valueOf(dayy));
-//        javax.swing.JOptionPane.showMessageDialog(this, result);
-//        if (result.toLowerCase().contains("confirmed")) {
-//            dispose(); // سكري الفريم بعد نجاح الحجز
-//        }}
-//    }
-//        client.sendLine(n);
-        //client.sendLine("BOOK");
-
+        catch (IOException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Booking error: " + ex.getMessage());
+        }
+        
     }//GEN-LAST:event_bookbtnActionPerformed
 
     private void seatcbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seatcbActionPerformed
-
+       
     }//GEN-LAST:event_seatcbActionPerformed
 
     /**
@@ -293,40 +340,6 @@ public class Availability extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Availability().setVisible(true));
     }
-
-   
-
-    private void showaAvailability() {
-
-        try {
-            ArrayList<Integer> seats = client.requestAvailability();
-            System.out.println("in  loadAvailability");
-
-            // هذا هو السطر اللي كنتِ تسألين عنه
-            javax.swing.DefaultComboBoxModel<String> model = new javax.swing.DefaultComboBoxModel<>();
-            System.out.println("passed ");
-
-            // أضفنا النصوص اللي تمثل المقاعد
-            for (int s : seats) {
-                if (s > 0) {
-                    model.addElement("Seat Number " + s);
-                }
-            }
-
-            seatcb.setModel(model);
-
-            boolean hasAny = model.getSize() > 0;
-            bookbtn.setEnabled(hasAny);
-
-            if (!hasAny) {
-                javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
-            }
-
-        } catch (IOException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error loading availability: " + ex.getMessage());
-        }
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Daycb;
