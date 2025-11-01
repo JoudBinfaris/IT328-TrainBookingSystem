@@ -32,7 +32,7 @@ public class Availability extends javax.swing.JFrame {
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
     //Declaration of the var:
-
+  //hello
     Client client;
     boolean changeMode;
 
@@ -117,18 +117,18 @@ public class Availability extends javax.swing.JFrame {
                             .addComponent(seatcb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGap(73, 73, 73)
+                            .addGap(102, 102, 102)
                             .addComponent(Daycb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(24, 24, 24)
                             .addComponent(showAvalbtn)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(158, 158, 158)
-                        .addComponent(bookbtn))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(62, 62, 62)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2))))
+                            .addComponent(jLabel2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addComponent(bookbtn)))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -189,6 +189,8 @@ public class Availability extends javax.swing.JFrame {
 
             if (!hasAny) {
                 javax.swing.JOptionPane.showMessageDialog(this, "No available trips for this class/route.");
+                //dispose();  //SourceDestination.this.
+                //new SourceDestination(client).setVisible(true);
             }
 
         } catch (IOException ex) {
@@ -213,13 +215,15 @@ public class Availability extends javax.swing.JFrame {
             System.out.println(booked);
             if (booked.equals("true")) {
                 client.sendLine("CHANGE");
+                JOptionPane.showMessageDialog(this, "Seat already taken:(");
+                Availability.this.dispose();  
                 new Availability(client, true).setVisible(true);
-                dispose();
+                
                 return;
             } else {
        
                 client.sendLine("CONFIRM");
-
+ 
                 String check = client.readLine();
                 JOptionPane.showMessageDialog(this, "Booking confirmed successfully!");
                 if (check.equals("done")) {
