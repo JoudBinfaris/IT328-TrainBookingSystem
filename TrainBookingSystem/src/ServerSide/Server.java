@@ -99,28 +99,18 @@ class ClientHandler implements Runnable {
         try {
 
             while (true) {
-                //java.awt.EventQueue.invokeLater(() -> new NetLab().setVisible(true));
 
+                //reading SIGNUP or LOGIN and user info (username password)
                 String option = in.readLine();
                 String userinfo = in.readLine();
-                System.out.println(option+" " + userinfo);
-                
-                //To take username:
-                //String str = "Seat Number 5";
-                //String username = option.substring(0, option.indexOf(" "));
-                //System.out.println(username);
-                //String username= sub
+                System.out.println(option + " " + userinfo);
 
-                                
-//                System.out.println(allInfo);
-//
-//                int firstSpace = allInfo.indexOf(" ");
-//
-//                String option = allInfo.substring(0, firstSpace);   // SIGNUP or LOGIN
-//                String info = allInfo.substring(firstSpace + 1);  //username password
-        
-                 if(option==null)
-                    option="nope";
+                //Null safety check
+                if (option == null) {
+                    option = "nope";
+                }
+
+                //adding new users
                 if (option.equals("SIGNUP")) {
                     User u1 = new User(userinfo);
                     users.add(u1);
@@ -128,20 +118,23 @@ class ClientHandler implements Runnable {
                     System.out.println("Total users: " + users.size());
                 }
 
-
-                //Source city:
+                //Reading Source city:
                 String sc = in.readLine();
-                //Destination city:
+                //Reading Destination city:
                 String dc = in.readLine();
-                System.out.println(sc +" "+dc);
-                
-                 if(sc==null)
-                    sc="nope";
-                 
-                  if(dc==null)
-                    dc="nope";
-                  
-                  
+                System.out.println(sc + " " + dc);
+
+                //Null safety check
+                if (sc == null) {
+                    sc = "nope";
+                }
+
+                //Null safety check
+                if (dc == null) {
+                    dc = "nope";
+                }
+
+                //deciding train id based on route
                 String tn = "Nan";
                 if (sc.equals("Riyadh") && dc.equals("Jeddah")) {
                     tn = "1111";
@@ -154,8 +147,9 @@ class ClientHandler implements Runnable {
                 } else if (sc.equals("Riyadh") && dc.equals("Alula")) {
                     tn = "5555";
                 }
-                
-                     Train t = switch (tn) {
+
+                //choosing train object based on train id
+                Train t = switch (tn) {
                     case "1111" ->
                         t1;
                     case "2222" ->
@@ -174,145 +168,111 @@ class ClientHandler implements Runnable {
                     System.out.println("No train on this route");
                     continue;
                 }
-                
 
+                //reading class (First or Economy)
                 System.out.println("class:");
                 String c = in.readLine();
                 System.out.println(c);
-                
-                //Day:
+
+                //reading Day:
                 System.out.println("Day:");
-                String dayy=in.readLine();
+                String dayy = in.readLine();
                 System.out.println(dayy);
-                int day=-1;
-                switch(dayy){
-            case"Sunday":
-                day=0;
-                break;
-            case "Monday":
-                day=1;
-                break;
-            case "Tuesday":
-                day=2;
-                break;
-            case "Wednesday":
-                day=3;
-                break;
-            case "Thursday":
-                day=4;
-                break;
-            case "Friday":
-                day=5;
-                break;
-            case "Saturday":
-                day=6;
-                break;
-            default:
-                day = 0;
-        }
+                int day = -1;
+                switch (dayy) {
+                    case "Sunday":
+                        day = 0;
+                        break;
+                    case "Monday":
+                        day = 1;
+                        break;
+                    case "Tuesday":
+                        day = 2;
+                        break;
+                    case "Wednesday":
+                        day = 3;
+                        break;
+                    case "Thursday":
+                        day = 4;
+                        break;
+                    case "Friday":
+                        day = 5;
+                        break;
+                    case "Saturday":
+                        day = 6;
+                        break;
+                    default:
+                        day = 0;
+                }
 
-// ... بعد تحديد tn وقراءة c (الـclass) ...
-           
+                //getting availability and sending it for gui to display it  
+                Seat[] open = t.getAvailableSeats(c, day);
+                int numOfSeats = open.length;
+                if (numOfSeats == 0) {
+                    System.out.println("No seats available on this day");
+                } else {
 
-                //get availability    
-                Seat[] open=t.getAvailableSeats(c, day);
-                int numOfSeats=open.length;
-                if(numOfSeats==0)
-                System.out.println("No seats available on this day");
-                else
-                {
-                    
-                    
-                    for(Seat s:open)
+                    for (Seat s : open) {
                         out.println(s.getSeatnumber());
-                   
+                    }
+
                 }
                 out.println("END");
-                
-                
-                //out.print("Day:" + day);
-               //System.out.println(day);
-                
-                
+
+                // reading seat number
                 System.out.println("Seat:");
                 String seat = in.readLine();
                 System.out.println(seat);
                 int snum = 0;
-                switch(seat){
-            case "Seat Number 1":
-                snum=0;
-                break;
-            case "Seat Number 2":
-                snum=1;
-                break;
-            case "Seat Number 3":
-                snum=2;
-                break;
-            case "Seat Number 4":
-                snum=3;
-                break;
-            default:
-                snum=0;
-                        }
-                //int seatnum = Integer.parseInt(seat);
+                switch (seat) {
+                    case "Seat Number 1":
+                        snum = 0;
+                        break;
+                    case "Seat Number 2":
+                        snum = 1;
+                        break;
+                    case "Seat Number 3":
+                        snum = 2;
+                        break;
+                    case "Seat Number 4":
+                        snum = 3;
+                        break;
+                    default:
+                        snum = 0;
+                }
+
+                //reading if the user pressed button book
                 String book = in.readLine();
-                if(book == null)
-                    book="nope";
-                if(book.equals("Book")){
-                     t.reserveSeat(c, snum, day, userinfo);
-                     Reservation res=new Reservation(userinfo, tn, c,  snum, day);
-                     reservations.add(res);
-                     System.out.println("Its works");
-                      out.println("done");
+
+                //Null safety check
+                if (book == null) {
+                    book = "nope";
                 }
                 
-               
-                 break;
-                 
-                
-                    
+                //book it and send confirmation to gui
+                if (book.equals("Book")) {
+                    t.reserveSeat(c, snum, day, userinfo);
+                    Reservation res = new Reservation(userinfo, tn, c, snum, day);
+                    reservations.add(res);
+                    System.out.println("Its works");
+                    out.println("done");
+                }
 
-            
-        
-    
-    //// 1) أرسل التوفّر لكل يوم: صيغة بسيطة 7 أرقام
-//int[] counts = t.countAvailablePerDay(c);
-//out.println("AVAIL:" + Arrays.toString(counts)); // مثال: AVAIL:[3, 1, 0, 5, 2, 0, 4]
-//
-//// 2) الآن اطلب اليوم
-//out.println("day:");
-//int d1 = Integer.parseInt(in.readLine()) - 1;
-//
-//// 3) احجز أول مقعد متاح تلقائيًا في هذا اليوم
-//int seatIdx = t.reserveNextAvailable(c, d1, info);
-//if (seatIdx >= 0) {
-//    Reservation r = new Reservation(info, tn, c, seatIdx, d1);
-//    reservations.add(r);
-//    out.println("Reservation confirmed! seat=" + (seatIdx + 1));
-//} else {
-//    out.println("No seats available on this day");
-//}
-
+                break;
 
             }
-        } catch (IOException e
-
-    
-        ) {
+        } catch (IOException e) {
             System.err.println("IO exception in new client class");
-        System.err.println(e.getStackTrace());
-    }
-
-    
-        finally {
+            System.err.println(e.getStackTrace());
+        } finally {
             out.close();
-        clients.remove(this);
-        try {
-            in.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            clients.remove(this);
+            try {
+                in.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
-}
 
 }
