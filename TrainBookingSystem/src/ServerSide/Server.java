@@ -207,7 +207,7 @@ class ClientHandler implements Runnable {
                         day = 6;
                         break;
                     default:
-                        day = 0;
+                        day = -1;
                 }
 
 
