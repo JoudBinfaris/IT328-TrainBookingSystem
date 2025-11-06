@@ -159,11 +159,11 @@ public class Availability extends javax.swing.JFrame {
 
     private void showAvalbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAvalbtnActionPerformed
         System.out.println("in  btnShowActionPerformed");
-        loadAvailability();
+        loadAvailability();//butoon
         showAvalbtn.setEnabled(false);
         Daycb.setEnabled(false);
     }//GEN-LAST:event_showAvalbtnActionPerformed
-    private void loadAvailability() {
+    private void loadAvailability() {//function
         try {
             if (changeMode == false) {
 
@@ -209,7 +209,7 @@ public class Availability extends javax.swing.JFrame {
     private void bookbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookbtnActionPerformed
 
         System.out.println("In bookbtnActionPerformed");
-
+//////////////////////////////////////////////////////
         String n = String.valueOf(seatcb.getSelectedItem());
         System.out.print("Seat number:");
         System.out.println(n);

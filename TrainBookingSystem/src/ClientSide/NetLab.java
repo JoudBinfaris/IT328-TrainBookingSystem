@@ -138,7 +138,7 @@ public class NetLab extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Client client = new Client();
         try {
-            client.connect("localhost", 9090);
+            client.connect("10.6.193.46", 9090);
             LogIn logobj = new LogIn(client);
             logobj.setVisible(true);
             dispose();

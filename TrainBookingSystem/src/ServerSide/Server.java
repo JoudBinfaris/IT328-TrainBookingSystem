@@ -43,7 +43,7 @@ public class Server {
 
     private static ArrayList<ClientHandler> clients = new ArrayList<>();
     private static ArrayList<Reservation> reservations = new ArrayList<>();
-    private static ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<User> users = new ArrayList<>();//no need
 
     public static Train t1 = new Train("1111", "Riyadh", "Jeddah");
     public static Train t2 = new Train("2222", "Jeddah", "Riyadh");
@@ -101,9 +101,9 @@ class ClientHandler implements Runnable {
         try {
 
             //reading SIGNUP or LOGIN and user info (username password)
-            String option = in.readLine();
+            String option = in.readLine();//from client
             String userinfo = in.readLine();
-            System.out.println(option + " " + userinfo);
+            System.out.println(option + " " + userinfo);//for testing
 
             //Null safety check
             if (option == null) {
@@ -115,18 +115,18 @@ class ClientHandler implements Runnable {
                 User u1 = new User(userinfo);
                 users.add(u1);
 
-                System.out.println("Total users: " + users.size());
+                System.out.println("Total users: " + users.size());//for testing
             }
 
             //Reading Source city:
-            String sc = in.readLine();
+            String sc = in.readLine();//from gui sd
 
             //Reading Destination city:
             String dc = in.readLine();
             System.out.println(sc + " " + dc);
 
             //Null safety check
-            if (sc == null) {
+            if (sc == null) {//.equals with null ex
                 sc = "nope";
             }
             //Null safety check
@@ -177,11 +177,11 @@ class ClientHandler implements Runnable {
 
             //reading Day:
             System.out.println("Day:");
-            String dayy = in.readLine();
+            String dayy = in.readLine();// show ava
             System.out.println("Resceives day:" + dayy);
 
             int day = 0;
-            try {
+            try { 
                 day = Integer.parseInt(dayy.trim());
 
             } catch (NumberFormatException e) {
@@ -212,21 +212,17 @@ class ClientHandler implements Runnable {
                 }
             }
 
-<<<<<<< Updated upstream
-//hellojhiyguf
-            //getting availability and sending it for gui to display it  
-            sendAvail(t, c, day);
-=======
 
+
+            
+
+                
                 //getting availability and sending it for gui to display it  
                  sendAvail( t,  c,  day);
                
                 // reading seat number
-                int snum=receiveSnum();
->>>>>>> Stashed changes
+                int snum=receiveSnum();///////////////////////
 
-            // reading seat number
-            int snum = receiveSnum();
 
             //double check
             String booked = searchRes(tn, c, snum, day) ? "true" : "false";
