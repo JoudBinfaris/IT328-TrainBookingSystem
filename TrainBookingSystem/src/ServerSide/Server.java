@@ -291,7 +291,7 @@ class ClientHandler implements Runnable {
         if (numOfSeats == 0) {
             System.out.println("No seats available on this day");
         } else {
-
+//line by line
             for (Seat s : open) {
                 out.println(s.getSeatnumber());
             }
