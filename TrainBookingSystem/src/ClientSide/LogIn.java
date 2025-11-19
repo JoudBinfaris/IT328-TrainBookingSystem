@@ -9,6 +9,8 @@
 package ClientSide;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class LogIn extends javax.swing.JFrame {
@@ -144,14 +146,30 @@ public class LogIn extends javax.swing.JFrame {
     }//GEN-LAST:event_passwardActionPerformed
 
     private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
-        username = Email.getText();
-        passward_ = passward.getText();
         try {
-            client.login(username, passward_);
+            username = Email.getText();
+            passward_ = passward.getText();
+
+            client.sendLine("LOGIN");
+            client.sendLine(username + " " + passward_);
+            String cmd = client.readLine();
+            if (cmd.equals("FAIL")) {
+                JOptionPane.showMessageDialog(this, "No User With This Username and Password Exists");
+
+                new LogIn(client).setVisible(true);
+                dispose();
+            }
+            else{
             JOptionPane.showMessageDialog(this, "Logged in successfully.");
+
+            new SourceDestination(client).setVisible(true);
+
+            dispose();
+            }
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Login failed: " + ex.getMessage());
+            Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_connectActionPerformed
 
     /**

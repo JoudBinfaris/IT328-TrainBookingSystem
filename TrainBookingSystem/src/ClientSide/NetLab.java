@@ -138,12 +138,12 @@ public class NetLab extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Client client = new Client();
         try {
-            client.connect("10.6.193.46", 9090);
+            client.connect("localhost", 9090);
             LogIn logobj = new LogIn(client);
             logobj.setVisible(true);
             dispose();
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Connicaton fealid" + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Connicaton failed" + ex.getMessage());
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed

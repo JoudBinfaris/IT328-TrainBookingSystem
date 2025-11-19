@@ -110,13 +110,17 @@ class ClientHandler implements Runnable {
                 option = "nope";
             }
 
-            //Null safety check
             if (option.equals("SIGNUP")) {
                 User u1 = new User(userinfo);
                 users.add(u1);
+                
 
                 System.out.println("Total users: " + users.size());//for testing
             }
+            logInCheck(option,userinfo );
+                    
+            
+            
 
             //Reading Source city:
             String sc = in.readLine();//from gui sd
@@ -331,4 +335,31 @@ class ClientHandler implements Runnable {
         }
         return snum;
     }
+    private void logInCheck(String option, String userinfo) {
+        
+        boolean userFound=false;
+           
+            if (option.equals("LOGIN")) {
+                
+                for(User s:users){
+                if(s.getInfo().equals(userinfo))
+                    userFound=true;
+                }
+                
+                if(!userFound)
+                {
+                    out.println("FAIL");
+                    System.out.println("user not found");
+                    logInCheck( option,  userinfo);
+                }
+                else    
+                    out.println("SUCCESS");
+                System.out.println("LOGIN SUCCESS");
+
+                System.out.println("Total users: " + users.size());//for testing
+            }
+    
+    }
 }
+
+
