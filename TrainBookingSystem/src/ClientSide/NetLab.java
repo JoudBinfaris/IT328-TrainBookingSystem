@@ -17,9 +17,9 @@ public class NetLab extends javax.swing.JFrame {
      * Creates new form NetLab
      */
     public NetLab() {
-        initComponents();
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        //initComponents();
+        //setLocationRelativeTo(null);
+        //setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     public static void main(String args[]) {
@@ -125,8 +125,8 @@ public class NetLab extends javax.swing.JFrame {
         Client client = new Client();
         try {
             client.connect("localhost", 9090);
-            SignUp signobj = new SignUp(client);
-            signobj.setVisible(true);
+            //SignUp1 signobj = new SignUp(client);
+            //signobj.setVisible(true);
             dispose();
             JOptionPane.showMessageDialog(this, "Connicaton done successfully!");
         } catch (IOException ex) {
