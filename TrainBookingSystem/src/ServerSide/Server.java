@@ -80,6 +80,9 @@ class ClientHandler implements Runnable {
     private ArrayList<Reservation> reservations;
     private ArrayList<User> users;
     private Train t1, t2, t3, t4, t5;
+    private String sc, dc, tn, c, dayy;
+    private int day, snum;
+    private Train t;
 
     public ClientHandler(Socket c, ArrayList<ClientHandler> clients, ArrayList<Reservation> reservations, ArrayList<User> users, Train t1, Train t2, Train t3, Train t4, Train t5) throws IOException {
         this.client = c;
@@ -97,179 +100,95 @@ class ClientHandler implements Runnable {
     }
 
     @Override
+
     public void run() {
-        try {
+        
+            try {
 
-            //reading SIGNUP or LOGIN and user info (username password)
-            String option = in.readLine();//from client
-            String userinfo = in.readLine();
-            System.out.println(option + " " + userinfo);//for testing
+                //reading SIGNUP or LOGIN and user info (username password)
+                String option = in.readLine();//from client
+                String userinfo = in.readLine();
+                System.out.println(option + " " + userinfo);//for testing
 
-            //Null safety check
-            if (option == null) {
-                option = "nope";
-            }
-
-            if (option.equals("SIGNUP")) {
-                User u1 = new User(userinfo);
-                users.add(u1);
-                
-
-                System.out.println("Total users: " + users.size());//for testing
-            }
-            logInCheck(option,userinfo );
-                    
-            
-            
-
-            //Reading Source city:
-            String sc = in.readLine();//from gui sd
-
-            //Reading Destination city:
-            String dc = in.readLine();
-            System.out.println(sc + " " + dc);
-
-            //Null safety check
-            if (sc == null) {//.equals with null ex
-                sc = "nope";
-            }
-            //Null safety check
-
-            if (dc == null) {
-                dc = "nope";
-            }
-
-            //deciding train id based on route
-            String tn = "Nan";
-            if (sc.equals("Riyadh") && dc.equals("Jeddah")) {
-                tn = "1111";
-            } else if (sc.equals("Jeddah") && dc.equals("Riyadh")) {
-                tn = "2222";
-            } else if (sc.equals("Riyadh") && dc.equals("Dammam")) {
-                tn = "3333";
-            } else if (sc.equals("Dammam") && dc.equals("Riyadh")) {
-                tn = "4444";
-            } else if (sc.equals("Riyadh") && dc.equals("Alula")) {
-                tn = "5555";
-            }
-
-            //choosing train object based on train id
-            Train t = switch (tn) {
-                case "1111" ->
-                    t1;
-                case "2222" ->
-                    t2;
-                case "3333" ->
-                    t3;
-                case "4444" ->
-                    t4;
-                case "5555" ->
-                    t5;
-                default ->
-                    null;
-            };
-
-            if (t == null) {
-                System.out.println("No train on this route");
-
-            }
-
-            //reading class (First or Economy)
-            System.out.println("class:");
-            String c = in.readLine();
-            System.out.println(c);
-
-            //reading Day:
-            System.out.println("Day:");
-            String dayy = in.readLine();// show ava
-            System.out.println("Resceives day:" + dayy);
-
-            int day = 0;
-            try { 
-                day = Integer.parseInt(dayy.trim());
-
-            } catch (NumberFormatException e) {
-                switch (dayy) {
-                    case "Sunday":
-                        day = 0;
-                        break;
-                    case "Monday":
-                        day = 1;
-                        break;
-                    case "Tuesday":
-                        day = 2;
-                        break;
-                    case "Wednesday":
-                        day = 3;
-                        break;
-                    case "Thursday":
-                        day = 4;
-                        break;
-                    case "Friday":
-                        day = 5;
-                        break;
-                    case "Saturday":
-                        day = 6;
-                        break;
-                    default:
-                        day = 0;
+                //Null safety check
+                if (option == null) {
+                    option = "nope";
                 }
-            }
 
+                if (option.equals("SIGNUP")) {
+                    User u1 = new User(userinfo);
+                    users.add(u1);
 
+                    System.out.println("Total users: " + users.size());//for testing
+                }
+                logInCheck(option, userinfo);
+                while (true) {
 
-            
+                String menuOption = in.readLine();//NEW or CANCEL or HISTORY
 
-                
-                //getting availability and sending it for gui to display it  
-                 sendAvail( t,  c,  day);
-               
-                // reading seat number
-                int snum=receiveSnum();///////////////////////
+                switch (menuOption) {
+
+                    case "NEW":
+                        readInfo();
+                        //getting availability and sending it for gui to display it  
+                        sendAvail(t, c, day);
+
+                        // reading seat number
+                         snum = receiveSnum();
+                        ///////////////////////
 
 
             //double check
             String booked = searchRes(tn, c, snum, day) ? "true" : "false";
-            System.out.println(booked);
-            out.println(booked);
+                        System.out.println(booked);
+                        out.println(booked);
 
-            //reading if the user pressed button book and checking if the reservation is availablle (value: CONFIRM or CHANGE)
-            String cmd = in.readLine();
+                        //reading if the user pressed button book and checking if the reservation is availablle (value: CONFIRM or CHANGE)
+                        String cmd = in.readLine();
 
-            //loop until client chooses available reservation
-            while (!cmd.equals("CONFIRM")) {
-                sendAvail(t, c, day);
-                snum = receiveSnum();
+                        //loop until client chooses available reservation
+                        while (!cmd.equals("CONFIRM")) {
+                            sendAvail(t, c, day);
+                            snum = receiveSnum();
 
-                booked = searchRes(tn, c, snum, day) ? "true" : "false";
-                out.println(booked);
+                            booked = searchRes(tn, c, snum, day) ? "true" : "false";
+                            out.println(booked);
 
-                cmd = in.readLine();
+                            cmd = in.readLine();
 
+                        }
+
+                        //book it and send confirmation to gui
+                        if (cmd.equals("CONFIRM")) {
+                            t.reserveSeat(c, snum, day, userinfo);
+                            Reservation res = new Reservation(userinfo, tn, c, snum, day);
+                            reservations.add(res);
+                            System.out.println("Its works");
+                            out.println("done");
+
+                        }
+                        break;
+                    case "CANCEL":
+                        readInfo();
+                        t.cancelSeat(c, snum, day);
+                        break;
+                    case "HISTORY":
+                        break;
+                }
+
+                } } catch (IOException e) {
+                System.err.println("IO exception in new client class");
+                System.err.println(e.getStackTrace());
+            } finally {
+                out.close();
+                clients.remove(this);
+                try {
+                    in.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
-
-            //book it and send confirmation to gui
-            if (cmd.equals("CONFIRM")) {
-                t.reserveSeat(c, snum, day, userinfo);
-                Reservation res = new Reservation(userinfo, tn, c, snum, day);
-                reservations.add(res);
-                System.out.println("Its works");
-                out.println("done");
-
-            }
-
-        } catch (IOException e) {
-            System.err.println("IO exception in new client class");
-            System.err.println(e.getStackTrace());
-        } finally {
-            out.close();
-            clients.remove(this);
-            try {
-                in.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
+        
     }
 
     //searches in arraylist of reservation for the same reservation
@@ -335,31 +254,130 @@ class ClientHandler implements Runnable {
         }
         return snum;
     }
-    private void logInCheck(String option, String userinfo) {
-        
-        boolean userFound=false;
-           
-            if (option.equals("LOGIN")) {
-                
-                for(User s:users){
-                if(s.getInfo().equals(userinfo))
-                    userFound=true;
-                }
-                
-                if(!userFound)
-                {
-                    out.println("FAIL");
-                    System.out.println("user not found");
-                    logInCheck( option,  userinfo);
-                }
-                else    
-                    out.println("SUCCESS");
-                System.out.println("LOGIN SUCCESS");
 
-                System.out.println("Total users: " + users.size());//for testing
+    private void logInCheck(String option, String userinfo) {
+
+        boolean userFound = false;
+
+        if (option.equals("LOGIN")) {
+
+            for (User s : users) {
+                if (s.getInfo().equals(userinfo)) {
+                    userFound = true;
+                }
             }
-    
+
+            if (!userFound) {
+                out.println("FAIL");
+                System.out.println("user not found");
+                logInCheck(option, userinfo);
+            } else {
+                out.println("SUCCESS");
+            }
+            System.out.println("LOGIN SUCCESS");
+
+            System.out.println("Total users: " + users.size());//for testing
+        }
+
+    }
+
+    private void readInfo() {
+        try {
+            //Reading Source city:
+            sc = in.readLine();//from gui sd
+
+            //Reading Destination city:
+            dc = in.readLine();
+            System.out.println(sc + " " + dc);
+
+            //Null safety check
+            if (sc == null) {//.equals with null ex
+                sc = "nope";
+            }
+            //Null safety check
+
+            if (dc == null) {
+                dc = "nope";
+            }
+
+            //deciding train id based on route
+            tn = "Nan";
+            if (sc.equals("Riyadh") && dc.equals("Jeddah")) {
+                tn = "1111";
+            } else if (sc.equals("Jeddah") && dc.equals("Riyadh")) {
+                tn = "2222";
+            } else if (sc.equals("Riyadh") && dc.equals("Dammam")) {
+                tn = "3333";
+            } else if (sc.equals("Dammam") && dc.equals("Riyadh")) {
+                tn = "4444";
+            } else if (sc.equals("Riyadh") && dc.equals("Alula")) {
+                tn = "5555";
+            }
+
+            //choosing train object based on train id
+            t = switch (tn) {
+                case "1111" ->
+                    t1;
+                case "2222" ->
+                    t2;
+                case "3333" ->
+                    t3;
+                case "4444" ->
+                    t4;
+                case "5555" ->
+                    t5;
+                default ->
+                    null;
+            };
+
+            if (t == null) {
+                System.out.println("No train on this route");
+
+            }
+
+            //reading class (First or Economy)
+            System.out.println("class:");
+            c = in.readLine();
+            System.out.println(c);
+
+            //reading Day:
+            System.out.println("Day:");
+            dayy = in.readLine();// show ava
+            System.out.println("Resceives day:" + dayy);
+
+            day = 0;
+            try {
+                day = Integer.parseInt(dayy.trim());
+
+            } catch (NumberFormatException e) {
+                switch (dayy) {
+                    case "Sunday":
+                        day = 0;
+                        break;
+                    case "Monday":
+                        day = 1;
+                        break;
+                    case "Tuesday":
+                        day = 2;
+                        break;
+                    case "Wednesday":
+                        day = 3;
+                        break;
+                    case "Thursday":
+                        day = 4;
+                        break;
+                    case "Friday":
+                        day = 5;
+                        break;
+                    case "Saturday":
+                        day = 6;
+                        break;
+                    default:
+                        day = 0;
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
-
-

@@ -12,7 +12,7 @@ public class MenuFrame extends JFrame {
     private JButton btnNewReservation;
     private JButton btnCancelReservation;
     private JButton btnViewHistory;
-private JButton btnExit;          // 👈 أضيفي هذا
+    private JButton btnExit;          // 👈 أضيفي هذا
 
     public MenuFrame(Client client) {
         this.client = client;   // حفظ الـ client
@@ -113,49 +113,50 @@ private JButton btnExit;          // 👈 أضيفي هذا
         btnExit = new JButton("Exit");
 
         btnCancelReservation.addActionListener(e -> {
-    new CancelFrame(client).setVisible(true);
-    dispose();
-});
+            client.sendLine("CANCEL");
+            new CancelFrame(client).setVisible(true);
+            dispose();
+        });
         btnViewHistory.addActionListener(e -> {
-    new ViewHistoryFrame(client).setVisible(true);
-    dispose();
-});
-
+            client.sendLine("HISTORY");
+            new ViewHistoryFrame(client).setVisible(true);
+            dispose();
+        });
 
         btnNewReservation.addActionListener(e -> {
-    new Reservation(client).setVisible(true);
-    dispose();
-});
+            client.sendLine("NEW");
+            new Reservation(client).setVisible(true);
+            dispose();
+        });
 
         Dimension btnSize = new Dimension(220, 40);
 
-btnNewReservation.setPreferredSize(btnSize);
-btnNewReservation.setMaximumSize(btnSize);
+        btnNewReservation.setPreferredSize(btnSize);
+        btnNewReservation.setMaximumSize(btnSize);
 
-btnCancelReservation.setPreferredSize(btnSize);
-btnCancelReservation.setMaximumSize(btnSize);
+        btnCancelReservation.setPreferredSize(btnSize);
+        btnCancelReservation.setMaximumSize(btnSize);
 
-btnViewHistory.setPreferredSize(btnSize);
-btnViewHistory.setMaximumSize(btnSize);
+        btnViewHistory.setPreferredSize(btnSize);
+        btnViewHistory.setMaximumSize(btnSize);
 
-btnExit.setPreferredSize(btnSize);      // 👈
-btnExit.setMaximumSize(btnSize);       // 👈
+        btnExit.setPreferredSize(btnSize);      // 👈
+        btnExit.setMaximumSize(btnSize);       // 👈
 
         // === Force same button size ===
-btnNewReservation.setPreferredSize(btnSize);
-btnCancelReservation.setPreferredSize(btnSize);
-btnViewHistory.setPreferredSize(btnSize);
- 
+        btnNewReservation.setPreferredSize(btnSize);
+        btnCancelReservation.setPreferredSize(btnSize);
+        btnViewHistory.setPreferredSize(btnSize);
+
         stylePrimaryButton(btnNewReservation);
         stylePrimaryButton(btnCancelReservation);
         stylePrimaryButton(btnViewHistory);
-stylePrimaryButton(btnExit);    // 👈
+        stylePrimaryButton(btnExit);    // 👈
 
         btnNewReservation.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnCancelReservation.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnViewHistory.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnExit.setAlignmentX(Component.CENTER_ALIGNMENT);   // 👈
-
 
         card.add(btnNewReservation);
         card.add(Box.createVerticalStrut(15));
@@ -163,9 +164,8 @@ stylePrimaryButton(btnExit);    // 👈
         card.add(Box.createVerticalStrut(15));
         card.add(btnViewHistory);
         card.add(Box.createVerticalStrut(15));   // مسافة قبل Exit
-card.add(btnExit);
+        card.add(btnExit);
         card.add(Box.createVerticalStrut(25));
-
 
         JLabel lblFooter = new JLabel("© 2025 Train Booking System");
         lblFooter.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -175,61 +175,61 @@ card.add(btnExit);
 
         centerWrapper.add(card, new GridBagConstraints());
         root.add(centerWrapper, BorderLayout.CENTER);
-        
+
         btnExit.addActionListener(e -> {
-    try {
-        if (client != null) {
-            client.disconnec();
-        }
-    } catch (Exception ex) {
-        // لو حابة تجاهليه أو تسوين لوق
-        ex.printStackTrace();
-    }
-    dispose(); // يقفل المنيو
-});
+            try {
+                if (client != null) {
+                    client.disconnec();
+                }
+            } catch (Exception ex) {
+                // لو حابة تجاهليه أو تسوين لوق
+                ex.printStackTrace();
+            }
+            dispose(); // يقفل المنيو
+        });
 
     }
 
     // ---------------- UTILITIES ----------------
-
     private ImageIcon loadLogoIcon() {
-    String path = "/ClientSide/images/train_logo.png"; // المسار الصحيح
-    try {
-        URL url = getClass().getResource(path);
-        if (url == null) {
-            System.out.println("Logo not found at " + path);
+        String path = "/ClientSide/images/train_logo.png"; // المسار الصحيح
+        try {
+            URL url = getClass().getResource(path);
+            if (url == null) {
+                System.out.println("Logo not found at " + path);
+                return null;
+            }
+            ImageIcon icon = new ImageIcon(url);
+            Image img = icon.getImage();
+            int targetHeight = 90;
+            int targetWidth = img.getWidth(null) * targetHeight / img.getHeight(null);
+            return new ImageIcon(img.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH));
+        } catch (Exception ex) {
+            ex.printStackTrace();
             return null;
         }
-        ImageIcon icon = new ImageIcon(url);
-        Image img = icon.getImage();
-        int targetHeight = 90;
-        int targetWidth = img.getWidth(null) * targetHeight / img.getHeight(null);
-        return new ImageIcon(img.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH));
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        return null;
     }
-}
-
 
     private Image loadBrickImage() {
         String path = "/ClientSide/images/brick.jpg";
         try {
             URL url = getClass().getResource(path);
-            if (url == null) return null;
+            if (url == null) {
+                return null;
+            }
             return new ImageIcon(url).getImage();
         } catch (Exception ex) {
             return null;
         }
     }
 
-   private void stylePrimaryButton(JButton btn) {
-    btn.setBackground(new Color(30, 136, 229));
-    btn.setForeground(Color.WHITE);
-    btn.setFocusPainted(false);
-    btn.setBorder(null); // أو خليه LineBorder بسيط لو حابة
-    btn.setFont(new Font("Serif", Font.BOLD, 14));
-    btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-}
+    private void stylePrimaryButton(JButton btn) {
+        btn.setBackground(new Color(30, 136, 229));
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        btn.setBorder(null); // أو خليه LineBorder بسيط لو حابة
+        btn.setFont(new Font("Serif", Font.BOLD, 14));
+        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
 
 }
