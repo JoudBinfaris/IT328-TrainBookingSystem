@@ -102,27 +102,27 @@ class ClientHandler implements Runnable {
     @Override
 
     public void run() {
-        
-            try {
 
-                //reading SIGNUP or LOGIN and user info (username password)
-                String option = in.readLine();//from client
-                String userinfo = in.readLine();
-                System.out.println(option + " " + userinfo);//for testing
+        try {
 
-                //Null safety check
-                if (option == null) {
-                    option = "nope";
-                }
+            //reading SIGNUP or LOGIN and user info (username password)
+            String option = in.readLine();//from client
+            String userinfo = in.readLine();
+            System.out.println(option + " " + userinfo);//for testing
 
-                if (option.equals("SIGNUP")) {
-                    User u1 = new User(userinfo);
-                    users.add(u1);
+            //Null safety check
+            if (option == null) {
+                option = "nope";
+            }
 
-                    System.out.println("Total users: " + users.size());//for testing
-                }
-                logInCheck(option, userinfo);
-                while (true) {
+            if (option.equals("SIGNUP")) {
+                User u1 = new User(userinfo);
+                users.add(u1);
+
+                System.out.println("Total users: " + users.size());//for testing
+            }
+            logInCheck(option, userinfo);
+            while (true) {
 
                 String menuOption = in.readLine();//NEW or CANCEL or HISTORY
 
@@ -134,12 +134,12 @@ class ClientHandler implements Runnable {
                         sendAvail(t, c, day);
 
                         // reading seat number
-                         snum = receiveSnum();
+                        snum = receiveSnum();
                         ///////////////////////
 
 
-            //double check
-            String booked = searchRes(tn, c, snum, day) ? "true" : "false";
+                        //double check
+                        String booked = searchRes(tn, c, snum, day) ? "true" : "false";
                         System.out.println(booked);
                         out.println(booked);
 
@@ -171,24 +171,36 @@ class ClientHandler implements Runnable {
                     case "CANCEL":
                         readInfo();
                         t.cancelSeat(c, snum, day);
+                        if (removeFromReservationsList(tn, c, snum, day)) {
+                            out.println("OK");
+                        } else {
+                            out.println("NOT_FOUND");
+                        }
                         break;
                     case "HISTORY":
+                        for (Reservation r : reservations) {
+                            if (r.getUsername().equals(userinfo)) {
+                                out.println(r.toString());
+                            }
+                        }
+                        out.println("END");
                         break;
                 }
 
-                } } catch (IOException e) {
-                System.err.println("IO exception in new client class");
-                System.err.println(e.getStackTrace());
-            } finally {
-                out.close();
-                clients.remove(this);
-                try {
-                    in.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
             }
-        
+        } catch (IOException e) {
+            System.err.println("IO exception in new client class");
+            System.err.println(e.getStackTrace());
+        } finally {
+            out.close();
+            clients.remove(this);
+            try {
+                in.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
     }
 
     //searches in arraylist of reservation for the same reservation
@@ -379,5 +391,30 @@ class ClientHandler implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private boolean removeFromReservationsList(String tn, String c, int snum, int day) {
+
+        boolean canceled = false;
+
+        Reservation found = null;
+
+        for (Reservation r : reservations) {
+            if (tn.equals(r.getTrainID())
+                    && c.equals(r.getClassType())
+                    && r.getSeatindex() == snum
+                    && r.getDayindex() == day) {
+
+                found = r;
+                break;
+            }
+        }
+
+        if (found != null) {
+            reservations.remove(found);
+            canceled = true;
+        }
+        return canceled;
+
     }
 }

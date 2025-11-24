@@ -13,14 +13,12 @@ public class MainMenu extends JFrame {
     private JButton btnExit;
 
     private Image brickImage;
-    
+
     //This constractor to view the frame + load th images for design
     public MainMenu() {
         brickImage = loadBrickImage();
         initUI();
     }
-    
-    
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -28,8 +26,7 @@ public class MainMenu extends JFrame {
             frame.setVisible(true);
         });
     }
-    
-    
+
     //The core code for the UI:
     private void initUI() {
         setTitle("Train Reservation System");
@@ -96,18 +93,17 @@ public class MainMenu extends JFrame {
 
         JPanel headerWrapper = new JPanel(new BorderLayout());
 
-headerWrapper.setOpaque(true);
-headerWrapper.setBackground(new Color(25, 17, 17)); 
+        headerWrapper.setOpaque(true);
+        headerWrapper.setBackground(new Color(25, 17, 17));
 
-headerWrapper.add(header, BorderLayout.CENTER);
-headerWrapper.add(headerBottomLine, BorderLayout.SOUTH);
+        headerWrapper.add(header, BorderLayout.CENTER);
+        headerWrapper.add(headerBottomLine, BorderLayout.SOUTH);
 
-root.add(headerWrapper, BorderLayout.NORTH);
-
+        root.add(headerWrapper, BorderLayout.NORTH);
 
         // ================= اCard in the middle =================
         JPanel centerWrapper = new JPanel(new GridBagLayout());
-        centerWrapper.setOpaque(false); 
+        centerWrapper.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -121,7 +117,7 @@ root.add(headerWrapper, BorderLayout.NORTH);
 
         // TRAIN TICKETS
         JPanel ticketBar = new JPanel(new BorderLayout());
-        ticketBar.setBackground(new Color(30, 21, 20)); 
+        ticketBar.setBackground(new Color(30, 21, 20));
         ticketBar.setMaximumSize(new Dimension(520, 40));
         ticketBar.setBorder(BorderFactory.createCompoundBorder(
                 new javax.swing.border.LineBorder(new Color(166, 77, 45), 1, true),
@@ -139,7 +135,7 @@ root.add(headerWrapper, BorderLayout.NORTH);
         booth.add(Box.createVerticalStrut(10));
 
         JPanel card = new JPanel();
-        card.setBackground(new Color(23, 18, 20)); 
+        card.setBackground(new Color(23, 18, 20));
         card.setBorder(BorderFactory.createCompoundBorder(
                 new javax.swing.border.LineBorder(new Color(120, 90, 70), 1, true),
                 BorderFactory.createEmptyBorder(35, 55, 35, 55)
@@ -211,12 +207,12 @@ root.add(headerWrapper, BorderLayout.NORTH);
             Client client = new Client();
             try {
                 client.connect("localhost", 9090);
-                signup1  signobj = new signup1 (client);
+                signup1 signobj = new signup1(client);
                 signobj.setVisible(true);
                 dispose();
-                CustomPopup.showSuccess(this, "Connicaton done successfully!");
+                CustomPopup.showSuccess(this, "Connection Done Successfully!");
             } catch (IOException ex) {
-                CustomPopup.showError(this, "Connicaton fealid " + ex.getMessage());
+                CustomPopup.showError(this, "Connection Failed " + ex.getMessage());
             }
         });
 
@@ -228,7 +224,7 @@ root.add(headerWrapper, BorderLayout.NORTH);
                 logobj.setVisible(true);
                 dispose();
             } catch (IOException ex) {
-                CustomPopup.showError(this, "Connicaton failed " + ex.getMessage());
+                CustomPopup.showError(this, "Connection Failed " + ex.getMessage());
             }
         });
 //==================================================== OUR CODES  =====================================
@@ -238,44 +234,42 @@ root.add(headerWrapper, BorderLayout.NORTH);
         addHoverEffect(btnSignUp);
         addHoverEffect(btnLogin);
     }
-/////The images 
+
+    /////The images 
 private ImageIcon loadLogoIcon() {
-    String path = "src/ClientSide/images/train_logo.png";
-    try {
-        ImageIcon icon = new ImageIcon(path);
-        Image img = icon.getImage();
+        String path = "src/ClientSide/images/train_logo.png";
+        try {
+            ImageIcon icon = new ImageIcon(path);
+            Image img = icon.getImage();
 
-        int targetHeight = 90;
-        int originalWidth = img.getWidth(null);
-        int originalHeight = img.getHeight(null);
-        int targetWidth = originalWidth * targetHeight / originalHeight;
+            int targetHeight = 90;
+            int originalWidth = img.getWidth(null);
+            int originalHeight = img.getHeight(null);
+            int targetWidth = originalWidth * targetHeight / originalHeight;
 
-        Image scaled = img.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaled);
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        return null;
+            Image scaled = img.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
+            return new ImageIcon(scaled);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
-}
 
+    private Image loadBrickImage() {
 
-  
-private Image loadBrickImage() {
-    
-    String path = "src/ClientSide/images/brick.jpg";
-    try {
-        ImageIcon icon = new ImageIcon(path);
-        return icon.getImage();
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        return null;
+        String path = "src/ClientSide/images/brick.jpg";
+        try {
+            ImageIcon icon = new ImageIcon(path);
+            return icon.getImage();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
-}
-
 
     // ========= Btn style=========
     private void stylePrimaryButton(JButton btn) {
-        btn.setBackground(new Color(30, 136, 229));  
+        btn.setBackground(new Color(30, 136, 229));
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
         btn.setBorder(BorderFactory.createEmptyBorder(10, 24, 10, 24));

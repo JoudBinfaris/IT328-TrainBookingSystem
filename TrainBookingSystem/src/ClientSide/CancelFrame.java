@@ -262,7 +262,7 @@ seatNumCb.setModel(seatModel);
             }
 
             
-            client.sendLine("CANCEL_TRIP");      
+    
             client.sendLine(src);
             client.sendLine(dest);
             client.sendLine(cls);

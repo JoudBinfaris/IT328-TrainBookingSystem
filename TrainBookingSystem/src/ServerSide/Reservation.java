@@ -47,7 +47,7 @@ public class Reservation {
     }
 
     public String toString() {
-        return this.username + "Train:" + this.trainID + "(" + this.classType + "Seat No:" + (this.seatindex + 1) + ") Day" + (this.dayindex + 1);
+        return  "Train: " + this.trainID + "  Class: " + this.classType + "  Seat No: " + (this.seatindex + 1) + "  Day: " + (this.dayindex + 1);
     }
 
 }

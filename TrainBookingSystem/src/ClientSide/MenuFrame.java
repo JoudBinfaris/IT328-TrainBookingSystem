@@ -3,6 +3,7 @@ package ClientSide;
 import java.awt.*;
 import java.net.URL;
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class MenuFrame extends JFrame {
 
@@ -118,9 +119,35 @@ public class MenuFrame extends JFrame {
             dispose();
         });
         btnViewHistory.addActionListener(e -> {
-            client.sendLine("HISTORY");
-            new ViewHistoryFrame(client).setVisible(true);
-            dispose();
+            try {
+                client.sendLine("HISTORY");
+
+                ArrayList<String> historyList = new ArrayList<>();
+                String tmp;
+
+                while (true) {
+                    tmp = client.readLine();
+
+                    if (tmp.equalsIgnoreCase("END")) {
+                        break;
+                    }
+
+                    historyList.add(tmp);
+                }
+                //concatnate all reservations in arraylist 
+                String text = "";
+                for (String line : historyList) {
+                    text += line + "\n";
+                }
+
+                ViewHistoryFrame view = new ViewHistoryFrame(client);
+                view.setHistoryText(text);
+                view.setVisible(true);
+                dispose();
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         });
 
         btnNewReservation.addActionListener(e -> {
