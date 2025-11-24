@@ -183,7 +183,7 @@ public class Reservation extends JFrame {
 
         root.add(centerWrapper, BorderLayout.CENTER);
 
-        // ===== زر Next بنفس منطقك =====
+        
         btnNext.addActionListener(e -> {
             String src = String.valueOf(source.getSelectedItem());
             client.sendLine(src);

@@ -14,6 +14,8 @@ public class CancelFrame extends JFrame {
     private JComboBox<String> destCb;
     private JComboBox<String> classCb;
     private JComboBox<String> dayCb;
+    private JComboBox<String> seatNumCb;
+
     private JButton btnCancel;
     private JButton btnBack;
 
@@ -107,63 +109,79 @@ public class CancelFrame extends JFrame {
         lblTitle.setForeground(Color.WHITE);
         card.add(lblTitle);
         card.add(Box.createVerticalStrut(25));
-
+        
         JPanel form = new JPanel(new GridBagLayout());
-        form.setOpaque(false);
-        GridBagConstraints f = new GridBagConstraints();
-        f.insets = new Insets(8, 8, 8, 8);
-        f.anchor = GridBagConstraints.WEST;
+form.setOpaque(false);
+GridBagConstraints f = new GridBagConstraints();
+f.insets = new Insets(8, 8, 8, 8);
+f.anchor = GridBagConstraints.WEST;
 
-        JLabel lblSource = new JLabel("Source:");
-        lblSource.setFont(new Font("Serif", Font.PLAIN, 16));
-        lblSource.setForeground(new Color(230, 230, 235));
+// ==== labels ====
+JLabel lblSource = new JLabel("Source:");
+lblSource.setFont(new Font("Serif", Font.PLAIN, 16));
+lblSource.setForeground(new Color(230, 230, 235));
 
-        JLabel lblDest = new JLabel("Destination:");
-        lblDest.setFont(new Font("Serif", Font.PLAIN, 16));
-        lblDest.setForeground(new Color(230, 230, 235));
+JLabel lblDest = new JLabel("Destination:");
+lblDest.setFont(new Font("Serif", Font.PLAIN, 16));
+lblDest.setForeground(new Color(230, 230, 235));
 
-        JLabel lblClass = new JLabel("Class:");
-        lblClass.setFont(new Font("Serif", Font.PLAIN, 16));
-        lblClass.setForeground(new Color(230, 230, 235));
+JLabel lblClass = new JLabel("Class:");
+lblClass.setFont(new Font("Serif", Font.PLAIN, 16));
+lblClass.setForeground(new Color(230, 230, 235));
 
-        JLabel lblDay = new JLabel("Day:");
-        lblDay.setFont(new Font("Serif", Font.PLAIN, 16));
-        lblDay.setForeground(new Color(230, 230, 235));
+JLabel lblDay = new JLabel("Day:");
+lblDay.setFont(new Font("Serif", Font.PLAIN, 16));
+lblDay.setForeground(new Color(230, 230, 235));
 
-        sourceCb = new JComboBox<>();
-        destCb = new JComboBox<>();
-        classCb = new JComboBox<>();
-        dayCb = new JComboBox<>();
+JLabel lblSeat = new JLabel("Seat Number:");
+lblSeat.setFont(new Font("Serif", Font.PLAIN, 16));
+lblSeat.setForeground(new Color(230, 230, 235));
 
-        Dimension comboSize = new Dimension(150, 28);
-        sourceCb.setPreferredSize(comboSize);
-        destCb.setPreferredSize(comboSize);
-        classCb.setPreferredSize(comboSize);
-        dayCb.setPreferredSize(comboSize);
+// ==== combo boxes (إنشاء قبل الاستخدام) ====
+sourceCb  = new JComboBox<>();
+destCb    = new JComboBox<>();
+classCb   = new JComboBox<>();
+dayCb     = new JComboBox<>();
+seatNumCb = new JComboBox<>();
 
-        // ترتيب الفورم
-        f.gridx = 0; f.gridy = 0;
-        form.add(lblSource, f);
-        f.gridx = 1;
-        form.add(sourceCb, f);
+// ==== الأحجام ====
+Dimension comboSize = new Dimension(150, 28);
+sourceCb.setPreferredSize(comboSize);
+destCb.setPreferredSize(comboSize);
+classCb.setPreferredSize(comboSize);
+dayCb.setPreferredSize(comboSize);
+seatNumCb.setPreferredSize(comboSize);
 
-        f.gridx = 0; f.gridy = 1;
-        form.add(lblDest, f);
-        f.gridx = 1;
-        form.add(destCb, f);
+// ==== ترتيب الفورم ====
+f.gridx = 0; f.gridy = 0;
+form.add(lblSource, f);
+f.gridx = 1;
+form.add(sourceCb, f);
 
-        f.gridx = 0; f.gridy = 2;
-        form.add(lblClass, f);
-        f.gridx = 1;
-        form.add(classCb, f);
+f.gridx = 0; f.gridy = 1;
+form.add(lblDest, f);
+f.gridx = 1;
+form.add(destCb, f);
 
-        f.gridx = 0; f.gridy = 3;
-        form.add(lblDay, f);
-        f.gridx = 1;
-        form.add(dayCb, f);
+f.gridx = 0; f.gridy = 2;
+form.add(lblClass, f);
+f.gridx = 1;
+form.add(classCb, f);
 
-        card.add(form);
-        card.add(Box.createVerticalStrut(20));
+f.gridx = 0; f.gridy = 3;
+form.add(lblDay, f);
+f.gridx = 1;
+form.add(dayCb, f);
+
+f.gridx = 0; f.gridy = 4;
+form.add(lblSeat, f);
+f.gridx = 1;
+form.add(seatNumCb, f);
+
+// إضافة الفورم للكارد
+card.add(form);
+card.add(Box.createVerticalStrut(20));
+
 
         btnCancel = new JButton("Cancel Reservation");
         btnBack   = new JButton("Back to Main Menu");
@@ -220,6 +238,12 @@ public class CancelFrame extends JFrame {
                 "Sunday", "Monday", "Tuesday", "Wednesday",
                 "Thursday", "Friday", "Saturday"
         }));
+        DefaultComboBoxModel<String> seatModel = new DefaultComboBoxModel<>();
+for (int i = 1; i <= 4; i++) {
+    seatModel.addElement("Seat " + i);
+}
+seatNumCb.setModel(seatModel);
+
     }
 
     private void doCancel() {
@@ -228,21 +252,25 @@ public class CancelFrame extends JFrame {
             String dest = String.valueOf(destCb.getSelectedItem());
             String cls  = String.valueOf(classCb.getSelectedItem());
             int dayIdx  = dayCb.getSelectedIndex();
+            String seat = String.valueOf(seatNumCb.getSelectedItem());
 
-            // لو حابه تمنعين Src = Dest
+
+           
             if (src.equals(dest)) {
                 CustomPopup.showError(this, "Source and destination cannot be the same.");
                 return;
             }
 
-            // ⬇ هنا البروتوكول مع السيرفر – عدليه حسب اللي عندكم
-            client.sendLine("CANCEL_TRIP");       // أمر جديد للسيرفر
+            
+            client.sendLine("CANCEL_TRIP");      
             client.sendLine(src);
             client.sendLine(dest);
             client.sendLine(cls);
             client.sendLine(Integer.toString(dayIdx));
+            client.sendLine(seat);
+            
 
-            String reply = client.readLine();     // مثلاً: OK أو NOT_FOUND
+            String reply = client.readLine();     
 
             if ("OK".equalsIgnoreCase(reply)) {
                 CustomPopup.showSuccess(this, "Reservation cancelled successfully.");
