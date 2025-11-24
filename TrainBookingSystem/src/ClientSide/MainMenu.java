@@ -13,12 +13,14 @@ public class MainMenu extends JFrame {
     private JButton btnExit;
 
     private Image brickImage;
-
+    
+    //This constractor to view the frame + load th images for design
     public MainMenu() {
-        // حمّل صورة الطوب أول
         brickImage = loadBrickImage();
         initUI();
     }
+    
+    
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -26,23 +28,25 @@ public class MainMenu extends JFrame {
             frame.setVisible(true);
         });
     }
-
+    
+    
+    //The core code for the UI:
     private void initUI() {
         setTitle("Train Reservation System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
 
-        // ============= ROOT PANEL: خلفية كاملة طوب =============
+        // ============= ROOT PANEL: =============
         JPanel root = new JPanel(new BorderLayout(0, 0)) {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 if (brickImage != null) {
-                    // نمدد صورة الطوب على كامل الشاشة
+                    //  For full screen
                     g.drawImage(brickImage, 0, 0, getWidth(), getHeight(), this);
                 } else {
-                    // لو ما لقاها، بني غامق
+                    // للاحتياط يحط بني غامق
                     g.setColor(new Color(40, 26, 22));
                     g.fillRect(0, 0, getWidth(), getHeight());
                 }
@@ -51,7 +55,7 @@ public class MainMenu extends JFrame {
         root.setOpaque(false);
         setContentPane(root);
 
-        // ================= الهيدر =================
+        // ================= header =================
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false); // خلي الطوب يبان خلفه
         header.setBorder(BorderFactory.createEmptyBorder(35, 45, 25, 45));
@@ -85,15 +89,15 @@ public class MainMenu extends JFrame {
 
         header.add(titlePanel, BorderLayout.CENTER);
 
-        // خط فاصل بسيط بلون طوب غامق
+        //Line
         JPanel headerBottomLine = new JPanel();
         headerBottomLine.setPreferredSize(new Dimension(0, 3));
         headerBottomLine.setBackground(new Color(166, 77, 45));
 
         JPanel headerWrapper = new JPanel(new BorderLayout());
-// نخلي الهيدر له خلفية ثابتة (شريط غامق)
+
 headerWrapper.setOpaque(true);
-headerWrapper.setBackground(new Color(25, 17, 17)); // غيّريه لو حابة درجة ثانية
+headerWrapper.setBackground(new Color(25, 17, 17)); 
 
 headerWrapper.add(header, BorderLayout.CENTER);
 headerWrapper.add(headerBottomLine, BorderLayout.SOUTH);
@@ -101,9 +105,9 @@ headerWrapper.add(headerBottomLine, BorderLayout.SOUTH);
 root.add(headerWrapper, BorderLayout.NORTH);
 
 
-        // ================= الكارد في النص =================
+        // ================= اCard in the middle =================
         JPanel centerWrapper = new JPanel(new GridBagLayout());
-        centerWrapper.setOpaque(false); // برضه شفاف عشان الطوب يبقى واضح
+        centerWrapper.setOpaque(false); 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -115,9 +119,9 @@ root.add(headerWrapper, BorderLayout.NORTH);
         booth.setOpaque(false);
         booth.setLayout(new BoxLayout(booth, BoxLayout.Y_AXIS));
 
-        // شريط TRAIN TICKETS
+        // TRAIN TICKETS
         JPanel ticketBar = new JPanel(new BorderLayout());
-        ticketBar.setBackground(new Color(30, 21, 20)); // مستطيل غامق فوق الطوب
+        ticketBar.setBackground(new Color(30, 21, 20)); 
         ticketBar.setMaximumSize(new Dimension(520, 40));
         ticketBar.setBorder(BorderFactory.createCompoundBorder(
                 new javax.swing.border.LineBorder(new Color(166, 77, 45), 1, true),
@@ -134,9 +138,8 @@ root.add(headerWrapper, BorderLayout.NORTH);
         booth.add(ticketBar);
         booth.add(Box.createVerticalStrut(10));
 
-        // الكارد الرئيسي
         JPanel card = new JPanel();
-        card.setBackground(new Color(23, 18, 20)); // غامق جداً عشان النص يقرأ فوق الطوب
+        card.setBackground(new Color(23, 18, 20)); 
         card.setBorder(BorderFactory.createCompoundBorder(
                 new javax.swing.border.LineBorder(new Color(120, 90, 70), 1, true),
                 BorderFactory.createEmptyBorder(35, 55, 35, 55)
@@ -203,7 +206,7 @@ root.add(headerWrapper, BorderLayout.NORTH);
 
         root.add(centerWrapper, BorderLayout.CENTER);
 //==================================================== OUR CODES: =====================================
-        // ================= أكشن الأزرار =================
+        // ================Conication begins here=================
         btnSignUp.addActionListener(e -> {
             Client client = new Client();
             try {
@@ -235,8 +238,7 @@ root.add(headerWrapper, BorderLayout.NORTH);
         addHoverEffect(btnSignUp);
         addHoverEffect(btnLogin);
     }
-
-    // ========= تحميل اللوقو من المسار مباشرة =========
+/////The images 
 private ImageIcon loadLogoIcon() {
     String path = "src/ClientSide/images/train_logo.png";
     try {
@@ -257,7 +259,6 @@ private ImageIcon loadLogoIcon() {
 }
 
 
-    // ========= تحميل صورة الطوب =========
   
 private Image loadBrickImage() {
     
@@ -272,9 +273,9 @@ private Image loadBrickImage() {
 }
 
 
-    // ========= ستايل الأزرار =========
+    // ========= Btn style=========
     private void stylePrimaryButton(JButton btn) {
-        btn.setBackground(new Color(30, 136, 229));  // أزرق يبرز فوق البني
+        btn.setBackground(new Color(30, 136, 229));  
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
         btn.setBorder(BorderFactory.createEmptyBorder(10, 24, 10, 24));

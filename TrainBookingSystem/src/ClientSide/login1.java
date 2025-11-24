@@ -219,7 +219,7 @@ public class login1 extends JFrame {
                 dispose();
             } else {
                 CustomPopup.showSuccess(this, "Logged in successfully.");
-                new Reservation(client).setVisible(true);
+                new MenuFrame(client).setVisible(true);
                 dispose();
             }
         } catch (IOException ex) {

@@ -112,14 +112,13 @@ lblCreate.setForeground(Color.WHITE);
 card.add(lblCreate);
 card.add(Box.createVerticalStrut(30));
 
-// ===== فورم مرتب بعمودين: Label + TextField =====
+
 JPanel formPanel = new JPanel(new GridBagLayout());
 formPanel.setOpaque(false);
 
 GridBagConstraints fg = new GridBagConstraints();
 fg.insets = new Insets(5, 10, 5, 10);
 
-// صف الإيميل
 JLabel lblEmail = new JLabel("Email:");
 lblEmail.setFont(new Font("Serif", Font.PLAIN, 16));
 lblEmail.setForeground(new Color(235, 235, 240));
@@ -138,7 +137,6 @@ fg.gridy = 0;
 fg.anchor = GridBagConstraints.WEST;
 formPanel.add(email, fg);
 
-// صف الباسورد
 JLabel lblPass = new JLabel("Password:");
 lblPass.setFont(new Font("Serif", Font.PLAIN, 16));
 lblPass.setForeground(new Color(235, 235, 240));
@@ -157,7 +155,6 @@ fg.gridy = 1;
 fg.anchor = GridBagConstraints.WEST;
 formPanel.add(passward, fg);
 
-// حطّ الفورم في الكارد
 card.add(formPanel);
 card.add(Box.createVerticalStrut(25));
 
@@ -190,7 +187,6 @@ jButton1.addActionListener(e -> onSignUp());
 
 addHoverEffect(jButton1);
 
-// أول شيء نزبط المقاس، بعدين نكبرها فل سكرين
 pack();
 setExtendedState(JFrame.MAXIMIZED_BOTH);
 setLocationRelativeTo(null);
@@ -198,15 +194,18 @@ setLocationRelativeTo(null);
 
 
     private void onSignUp() {
+        //Take the values 
         username = email.getText();
         passward_ = passward.getText();
         if (username.isEmpty() || passward_.isEmpty()) {
             CustomPopup.showError(this, "Please fill the blanks");
             return;
         }
+        //To the server:-
         client.sendLine("SIGNUP");
         client.sendLine(username + " " + passward_);
-        new Reservation(client).setVisible(true);
+        //Open the next frame
+        new MenuFrame(client).setVisible(true);
         CustomPopup.showSuccess(this, "sign-up done successfully!");
         dispose();
     }

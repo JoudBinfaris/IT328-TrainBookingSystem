@@ -1,40 +1,34 @@
 package ClientSide;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.io.IOException;
 import java.net.URL;
 import javax.swing.*;
 
-public class Reservation extends JFrame {
-
-    private static final java.util.logging.Logger logger =
-            java.util.logging.Logger.getLogger(Reservation.class.getName());
+public class CancelFrame extends JFrame {
 
     private Client client;
     private Image brickImage;
 
-    private JComboBox<String> source;
-    private JComboBox<String> Destination;
-    private JComboBox<String> Class;
-    private JButton btnNext;
+    private JComboBox<String> sourceCb;
+    private JComboBox<String> destCb;
+    private JComboBox<String> classCb;
+    private JComboBox<String> dayCb;
+    private JButton btnCancel;
+    private JButton btnBack;
 
-    
-
-    public Reservation(Client client) {
-    this.client = client;
-    brickImage = loadBrickImage();
-    initUI();
-    fillCombos();
-    setExtendedState(JFrame.MAXIMIZED_BOTH);
-    setLocationRelativeTo(null);
-    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-}
-
+    public CancelFrame(Client client) {
+        this.client = client;
+        brickImage = loadBrickImage();
+        initUI();
+        fillCombos();
+    }
 
     private void initUI() {
         setTitle("Express Railways Reservation System");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setLocationRelativeTo(null);
 
         JPanel root = new JPanel(new BorderLayout()) {
             @Override
@@ -51,7 +45,7 @@ public class Reservation extends JFrame {
         root.setOpaque(false);
         setContentPane(root);
 
-        // ============== Header ==============
+        // ============== HEADER ==============
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false);
         header.setBorder(BorderFactory.createEmptyBorder(25, 40, 20, 40));
@@ -72,7 +66,7 @@ public class Reservation extends JFrame {
         lblProjectName.setFont(new Font("Serif", Font.BOLD, 28));
         lblProjectName.setForeground(Color.WHITE);
 
-        JLabel lblTagline = new JLabel("Choose your route and class");
+        JLabel lblTagline = new JLabel("Cancel your reservation");
         lblTagline.setFont(new Font("Serif", Font.PLAIN, 15));
         lblTagline.setForeground(new Color(230, 230, 235));
 
@@ -94,7 +88,7 @@ public class Reservation extends JFrame {
 
         root.add(headerWrapper, BorderLayout.NORTH);
 
-        // ============== Center card ==============
+        // ============== CARD ==============
         JPanel centerWrapper = new JPanel(new GridBagLayout());
         centerWrapper.setOpaque(false);
 
@@ -102,16 +96,15 @@ public class Reservation extends JFrame {
         card.setBackground(new Color(23, 18, 20));
         card.setBorder(BorderFactory.createCompoundBorder(
                 new javax.swing.border.LineBorder(new Color(120, 90, 70), 1, true),
-                BorderFactory.createEmptyBorder(30, 50, 30, 50)
+                BorderFactory.createEmptyBorder(30, 60, 30, 60)
         ));
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setMaximumSize(new Dimension(520, 280));
+        card.setMaximumSize(new Dimension(520, 320));
 
-        JLabel lblTitle = new JLabel("Where you want to go?");
+        JLabel lblTitle = new JLabel("Cancel Reservation");
         lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblTitle.setFont(new Font("Serif", Font.BOLD, 24));
         lblTitle.setForeground(Color.WHITE);
-
         card.add(lblTitle);
         card.add(Box.createVerticalStrut(25));
 
@@ -125,46 +118,65 @@ public class Reservation extends JFrame {
         lblSource.setFont(new Font("Serif", Font.PLAIN, 16));
         lblSource.setForeground(new Color(230, 230, 235));
 
-        JLabel lblDestination = new JLabel("Destination:");
-        lblDestination.setFont(new Font("Serif", Font.PLAIN, 16));
-        lblDestination.setForeground(new Color(230, 230, 235));
+        JLabel lblDest = new JLabel("Destination:");
+        lblDest.setFont(new Font("Serif", Font.PLAIN, 16));
+        lblDest.setForeground(new Color(230, 230, 235));
 
         JLabel lblClass = new JLabel("Class:");
         lblClass.setFont(new Font("Serif", Font.PLAIN, 16));
         lblClass.setForeground(new Color(230, 230, 235));
 
-        source = new JComboBox<>();
-        Destination = new JComboBox<>();
-        Class = new JComboBox<>();
+        JLabel lblDay = new JLabel("Day:");
+        lblDay.setFont(new Font("Serif", Font.PLAIN, 16));
+        lblDay.setForeground(new Color(230, 230, 235));
 
-        Dimension comboSize = new Dimension(140, 28);
-        source.setPreferredSize(comboSize);
-        Destination.setPreferredSize(comboSize);
-        Class.setPreferredSize(comboSize);
+        sourceCb = new JComboBox<>();
+        destCb = new JComboBox<>();
+        classCb = new JComboBox<>();
+        dayCb = new JComboBox<>();
 
+        Dimension comboSize = new Dimension(150, 28);
+        sourceCb.setPreferredSize(comboSize);
+        destCb.setPreferredSize(comboSize);
+        classCb.setPreferredSize(comboSize);
+        dayCb.setPreferredSize(comboSize);
+
+        // ترتيب الفورم
         f.gridx = 0; f.gridy = 0;
         form.add(lblSource, f);
         f.gridx = 1;
-        form.add(source, f);
+        form.add(sourceCb, f);
 
         f.gridx = 0; f.gridy = 1;
-        form.add(lblDestination, f);
+        form.add(lblDest, f);
         f.gridx = 1;
-        form.add(Destination, f);
+        form.add(destCb, f);
 
         f.gridx = 0; f.gridy = 2;
         form.add(lblClass, f);
         f.gridx = 1;
-        form.add(Class, f);
+        form.add(classCb, f);
+
+        f.gridx = 0; f.gridy = 3;
+        form.add(lblDay, f);
+        f.gridx = 1;
+        form.add(dayCb, f);
 
         card.add(form);
         card.add(Box.createVerticalStrut(20));
 
-        btnNext = new JButton("Next");
-        stylePrimaryButton(btnNext);
-        btnNext.setAlignmentX(Component.CENTER_ALIGNMENT);
-        card.add(btnNext);
+        btnCancel = new JButton("Cancel Reservation");
+        btnBack   = new JButton("Back to Main Menu");
 
+        stylePrimaryButton(btnCancel);
+        stylePrimaryButton(btnBack);
+
+        btnCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnBack.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        card.add(btnCancel);
+        card.add(Box.createVerticalStrut(10));
+        card.add(btnBack);
         card.add(Box.createVerticalStrut(15));
 
         JLabel lblFooter = new JLabel("© 2025 Train Booking System");
@@ -183,80 +195,92 @@ public class Reservation extends JFrame {
 
         root.add(centerWrapper, BorderLayout.CENTER);
 
-        // ===== زر Next بنفس منطقك =====
-        btnNext.addActionListener(e -> {
-            String src = String.valueOf(source.getSelectedItem());
-            client.sendLine(src);
-            String des = String.valueOf(Destination.getSelectedItem());
-            client.sendLine(des);
-
-            String cls = String.valueOf(Class.getSelectedItem());
-            client.sendLine(cls);
-
-            if (src.equals(des)) {
-                JOptionPane.showMessageDialog(this, "Src =Des canot complete");
-                return;
-            }
-            if ((src.equals("Dammam") && des.equals("Jeddah"))
-                    || (src.equals("Dammam") && des.equals("Alula"))
-                    || (src.equals("Jeddah") && des.equals("Alula"))
-                    || (src.equals("Jeddah") && des.equals("Dammam"))
-                    || src.equals(des)) {
-                JOptionPane.showMessageDialog(this, "Sorry, no available route for this source and destination");
-                return;
-            }
-
-            new Availability1(client, false).setVisible(true);
+        // ====== الأحداث ======
+        btnCancel.addActionListener(e -> doCancel());
+        btnBack.addActionListener(e -> {
+            new MenuFrame(client).setVisible(true);
             dispose();
         });
-
-        addHoverEffect(btnNext);
-        
     }
 
     private void fillCombos() {
-        source.setModel(new javax.swing.DefaultComboBoxModel<>(
-                new String[]{"Riyadh", "Jeddah", "Dammam"}));
-        Destination.setModel(new javax.swing.DefaultComboBoxModel<>(
-                new String[]{"Riyadh", "Jeddah", "Dammam", "Alula"}));
-        Class.setModel(new javax.swing.DefaultComboBoxModel<>(
-                new String[]{"First", "Economy"}));
+        sourceCb.setModel(new DefaultComboBoxModel<>(new String[]{
+                "Riyadh", "Jeddah", "Dammam"
+        }));
+
+        destCb.setModel(new DefaultComboBoxModel<>(new String[]{
+                "Riyadh", "Jeddah", "Dammam", "Alula"
+        }));
+
+        classCb.setModel(new DefaultComboBoxModel<>(new String[]{
+                "First", "Economy"
+        }));
+
+        dayCb.setModel(new DefaultComboBoxModel<>(new String[]{
+                "Sunday", "Monday", "Tuesday", "Wednesday",
+                "Thursday", "Friday", "Saturday"
+        }));
+    }
+
+    private void doCancel() {
+        try {
+            String src  = String.valueOf(sourceCb.getSelectedItem());
+            String dest = String.valueOf(destCb.getSelectedItem());
+            String cls  = String.valueOf(classCb.getSelectedItem());
+            int dayIdx  = dayCb.getSelectedIndex();
+
+            // لو حابه تمنعين Src = Dest
+            if (src.equals(dest)) {
+                CustomPopup.showError(this, "Source and destination cannot be the same.");
+                return;
+            }
+
+            // ⬇ هنا البروتوكول مع السيرفر – عدليه حسب اللي عندكم
+            client.sendLine("CANCEL_TRIP");       // أمر جديد للسيرفر
+            client.sendLine(src);
+            client.sendLine(dest);
+            client.sendLine(cls);
+            client.sendLine(Integer.toString(dayIdx));
+
+            String reply = client.readLine();     // مثلاً: OK أو NOT_FOUND
+
+            if ("OK".equalsIgnoreCase(reply)) {
+                CustomPopup.showSuccess(this, "Reservation cancelled successfully.");
+                new MenuFrame(client).setVisible(true);
+                dispose();
+            } else if ("NOT_FOUND".equalsIgnoreCase(reply)) {
+                CustomPopup.showError(this, "No reservation found for these details.");
+                new MenuFrame(client).setVisible(true);
+                dispose();
+            } else {
+                CustomPopup.showError(this, "Unexpected server reply: " + reply);
+            }
+
+        } catch (IOException ex) {
+            CustomPopup.showError(this, "Cancel error: " + ex.getMessage());
+        }
     }
 
     private ImageIcon loadLogoIcon() {
-    String path = "/ClientSide/images/train_logo.png";
-    try {
-        URL url = getClass().getResource(path);
-        if (url == null) {
-            System.out.println("Logo not found at " + path);
+        try {
+            URL url = getClass().getResource("/ClientSide/images/train_logo.png");
+            if (url == null) return null;
+            Image img = new ImageIcon(url).getImage();
+            int h = 70;
+            int w = img.getWidth(null) * h / img.getHeight(null);
+            img = img.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+            return new ImageIcon(img);
+        } catch (Exception ex) {
             return null;
         }
-        ImageIcon icon = new ImageIcon(url);
-        Image img = icon.getImage();
-        int targetHeight = 70;
-        int originalWidth = img.getWidth(null);
-        int originalHeight = img.getHeight(null);
-        int targetWidth = originalWidth * targetHeight / originalHeight;
-        Image scaled = img.getScaledInstance(
-                targetWidth, targetHeight, java.awt.Image.SCALE_SMOOTH);
-        return new ImageIcon(scaled);
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        return null;
     }
-}
 
     private Image loadBrickImage() {
-        String path = "/ClientSide/images/brick.jpg";
         try {
-            URL url = getClass().getResource(path);
-            if (url == null) {
-                System.out.println("Brick image not found at " + path);
-                return null;
-            }
+            URL url = getClass().getResource("/ClientSide/images/brick.jpg");
+            if (url == null) return null;
             return new ImageIcon(url).getImage();
         } catch (Exception ex) {
-            ex.printStackTrace();
             return null;
         }
     }
@@ -269,22 +293,4 @@ public class Reservation extends JFrame {
         btn.setFont(new Font("Serif", Font.BOLD, 14));
         btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
-
-    private void addHoverEffect(JButton btn) {
-        Color normal = btn.getBackground();
-        Color hover = normal.brighter();
-        btn.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                btn.setBackground(hover);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btn.setBackground(normal);
-            }
-        });
-    }
-
-    
 }
