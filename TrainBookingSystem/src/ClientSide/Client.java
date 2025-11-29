@@ -55,27 +55,7 @@ public class Client {
         sendLine("LOGIN " + user + " " + pass);
        
     }
-    public String reserve(String source, String dest, String cls, String day1to7, String seat1to5) throws IOException {
-
-        waitForPrompt("Source city:");
-        sendLine(source);
-
-        waitForPrompt("Destination city:");
-        sendLine(dest);
-
-        waitForPrompt("class:");
-        sendLine(cls); // "First" or "Economy"
-
-        
-        waitForPrompt("Day:");
-        sendLine(String.valueOf(day1to7));
-
-        waitForPrompt("Seat Number:");
-        sendLine(String.valueOf(seat1to5));
-
-        String result = readLine(); // "Reservation confirmed!" or "Seat Already Taken :("
-        return (result == null) ? "Server closed connection." : result;
-    }
+    
 
     //*************************************
     public String queryAvailability(String source, String dest, String cls) throws IOException {
@@ -114,12 +94,7 @@ public class Client {
     }
 
 
-    public String bookOnDay(int day1to7) throws IOException {
-        waitForPrompt("day:");
-        sendLine(String.valueOf(day1to7));
-        String result = readLine();
-        return (result == null) ? "Server closed connection." : result;
-    }
+    
 
 
     private int[] parseAvail(String availLine) {
