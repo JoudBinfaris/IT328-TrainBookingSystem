@@ -113,7 +113,7 @@ public class Client {
 
     }
 
-// يرسل اليوم المختار ويستقبل رسالة النتيجة من السيرفر
+
     public String bookOnDay(int day1to7) throws IOException {
         waitForPrompt("day:");
         sendLine(String.valueOf(day1to7));
