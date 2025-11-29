@@ -10,8 +10,7 @@ public class CancelFrame extends JFrame {
     private Client client;
     private Image brickImage;
 
-    private JComboBox<String> sourceCb;
-    private JComboBox<String> destCb;
+    private JComboBox<String> routeCb;
     private JComboBox<String> classCb;
     private JComboBox<String> dayCb;
     private JComboBox<String> seatNumCb;
@@ -47,17 +46,14 @@ public class CancelFrame extends JFrame {
         root.setOpaque(false);
         setContentPane(root);
 
-        // ============== HEADER ==============
+        // HEADER
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false);
         header.setBorder(BorderFactory.createEmptyBorder(25, 40, 20, 40));
 
         JLabel logoLabel = new JLabel();
         ImageIcon logoIcon = loadLogoIcon();
-        if (logoIcon != null) {
-            logoLabel.setIcon(logoIcon);
-        }
-        logoLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 18));
+        if (logoIcon != null) logoLabel.setIcon(logoIcon);
         header.add(logoLabel, BorderLayout.LINE_START);
 
         JPanel titlePanel = new JPanel();
@@ -83,14 +79,13 @@ public class CancelFrame extends JFrame {
         headerBottomLine.setBackground(new Color(166, 77, 45));
 
         JPanel headerWrapper = new JPanel(new BorderLayout());
-        headerWrapper.setOpaque(true);
         headerWrapper.setBackground(new Color(25, 17, 17));
         headerWrapper.add(header, BorderLayout.CENTER);
         headerWrapper.add(headerBottomLine, BorderLayout.SOUTH);
 
         root.add(headerWrapper, BorderLayout.NORTH);
 
-        // ============== CARD ==============
+        // CENTER CARD
         JPanel centerWrapper = new JPanel(new GridBagLayout());
         centerWrapper.setOpaque(false);
 
@@ -101,7 +96,7 @@ public class CancelFrame extends JFrame {
                 BorderFactory.createEmptyBorder(30, 60, 30, 60)
         ));
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setMaximumSize(new Dimension(520, 320));
+        card.setMaximumSize(new Dimension(520, 340));
 
         JLabel lblTitle = new JLabel("Cancel Reservation");
         lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -109,85 +104,59 @@ public class CancelFrame extends JFrame {
         lblTitle.setForeground(Color.WHITE);
         card.add(lblTitle);
         card.add(Box.createVerticalStrut(25));
-        
+
         JPanel form = new JPanel(new GridBagLayout());
-form.setOpaque(false);
-GridBagConstraints f = new GridBagConstraints();
-f.insets = new Insets(8, 8, 8, 8);
-f.anchor = GridBagConstraints.WEST;
+        form.setOpaque(false);
+        GridBagConstraints f = new GridBagConstraints();
+        f.insets = new Insets(8, 8, 8, 8);
+        f.anchor = GridBagConstraints.WEST;
 
-// ==== labels ====
-JLabel lblSource = new JLabel("Source:");
-lblSource.setFont(new Font("Serif", Font.PLAIN, 16));
-lblSource.setForeground(new Color(230, 230, 235));
+        // LABELS
+        JLabel lblRoute = new JLabel("Route:");
+        JLabel lblClass = new JLabel("Class:");
+        JLabel lblDay = new JLabel("Day:");
+        JLabel lblSeat = new JLabel("Seat Number:");
 
-JLabel lblDest = new JLabel("Destination:");
-lblDest.setFont(new Font("Serif", Font.PLAIN, 16));
-lblDest.setForeground(new Color(230, 230, 235));
+        for (JLabel lbl : new JLabel[]{lblRoute, lblClass, lblDay, lblSeat}) {
+            lbl.setFont(new Font("Serif", Font.PLAIN, 16));
+            lbl.setForeground(new Color(230, 230, 235));
+        }
 
-JLabel lblClass = new JLabel("Class:");
-lblClass.setFont(new Font("Serif", Font.PLAIN, 16));
-lblClass.setForeground(new Color(230, 230, 235));
+        // COMBOBOXES
+        routeCb = new JComboBox<>();
+        classCb = new JComboBox<>();
+        dayCb = new JComboBox<>();
+        seatNumCb = new JComboBox<>();
 
-JLabel lblDay = new JLabel("Day:");
-lblDay.setFont(new Font("Serif", Font.PLAIN, 16));
-lblDay.setForeground(new Color(230, 230, 235));
+        Dimension comboSize = new Dimension(160, 28);
+        routeCb.setPreferredSize(comboSize);
+        classCb.setPreferredSize(comboSize);
+        dayCb.setPreferredSize(comboSize);
+        seatNumCb.setPreferredSize(comboSize);
 
-JLabel lblSeat = new JLabel("Seat Number:");
-lblSeat.setFont(new Font("Serif", Font.PLAIN, 16));
-lblSeat.setForeground(new Color(230, 230, 235));
+        // FORM LAYOUT
+        int row = 0;
 
-// ==== combo boxes (إنشاء قبل الاستخدام) ====
-sourceCb  = new JComboBox<>();
-destCb    = new JComboBox<>();
-classCb   = new JComboBox<>();
-dayCb     = new JComboBox<>();
-seatNumCb = new JComboBox<>();
+        f.gridx = 0; f.gridy = row; form.add(lblRoute, f);
+        f.gridx = 1; form.add(routeCb, f); row++;
 
-// ==== الأحجام ====
-Dimension comboSize = new Dimension(150, 28);
-sourceCb.setPreferredSize(comboSize);
-destCb.setPreferredSize(comboSize);
-classCb.setPreferredSize(comboSize);
-dayCb.setPreferredSize(comboSize);
-seatNumCb.setPreferredSize(comboSize);
+        f.gridx = 0; f.gridy = row; form.add(lblClass, f);
+        f.gridx = 1; form.add(classCb, f); row++;
 
-// ==== ترتيب الفورم ====
-f.gridx = 0; f.gridy = 0;
-form.add(lblSource, f);
-f.gridx = 1;
-form.add(sourceCb, f);
+        f.gridx = 0; f.gridy = row; form.add(lblDay, f);
+        f.gridx = 1; form.add(dayCb, f); row++;
 
-f.gridx = 0; f.gridy = 1;
-form.add(lblDest, f);
-f.gridx = 1;
-form.add(destCb, f);
+        f.gridx = 0; f.gridy = row; form.add(lblSeat, f);
+        f.gridx = 1; form.add(seatNumCb, f);
 
-f.gridx = 0; f.gridy = 2;
-form.add(lblClass, f);
-f.gridx = 1;
-form.add(classCb, f);
-
-f.gridx = 0; f.gridy = 3;
-form.add(lblDay, f);
-f.gridx = 1;
-form.add(dayCb, f);
-
-f.gridx = 0; f.gridy = 4;
-form.add(lblSeat, f);
-f.gridx = 1;
-form.add(seatNumCb, f);
-
-// إضافة الفورم للكارد
-card.add(form);
-card.add(Box.createVerticalStrut(20));
-
+        card.add(form);
+        card.add(Box.createVerticalStrut(20));
 
         btnCancel = new JButton("Cancel Reservation");
-        btnBack   = new JButton("Back to Main Menu");
+        btnBack = new JButton("Back to Main Menu");
 
-        stylePrimaryButton(btnCancel);
-        stylePrimaryButton(btnBack);
+        styleButton(btnCancel);
+        styleButton(btnBack);
 
         btnCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnBack.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -195,7 +164,7 @@ card.add(Box.createVerticalStrut(20));
         card.add(btnCancel);
         card.add(Box.createVerticalStrut(10));
         card.add(btnBack);
-        card.add(Box.createVerticalStrut(15));
+        card.add(Box.createVerticalStrut(10));
 
         JLabel lblFooter = new JLabel("© 2025 Train Booking System");
         lblFooter.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -206,14 +175,11 @@ card.add(Box.createVerticalStrut(20));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.CENTER;
-        centerWrapper.add(card, gbc);
 
+        centerWrapper.add(card, gbc);
         root.add(centerWrapper, BorderLayout.CENTER);
 
-        // ====== الأحداث ======
         btnCancel.addActionListener(e -> doCancel());
         btnBack.addActionListener(e -> {
             new MenuFrame(client).setVisible(true);
@@ -222,12 +188,15 @@ card.add(Box.createVerticalStrut(20));
     }
 
     private void fillCombos() {
-        sourceCb.setModel(new DefaultComboBoxModel<>(new String[]{
-                "Riyadh", "Jeddah", "Dammam"
-        }));
 
-        destCb.setModel(new DefaultComboBoxModel<>(new String[]{
-                "Riyadh", "Jeddah", "Dammam", "Alula"
+        
+        routeCb.setModel(new DefaultComboBoxModel<>(new String[]{
+                "Riyadh → Jeddah",
+                "Jeddah → Riyadh",
+                "Riyadh → Dammam",
+                "Dammam → Riyadh",
+                "Riyadh → Alula",
+                "Alula → Riyadh"
         }));
 
         classCb.setModel(new DefaultComboBoxModel<>(new String[]{
@@ -238,54 +207,45 @@ card.add(Box.createVerticalStrut(20));
                 "Sunday", "Monday", "Tuesday", "Wednesday",
                 "Thursday", "Friday", "Saturday"
         }));
-        DefaultComboBoxModel<String> seatModel = new DefaultComboBoxModel<>();
-for (int i = 1; i <= 4; i++) {
-    seatModel.addElement("Seat " + i);
-}
-seatNumCb.setModel(seatModel);
 
+        DefaultComboBoxModel<String> seatModel = new DefaultComboBoxModel<>();
+        for (int i = 1; i <= 4; i++) {
+            seatModel.addElement("Seat " + i);
+        }
+        seatNumCb.setModel(seatModel);
     }
 
     private void doCancel() {
         try {
-            String src  = String.valueOf(sourceCb.getSelectedItem());
-            String dest = String.valueOf(destCb.getSelectedItem());
-            String cls  = String.valueOf(classCb.getSelectedItem());
-            int dayIdx  = dayCb.getSelectedIndex();
+            String route = String.valueOf(routeCb.getSelectedItem());
+            String[] parts = route.split("→");
+
+            String src = parts[0].trim();
+            String dest = parts[1].trim();
+
+            String cls = String.valueOf(classCb.getSelectedItem());
+            int dayIdx = dayCb.getSelectedIndex();
             String seat = String.valueOf(seatNumCb.getSelectedItem());
 
-
-           
-            if (src.equals(dest)) {
-                CustomPopup.showError(this, "Source and destination cannot be the same.");
-                return;
-            }
-
             
-    
             client.sendLine(src);
             client.sendLine(dest);
             client.sendLine(cls);
-            client.sendLine(Integer.toString(dayIdx));
+            client.sendLine(String.valueOf(dayIdx));
             client.sendLine(seat);
-            
 
-            String reply = client.readLine();     
+            String reply = client.readLine();
 
             if ("OK".equalsIgnoreCase(reply)) {
                 CustomPopup.showSuccess(this, "Reservation cancelled successfully.");
                 new MenuFrame(client).setVisible(true);
                 dispose();
-            } else if ("NOT_FOUND".equalsIgnoreCase(reply)) {
-                CustomPopup.showError(this, "No reservation found for these details.");
-                new MenuFrame(client).setVisible(true);
-                dispose();
             } else {
-                CustomPopup.showError(this, "Unexpected server reply: " + reply);
+                CustomPopup.showError(this, "No matching reservation.");
             }
 
-        } catch (IOException ex) {
-            CustomPopup.showError(this, "Cancel error: " + ex.getMessage());
+        } catch (Exception e) {
+            CustomPopup.showError(this, "Error: " + e.getMessage());
         }
     }
 
@@ -294,9 +254,7 @@ seatNumCb.setModel(seatModel);
             URL url = getClass().getResource("/ClientSide/images/train_logo.png");
             if (url == null) return null;
             Image img = new ImageIcon(url).getImage();
-            int h = 70;
-            int w = img.getWidth(null) * h / img.getHeight(null);
-            img = img.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+            img = img.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
             return new ImageIcon(img);
         } catch (Exception ex) {
             return null;
@@ -313,12 +271,11 @@ seatNumCb.setModel(seatModel);
         }
     }
 
-    private void stylePrimaryButton(JButton btn) {
+    private void styleButton(JButton btn) {
         btn.setBackground(new Color(30, 136, 229));
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
         btn.setBorder(BorderFactory.createEmptyBorder(8, 24, 8, 24));
         btn.setFont(new Font("Serif", Font.BOLD, 14));
-        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 }
