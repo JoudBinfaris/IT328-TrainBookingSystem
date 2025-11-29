@@ -8,7 +8,7 @@ package ServerSide;
  *
  * @author joud
  */
-import ClientSide.NetLab;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.ServerSocket;
@@ -80,7 +80,7 @@ class ClientHandler implements Runnable {
     private ArrayList<Reservation> reservations;
     private ArrayList<User> users;
     private Train t1, t2, t3, t4, t5;
-    private String sc, dc, tn, c, dayy;
+    private String sc, dc, tn, c, dayy, userinfo;
     private int day, snum;
     private Train t;
 
@@ -107,7 +107,7 @@ class ClientHandler implements Runnable {
 
             //reading SIGNUP or LOGIN and user info (username password)
             String option = in.readLine();//from client
-            String userinfo = in.readLine();
+             userinfo = in.readLine();
             System.out.println(option + " " + userinfo);//for testing
 
             //Null safety check
@@ -116,11 +116,11 @@ class ClientHandler implements Runnable {
             }
 
             if (option.equals("SIGNUP")) {
-                SignUpCheck(userinfo);
+                SignUpCheck();
             }
 
             if (option.equals("LOGIN")) {
-                logInCheck(userinfo);
+                logInCheck();
             }
 
             while (true) {
@@ -269,7 +269,7 @@ class ClientHandler implements Runnable {
         return snum;
     }
 
-   private void SignUpCheck(String userinfo) {
+   private void SignUpCheck() {
 
     try {
         while (true) {
@@ -312,7 +312,7 @@ class ClientHandler implements Runnable {
         Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
     }
 }
-    private void logInCheck(String userinfo) {
+    private void logInCheck() {
     try {
         while (true) {
             boolean userFound = false;
