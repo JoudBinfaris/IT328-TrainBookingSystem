@@ -7,16 +7,16 @@ import java.util.ArrayList;
 
 public class MenuFrame extends JFrame {
 
-    private Client client;  // مهم — نفس الـ client اللي يتنقل بين الكلاسات
+    private Client client;  
     private Image brickImage;
 
     private JButton btnNewReservation;
     private JButton btnCancelReservation;
     private JButton btnViewHistory;
-    private JButton btnExit;          // 👈 أضيفي هذا
+    private JButton btnExit;          
 
     public MenuFrame(Client client) {
-        this.client = client;   // حفظ الـ client
+        this.client = client;   
         brickImage = loadBrickImage();
         initUI();
     }
@@ -42,12 +42,12 @@ public class MenuFrame extends JFrame {
         root.setOpaque(false);
         setContentPane(root);
 
-        // ---------------- HEADER ----------------
+        
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false);
         header.setBorder(BorderFactory.createEmptyBorder(35, 45, 25, 45));
 
-        // Logo
+        
         JLabel logoLabel = new JLabel();
         ImageIcon logoIcon = loadLogoIcon();
         if (logoIcon != null) {
@@ -56,7 +56,7 @@ public class MenuFrame extends JFrame {
         logoLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
         header.add(logoLabel, BorderLayout.LINE_START);
 
-        // Title
+       
         JPanel titlePanel = new JPanel();
         titlePanel.setOpaque(false);
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
@@ -86,7 +86,7 @@ public class MenuFrame extends JFrame {
 
         root.add(headerWrapper, BorderLayout.NORTH);
 
-        // ---------------- CENTER CARD ----------------
+        
         JPanel centerWrapper = new JPanel(new GridBagLayout());
         centerWrapper.setOpaque(false);
 
@@ -107,7 +107,7 @@ public class MenuFrame extends JFrame {
         card.add(lblTitle);
         card.add(Box.createVerticalStrut(30));
 
-        // Buttons
+        
         btnNewReservation = new JButton("New Reservation");
         btnCancelReservation = new JButton("Cancel Reservation");
         btnViewHistory = new JButton("View My Reservations");
@@ -167,10 +167,9 @@ public class MenuFrame extends JFrame {
         btnViewHistory.setPreferredSize(btnSize);
         btnViewHistory.setMaximumSize(btnSize);
 
-        btnExit.setPreferredSize(btnSize);      // 👈
-        btnExit.setMaximumSize(btnSize);       // 👈
-
-        // === Force same button size ===
+        btnExit.setPreferredSize(btnSize);    
+        btnExit.setMaximumSize(btnSize);       
+        
         btnNewReservation.setPreferredSize(btnSize);
         btnCancelReservation.setPreferredSize(btnSize);
         btnViewHistory.setPreferredSize(btnSize);
@@ -178,19 +177,18 @@ public class MenuFrame extends JFrame {
         stylePrimaryButton(btnNewReservation);
         stylePrimaryButton(btnCancelReservation);
         stylePrimaryButton(btnViewHistory);
-        stylePrimaryButton(btnExit);    // 👈
+        stylePrimaryButton(btnExit);    
 
         btnNewReservation.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnCancelReservation.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnViewHistory.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnExit.setAlignmentX(Component.CENTER_ALIGNMENT);   // 👈
-
+        btnExit.setAlignmentX(Component.CENTER_ALIGNMENT);  
         card.add(btnNewReservation);
         card.add(Box.createVerticalStrut(15));
         card.add(btnCancelReservation);
         card.add(Box.createVerticalStrut(15));
         card.add(btnViewHistory);
-        card.add(Box.createVerticalStrut(15));   // مسافة قبل Exit
+        card.add(Box.createVerticalStrut(15));  
         card.add(btnExit);
         card.add(Box.createVerticalStrut(25));
 
@@ -209,17 +207,16 @@ public class MenuFrame extends JFrame {
                     client.disconnec();
                 }
             } catch (Exception ex) {
-                // لو حابة تجاهليه أو تسوين لوق
+               
                 ex.printStackTrace();
             }
-            dispose(); // يقفل المنيو
+            dispose(); 
         });
 
     }
 
-    // ---------------- UTILITIES ----------------
     private ImageIcon loadLogoIcon() {
-        String path = "/ClientSide/images/train_logo.png"; // المسار الصحيح
+        String path = "/ClientSide/images/train_logo.png"; 
         try {
             URL url = getClass().getResource(path);
             if (url == null) {
@@ -254,7 +251,7 @@ public class MenuFrame extends JFrame {
         btn.setBackground(new Color(30, 136, 229));
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
-        btn.setBorder(null); // أو خليه LineBorder بسيط لو حابة
+        btn.setBorder(null); 
         btn.setFont(new Font("Serif", Font.BOLD, 14));
         btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }

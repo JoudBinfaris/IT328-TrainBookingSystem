@@ -14,7 +14,6 @@ public class MainMenu extends JFrame {
 
     private Image brickImage;
 
-    //This constractor to view the frame + load th images for design
     public MainMenu() {
         brickImage = loadBrickImage();
         initUI();
@@ -34,7 +33,7 @@ public class MainMenu extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
 
-        // ============= ROOT PANEL: =============
+        
         JPanel root = new JPanel(new BorderLayout(0, 0)) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -43,7 +42,7 @@ public class MainMenu extends JFrame {
                     //  For full screen
                     g.drawImage(brickImage, 0, 0, getWidth(), getHeight(), this);
                 } else {
-                    // للاحتياط يحط بني غامق
+                   
                     g.setColor(new Color(40, 26, 22));
                     g.fillRect(0, 0, getWidth(), getHeight());
                 }
@@ -52,9 +51,9 @@ public class MainMenu extends JFrame {
         root.setOpaque(false);
         setContentPane(root);
 
-        // ================= header =================
+        
         JPanel header = new JPanel(new BorderLayout());
-        header.setOpaque(false); // خلي الطوب يبان خلفه
+        header.setOpaque(false); 
         header.setBorder(BorderFactory.createEmptyBorder(35, 45, 25, 45));
 
         JLabel logoLabel = new JLabel();
@@ -101,7 +100,7 @@ public class MainMenu extends JFrame {
 
         root.add(headerWrapper, BorderLayout.NORTH);
 
-        // ================= اCard in the middle =================
+        
         JPanel centerWrapper = new JPanel(new GridBagLayout());
         centerWrapper.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -115,7 +114,7 @@ public class MainMenu extends JFrame {
         booth.setOpaque(false);
         booth.setLayout(new BoxLayout(booth, BoxLayout.Y_AXIS));
 
-        // TRAIN TICKETS
+        
         JPanel ticketBar = new JPanel(new BorderLayout());
         ticketBar.setBackground(new Color(30, 21, 20));
         ticketBar.setMaximumSize(new Dimension(520, 40));
@@ -202,7 +201,7 @@ public class MainMenu extends JFrame {
 
         root.add(centerWrapper, BorderLayout.CENTER);
 //==================================================== OUR CODES: =====================================
-        // ================Conication begins here=================
+        // Conication begins here=================
         btnSignUp.addActionListener(e -> {
             Client client = new Client();
             try {
@@ -267,7 +266,6 @@ private ImageIcon loadLogoIcon() {
         }
     }
 
-    // ========= Btn style=========
     private void stylePrimaryButton(JButton btn) {
         btn.setBackground(new Color(30, 136, 229));
         btn.setForeground(Color.WHITE);

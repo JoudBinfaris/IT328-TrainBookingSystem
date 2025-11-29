@@ -15,7 +15,7 @@ import javax.swing.*;
 
 public class CustomPopup extends JDialog {
 
-    // ====== واجهات جاهزة للاستعمال ======
+    
 
     public static void showSuccess(Window parent, String message) {
         show(parent, "Success", message, true);
@@ -30,25 +30,25 @@ public class CustomPopup extends JDialog {
         dialog.setVisible(true); // modal
     }
 
-    // ====== تصميم البوب-اب نفسه ======
+   
 
     private CustomPopup(Window parent, String title, String message, boolean success) {
         super(parent, title, ModalityType.APPLICATION_MODAL);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        // الحجم
+        
         setSize(420, 200);
         setLocationRelativeTo(parent);
 
-        // ألوان نفس الكارد حقك
-        Color bgColor      = new Color(23, 18, 20);   // خلفية البوب-اب
-        Color borderColor  = new Color(120, 90, 70);  // إطار بني
+        
+        Color bgColor      = new Color(23, 18, 20);  
+        Color borderColor  = new Color(120, 90, 70); 
         Color textColor    = new Color(235, 235, 240);
 
         Color accentColor  = success
-                ? new Color(30, 136, 229)   // أزرق للإشعار الناجح
-                : new Color(200, 60, 60);   // أحمر للـ error
+                ? new Color(30, 136, 229)   
+                : new Color(200, 60, 60);   
 
         JPanel root = new JPanel(new BorderLayout(0, 0));
         root.setBackground(bgColor);
@@ -58,11 +58,11 @@ public class CustomPopup extends JDialog {
         ));
         setContentPane(root);
 
-        // ===== أيقونة صغيرة + عنوان =====
+       
         JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         top.setOpaque(false);
 
-        // دائرة ملوّنة تمثل نوع الرسالة
+        
         JLabel iconCircle = new JLabel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -85,7 +85,7 @@ public class CustomPopup extends JDialog {
 
         root.add(top, BorderLayout.NORTH);
 
-        // ===== نص الرسالة (HTML عشان سطرين وثلاثة بدون مشاكل) =====
+        
         JLabel lblMessage = new JLabel("<html>" + message + "</html>");
         lblMessage.setForeground(textColor);
         lblMessage.setFont(new Font("Serif", Font.PLAIN, 15));
@@ -98,7 +98,7 @@ public class CustomPopup extends JDialog {
 
         root.add(center, BorderLayout.CENTER);
 
-        // ===== زر OK =====
+        
         JButton btnOk = new JButton("OK");
         btnOk.setBackground(accentColor);
         btnOk.setForeground(Color.WHITE);
@@ -115,7 +115,7 @@ public class CustomPopup extends JDialog {
 
         root.add(bottom, BorderLayout.SOUTH);
 
-        // اغلاق بالـ Esc
+       
         getRootPane().registerKeyboardAction(
                 e -> dispose(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
