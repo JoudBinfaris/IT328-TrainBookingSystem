@@ -200,8 +200,7 @@ public class Reservation extends JFrame {
                 "Jeddah → Riyadh",
                 "Riyadh → Dammam",
                 "Dammam → Riyadh",
-                "Riyadh → Alula",
-                "Alula → Riyadh"
+                "Riyadh → Alula"
                 }
         ));
 

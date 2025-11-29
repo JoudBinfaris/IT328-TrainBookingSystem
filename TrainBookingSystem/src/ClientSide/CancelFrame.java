@@ -195,8 +195,8 @@ public class CancelFrame extends JFrame {
                 "Jeddah → Riyadh",
                 "Riyadh → Dammam",
                 "Dammam → Riyadh",
-                "Riyadh → Alula",
-                "Alula → Riyadh"
+                "Riyadh → Alula"
+                
         }));
 
         classCb.setModel(new DefaultComboBoxModel<>(new String[]{
