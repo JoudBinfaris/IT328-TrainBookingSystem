@@ -170,8 +170,9 @@ class ClientHandler implements Runnable {
                         break;
                     case "CANCEL":
                         readInfo();
-                        t.cancelSeat(c, snum, day);
-                        if (removeFromReservationsList(tn, c, snum, day)) {
+                        
+                        if (removeFromReservationsList(userinfo, tn, c, snum, day)) {
+                             t.cancelSeat(c, snum, day);
                             out.println("OK");
                         } else {
                             out.println("NOT_FOUND");
@@ -393,13 +394,15 @@ class ClientHandler implements Runnable {
         }
     }
 
-    private boolean removeFromReservationsList(String tn, String c, int snum, int day) {
+    private boolean removeFromReservationsList(String userinfo,String tn, String c, int snum, int day) {
 
         boolean canceled = false;
 
         Reservation found = null;
 
         for (Reservation r : reservations) {
+            if(!userinfo.equals(r.getUsername()))
+                continue;
             if (tn.equals(r.getTrainID())
                     && c.equals(r.getClassType())
                     && r.getSeatindex() == snum

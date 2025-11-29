@@ -241,7 +241,7 @@ public class CancelFrame extends JFrame {
                 new MenuFrame(client).setVisible(true);
                 dispose();
             } else {
-                CustomPopup.showError(this, "No matching reservation.");
+                CustomPopup.showError(this, "No matching reservation under your name.");
             }
 
         } catch (Exception e) {
