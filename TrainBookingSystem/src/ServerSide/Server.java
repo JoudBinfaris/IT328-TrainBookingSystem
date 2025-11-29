@@ -116,12 +116,13 @@ class ClientHandler implements Runnable {
             }
 
             if (option.equals("SIGNUP")) {
-                User u1 = new User(userinfo);
-                users.add(u1);
-
-                System.out.println("Total users: " + users.size());//for testing
+                SignUpCheck(userinfo);
             }
-            logInCheck(option, userinfo);
+
+            if (option.equals("LOGIN")) {
+                logInCheck(userinfo);
+            }
+
             while (true) {
 
                 String menuOption = in.readLine();//NEW or CANCEL or HISTORY
@@ -170,9 +171,9 @@ class ClientHandler implements Runnable {
                         break;
                     case "CANCEL":
                         readInfo();
-                        
+
                         if (removeFromReservationsList(userinfo, tn, c, snum, day)) {
-                             t.cancelSeat(c, snum, day);
+                            t.cancelSeat(c, snum, day);
                             out.println("OK");
                         } else {
                             out.println("NOT_FOUND");
@@ -268,31 +269,83 @@ class ClientHandler implements Runnable {
         return snum;
     }
 
-    private void logInCheck(String option, String userinfo) {
+   private void SignUpCheck(String userinfo) {
 
-        boolean userFound = false;
+    try {
+        while (true) {
+            // Extract username
+            int index = userinfo.indexOf('-');
+            if (index == -1) { 
+                out.println("Invalid format. Use username-password");
+                userinfo = in.readLine();
+                continue;
+            }
 
-        if (option.equals("LOGIN")) {
+            String username = userinfo.substring(0, index);
 
+            // Check if username exists
+            boolean userFound = false;
             for (User s : users) {
-                if (s.getInfo().equals(userinfo)) {
+                String username2 = s.getInfo().substring(0, s.getInfo().indexOf('-'));
+                if (username2.equals(username)) {
                     userFound = true;
+                    break;
                 }
             }
 
-            if (!userFound) {
-                out.println("FAIL");
-                System.out.println("user not found");
-                logInCheck(option, userinfo);
+            if (userFound) {
+                out.println("UserName already in use");
+                in.readLine(); //garbage for option
+                userinfo = in.readLine(); // get new username-password
+                if (userinfo == null) return; // client disconnected
             } else {
-                out.println("SUCCESS");
+                // Username is available → register user
+                out.println("OK");
+                users.add(new User(userinfo));
+                break; // exit the loop
             }
-            System.out.println("LOGIN SUCCESS");
-
-            System.out.println("Total users: " + users.size());//for testing
         }
 
+        System.out.println("Total users: " + users.size()); // Debug
+
+    } catch (IOException ex) {
+        Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
     }
+}
+    private void logInCheck(String userinfo) {
+    try {
+        while (true) {
+            boolean userFound = false;
+
+            // Search for a matching user
+            for (User s : users) {
+                if (s.getInfo().equals(userinfo)) {
+                    userFound = true;
+                    break;
+                }
+            }
+
+            if (userFound) {
+                out.println("SUCCESS");
+                System.out.println("LOGIN SUCCESS");
+                System.out.println("Total users: " + users.size()); // for testing
+                break; // exit the loop after successful login
+            } else {
+                // Tell client login failed and wait for new credentials
+                out.println("FAIL");
+                in.readLine(); //garbage for option
+                userinfo = in.readLine(); // read next "username-password"
+
+                if (userinfo == null) {
+                    System.out.println("Client disconnected during login.");
+                    break;
+                }
+            }
+        }
+    } catch (IOException ex) {
+        Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
 
     private void readInfo() {
         try {
@@ -394,15 +447,16 @@ class ClientHandler implements Runnable {
         }
     }
 
-    private boolean removeFromReservationsList(String userinfo,String tn, String c, int snum, int day) {
+    private boolean removeFromReservationsList(String userinfo, String tn, String c, int snum, int day) {
 
         boolean canceled = false;
 
         Reservation found = null;
 
         for (Reservation r : reservations) {
-            if(!userinfo.equals(r.getUsername()))
+            if (!userinfo.equals(r.getUsername())) {
                 continue;
+            }
             if (tn.equals(r.getTrainID())
                     && c.equals(r.getClassType())
                     && r.getSeatindex() == snum

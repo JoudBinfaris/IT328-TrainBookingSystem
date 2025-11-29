@@ -2,6 +2,9 @@ package ClientSide;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 public class signup1 extends JFrame {
@@ -105,59 +108,57 @@ public class signup1 extends JFrame {
         card.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel lblCreate = new JLabel("Create Account");
-lblCreate.setAlignmentX(Component.CENTER_ALIGNMENT);
-lblCreate.setFont(new Font("Serif", Font.BOLD, 30));
-lblCreate.setForeground(Color.WHITE);
+        lblCreate.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblCreate.setFont(new Font("Serif", Font.BOLD, 30));
+        lblCreate.setForeground(Color.WHITE);
 
-card.add(lblCreate);
-card.add(Box.createVerticalStrut(30));
+        card.add(lblCreate);
+        card.add(Box.createVerticalStrut(30));
 
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        formPanel.setOpaque(false);
 
-JPanel formPanel = new JPanel(new GridBagLayout());
-formPanel.setOpaque(false);
+        GridBagConstraints fg = new GridBagConstraints();
+        fg.insets = new Insets(5, 10, 5, 10);
 
-GridBagConstraints fg = new GridBagConstraints();
-fg.insets = new Insets(5, 10, 5, 10);
+        JLabel lblEmail = new JLabel("Email:");
+        lblEmail.setFont(new Font("Serif", Font.PLAIN, 16));
+        lblEmail.setForeground(new Color(235, 235, 240));
 
-JLabel lblEmail = new JLabel("Email:");
-lblEmail.setFont(new Font("Serif", Font.PLAIN, 16));
-lblEmail.setForeground(new Color(235, 235, 240));
+        fg.gridx = 0;
+        fg.gridy = 0;
+        fg.anchor = GridBagConstraints.EAST;
+        formPanel.add(lblEmail, fg);
 
-fg.gridx = 0;
-fg.gridy = 0;
-fg.anchor = GridBagConstraints.EAST;
-formPanel.add(lblEmail, fg);
+        email = new JTextField();
+        email.setPreferredSize(new Dimension(260, 30));
+        email.setFont(new Font("Serif", Font.PLAIN, 15));
 
-email = new JTextField();
-email.setPreferredSize(new Dimension(260, 30));
-email.setFont(new Font("Serif", Font.PLAIN, 15));
+        fg.gridx = 1;
+        fg.gridy = 0;
+        fg.anchor = GridBagConstraints.WEST;
+        formPanel.add(email, fg);
 
-fg.gridx = 1;
-fg.gridy = 0;
-fg.anchor = GridBagConstraints.WEST;
-formPanel.add(email, fg);
+        JLabel lblPass = new JLabel("Password:");
+        lblPass.setFont(new Font("Serif", Font.PLAIN, 16));
+        lblPass.setForeground(new Color(235, 235, 240));
 
-JLabel lblPass = new JLabel("Password:");
-lblPass.setFont(new Font("Serif", Font.PLAIN, 16));
-lblPass.setForeground(new Color(235, 235, 240));
+        fg.gridx = 0;
+        fg.gridy = 1;
+        fg.anchor = GridBagConstraints.EAST;
+        formPanel.add(lblPass, fg);
 
-fg.gridx = 0;
-fg.gridy = 1;
-fg.anchor = GridBagConstraints.EAST;
-formPanel.add(lblPass, fg);
+        passward = new JTextField();
+        passward.setPreferredSize(new Dimension(260, 30));
+        passward.setFont(new Font("Serif", Font.PLAIN, 15));
 
-passward = new JTextField();
-passward.setPreferredSize(new Dimension(260, 30));
-passward.setFont(new Font("Serif", Font.PLAIN, 15));
+        fg.gridx = 1;
+        fg.gridy = 1;
+        fg.anchor = GridBagConstraints.WEST;
+        formPanel.add(passward, fg);
 
-fg.gridx = 1;
-fg.gridy = 1;
-fg.anchor = GridBagConstraints.WEST;
-formPanel.add(passward, fg);
-
-card.add(formPanel);
-card.add(Box.createVerticalStrut(25));
-
+        card.add(formPanel);
+        card.add(Box.createVerticalStrut(25));
 
         jButton1 = new JButton("Sign Up");
         stylePrimaryButton(jButton1);
@@ -183,31 +184,42 @@ card.add(Box.createVerticalStrut(25));
 
         root.add(centerWrapper, BorderLayout.CENTER);
 
-jButton1.addActionListener(e -> onSignUp());
+        jButton1.addActionListener(e -> onSignUp());
 
-addHoverEffect(jButton1);
+        addHoverEffect(jButton1);
 
-pack();
-setExtendedState(JFrame.MAXIMIZED_BOTH);
-setLocationRelativeTo(null);
-}
-
+        pack();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setLocationRelativeTo(null);
+    }
 
     private void onSignUp() {
-        //Take the values 
-        username = email.getText();
-        passward_ = passward.getText();
-        if (username.isEmpty() || passward_.isEmpty()) {
-            CustomPopup.showError(this, "Please fill the blanks");
-            return;
+        try {
+            //Take the values
+            username = email.getText();
+            passward_ = passward.getText();
+            if (username.isEmpty() || passward_.isEmpty()) {
+                CustomPopup.showError(this, "Please fill the blanks");
+                return;
+            }
+            //To the server:-
+            client.sendLine("SIGNUP");
+            client.sendLine(username + "-" + passward_);
+            String check = client.readLine();
+            if (check.equals("UserName already in use")) {
+                CustomPopup.showError(this, "UserName already in use");
+                new signup1(client).setVisible(true);
+                dispose();
+            }
+            
+            //Open the next frame
+            else{
+            new MenuFrame(client).setVisible(true);
+            CustomPopup.showSuccess(this, "sign-up done successfully!");
+            dispose();}
+        } catch (IOException ex) {
+            Logger.getLogger(signup1.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //To the server:-
-        client.sendLine("SIGNUP");
-        client.sendLine(username + " " + passward_);
-        //Open the next frame
-        new MenuFrame(client).setVisible(true);
-        CustomPopup.showSuccess(this, "sign-up done successfully!");
-        dispose();
     }
 
     private Image loadBrickImage() {
@@ -255,6 +267,7 @@ setLocationRelativeTo(null);
             public void mouseEntered(MouseEvent e) {
                 btn.setBackground(hover);
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 btn.setBackground(normal);

@@ -211,7 +211,7 @@ public class login1 extends JFrame {
             passward_ = passward.getText();
 
             client.sendLine("LOGIN");
-            client.sendLine(username + " " + passward_);
+            client.sendLine(username + "-" + passward_);
             String cmd = client.readLine();
             if (cmd.equals("FAIL")) {
                 CustomPopup.showError(this, "No User With This Username and Password Exists");
