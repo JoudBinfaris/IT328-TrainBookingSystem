@@ -55,19 +55,6 @@ public class Client {
         sendLine("LOGIN " + user + " " + pass);
        
     }
-    
-
-    //*************************************
-    public String queryAvailability(String source, String dest, String cls) throws IOException {
-        waitForPrompt("Sourse city:");
-        sendLine(source);
-        waitForPrompt("Destination city:");
-        sendLine(dest);
-        waitForPrompt("Class:");
-        sendLine(cls);
-
-        return waitForPrompt("AVAIL:");
-    }
 
 
     public ArrayList<Integer> requestAvailability() throws IOException {
@@ -91,23 +78,6 @@ public class Client {
 
         return seats;
 
-    }
-
-
-    
-
-
-    private int[] parseAvail(String availLine) {
-        int l = availLine.indexOf('['), r = availLine.indexOf(']');
-        if (l == -1 || r == -1 || r <= l) {
-            return new int[0];
-        }
-        String[] parts = availLine.substring(l + 1, r).split(",");
-        int[] out = new int[Math.min(7, parts.length)];
-        for (int i = 0; i < out.length; i++) {
-            out[i] = Integer.parseInt(parts[i].trim());
-        }
-        return out;
     }
 
     public void disconnec() throws IOException {
