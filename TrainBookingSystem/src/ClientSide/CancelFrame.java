@@ -210,7 +210,7 @@ public class CancelFrame extends JFrame {
 
         DefaultComboBoxModel<String> seatModel = new DefaultComboBoxModel<>();
         for (int i = 1; i <= 4; i++) {
-            seatModel.addElement("Seat " + i);
+            seatModel.addElement("Seat Number " + i);
         }
         seatNumCb.setModel(seatModel);
     }
@@ -226,11 +226,15 @@ public class CancelFrame extends JFrame {
             String cls = String.valueOf(classCb.getSelectedItem());
             int dayIdx = dayCb.getSelectedIndex();
             String seat = String.valueOf(seatNumCb.getSelectedItem());
+             
 
             
             client.sendLine(src);
             client.sendLine(dest);
             client.sendLine(cls);
+            System.out.println("CLIENT: selected day = " 
+    + dayCb.getSelectedItem() 
+    + " , index = " + dayIdx);
             client.sendLine(String.valueOf(dayIdx));
             client.sendLine(seat);
 

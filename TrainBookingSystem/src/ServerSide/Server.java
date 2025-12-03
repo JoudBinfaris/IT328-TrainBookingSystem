@@ -171,7 +171,7 @@ class ClientHandler implements Runnable {
                         break;
                     case "CANCEL":
                         readInfo();
-
+                        snum = receiveSnum();
                         if (removeFromReservationsList(userinfo, tn, c, snum, day)) {
                             t.cancelSeat(c, snum, day);
                             out.println("OK");
@@ -454,9 +454,7 @@ class ClientHandler implements Runnable {
         Reservation found = null;
 
         for (Reservation r : reservations) {
-            if (!userinfo.equals(r.getUsername())) {
-                continue;
-            }
+            if (userinfo.equals(r.getUsername())) 
             if (tn.equals(r.getTrainID())
                     && c.equals(r.getClassType())
                     && r.getSeatindex() == snum
